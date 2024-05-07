@@ -1,18 +1,18 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
-import { useMusicContext } from "../contexts/ContextProvider";
+import { useEffect, useState } from "react";
+import {
+  HiChevronDoubleLeft,
+  HiChevronLeft,
+  HiChevronRight,
+} from "react-icons/hi";
 import { MdVerified } from "react-icons/md";
 import { Link } from "react-router-dom";
 import { ClipLoader } from "react-spinners";
-import {
-  HiChevronRight,
-  HiChevronLeft,
-  HiChevronDoubleLeft,
-} from "react-icons/hi";
+import { useTheme } from "../context/ThemeContext";
 
 const Home = () => {
   const [items, setItems] = useState();
-  const { search } = useMusicContext();
+  const { search } = useTheme();
   const [page, setPage] = useState(1);
   const [sort, setSort] = useState("title");
   const [loading, setloading] = useState(false);
@@ -22,8 +22,8 @@ const Home = () => {
       url: "https://genius-song-lyrics1.p.rapidapi.com/search/",
       params: { q: search, per_page: 20, page: page },
       headers: {
-        "X-RapidAPI-Key": "1b9c31d152msh57380cfd320d6d0p1208b9jsn79fb66fdb9e6",
-        "X-RapidAPI-Host": "genius-song-lyrics1.p.rapidapi.com",
+        "X-RapidAPI-Key": import.meta.env.VITE_API_KEY,
+        "X-RapidAPI-Host": import.meta.env.VITE_API_HOST,
       },
     };
     setloading(true);
@@ -43,8 +43,8 @@ const Home = () => {
     return () => clearTimeout(timer);
   }, [page, search]);
 
-  const changePage = (pageNumber) => {
-    localStorage.setItem("page", pageNumber);
+  const changePage = (pageNumber: number) => {
+    localStorage.setItem("page", String(pageNumber));
     setPage(pageNumber);
     window.scrollTo(0, 0);
   };
@@ -72,7 +72,7 @@ const Home = () => {
       ) : (
         <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 pb-14">
           {items &&
-            items.map((item) => (
+            items?.map((item) => (
               <div
                 key={item.result.id}
                 className="flex bg-gray-100 dark:bg-gray-800 sm:hover:scale-105"
