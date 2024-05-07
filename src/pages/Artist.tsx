@@ -1,18 +1,17 @@
-import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
 import axios from "axios";
-import "react-loading-skeleton/dist/skeleton.css";
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 
+import { Skeleton } from "antd";
+import { FaFacebook, FaInstagram, FaTwitter } from "react-icons/fa";
+import {
+  HiChevronDoubleLeft,
+  HiChevronLeft,
+  HiChevronRight,
+} from "react-icons/hi";
 import { MdVerified } from "react-icons/md";
 import { Link } from "react-router-dom";
 import { ClipLoader } from "react-spinners";
-import {
-  HiChevronRight,
-  HiChevronLeft,
-  HiChevronDoubleLeft,
-} from "react-icons/hi";
-import { FaFacebook, FaInstagram, FaTwitter } from "react-icons/fa";
-import { Skeleton } from "antd";
 
 const Artist = () => {
   const { artistId } = useParams();

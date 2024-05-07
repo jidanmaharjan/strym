@@ -2,11 +2,10 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import parse from "html-react-parser";
-import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
-import "react-loading-skeleton/dist/skeleton.css";
 import { MdVerified } from "react-icons/md";
 
 import { ClipLoader } from "react-spinners";
+import { Skeleton } from "antd";
 
 const Song = () => {
   const { songId } = useParams();
@@ -18,11 +17,11 @@ const Song = () => {
     const options = {
       method: "GET",
       url: `https://genius-song-lyrics1.p.rapidapi.com/song/details/`,
-      params: {id: songId},
+      params: { id: songId },
       headers: {
-        'X-RapidAPI-Key': '1b9c31d152msh57380cfd320d6d0p1208b9jsn79fb66fdb9e6',
-        'X-RapidAPI-Host': 'genius-song-lyrics1.p.rapidapi.com'
-      }
+        "X-RapidAPI-Key": "1b9c31d152msh57380cfd320d6d0p1208b9jsn79fb66fdb9e6",
+        "X-RapidAPI-Host": "genius-song-lyrics1.p.rapidapi.com",
+      },
     };
     setloading(true);
     axios
@@ -48,9 +47,10 @@ const Song = () => {
           id: song.id,
         },
         headers: {
-          'X-RapidAPI-Key': '1b9c31d152msh57380cfd320d6d0p1208b9jsn79fb66fdb9e6',
-          'X-RapidAPI-Host': 'genius-song-lyrics1.p.rapidapi.com'
-        }
+          "X-RapidAPI-Key":
+            "1b9c31d152msh57380cfd320d6d0p1208b9jsn79fb66fdb9e6",
+          "X-RapidAPI-Host": "genius-song-lyrics1.p.rapidapi.com",
+        },
       };
 
       axios
