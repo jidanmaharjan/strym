@@ -1,14 +1,16 @@
-import axios from "axios";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import {
   HiChevronDoubleLeft,
   HiChevronLeft,
   HiChevronRight,
 } from "react-icons/hi";
 import { MdVerified } from "react-icons/md";
+import { useQuery } from "react-query";
 import { Link } from "react-router-dom";
 import { ClipLoader } from "react-spinners";
+import ErrorPage from "../components/Error";
 import { useTheme } from "../context/ThemeContext";
+import { searchSongs } from "../queries/songs";
 
 const Home = () => {
   const [items, setItems] = useState();
@@ -16,38 +18,24 @@ const Home = () => {
   const [page, setPage] = useState(1);
   const [sort, setSort] = useState("title");
   const [loading, setloading] = useState(false);
-  useEffect(() => {
-    const options = {
-      method: "GET",
-      url: "https://genius-song-lyrics1.p.rapidapi.com/search/",
-      params: { q: search, per_page: 20, page: page },
-      headers: {
-        "X-RapidAPI-Key": import.meta.env.VITE_API_KEY,
-        "X-RapidAPI-Host": import.meta.env.VITE_API_HOST,
-      },
-    };
-    setloading(true);
-    const timer = setTimeout(() => {
-      axios
-        .request(options)
-        .then(function (response) {
-          setItems(response.data.hits);
-          setloading(false);
-        })
-        .catch(function (error) {
-          console.error(error);
-          setloading(false);
-        });
-    }, 500);
 
-    return () => clearTimeout(timer);
-  }, [page, search]);
+  const { data, isLoading, isFetching, isError } = useQuery(
+    ["songs", page, search],
+    () => searchSongs({ page, search }),
+    {
+      enabled: !!search,
+    }
+  );
 
   const changePage = (pageNumber: number) => {
     localStorage.setItem("page", String(pageNumber));
     setPage(pageNumber);
     window.scrollTo(0, 0);
   };
+
+  if (isError) {
+    <ErrorPage />;
+  }
 
   return (
     <div className="p-4 bg-slate-200 dark:bg-gray-900 dark:text-gray-200 min-h-screen w-full">
