@@ -1,4 +1,3 @@
-import axios from "axios";
 import {
   ReactNode,
   createContext,
@@ -6,6 +5,8 @@ import {
   useEffect,
   useState,
 } from "react";
+import { useMutation } from "react-query";
+import { useNavigate } from "react-router-dom";
 import { callAxios } from "../hooks/useAxios";
 
 type ContextType = {
@@ -18,10 +19,11 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(
     !!localStorage.getItem("ACCESS_TOKEN")
   );
+  const navigate = useNavigate();
 
-  useEffect(() => {
-    if (!isAuthenticated) {
-      const response = callAxios({
+  const fetchToken = useMutation(
+    () =>
+      callAxios({
         url: "https://accounts.spotify.com/api/token",
         method: "post",
         headers: {
@@ -32,10 +34,24 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
           client_id: import.meta.env.VITE_SPOTIFY_CLIENT_KEY,
           client_secret: import.meta.env.VITE_SPOTIFY_SECRET_KEY,
         },
-      });
-      console.log(response);
+      }),
+    {
+      onSuccess: (res) => {
+        localStorage.setItem("ACCESS_TOKEN", res.access_token);
+        setIsAuthenticated(true);
+      },
+      onError: () => {
+        navigate("/connection-error");
+      },
+    }
+  );
+
+  useEffect(() => {
+    if (!isAuthenticated) {
+      fetchToken.mutate();
     }
   }, []);
+
   return (
     <AuthContext.Provider value={{ isAuthenticated }}>
       {children}
