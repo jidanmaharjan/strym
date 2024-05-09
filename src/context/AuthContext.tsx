@@ -6,24 +6,22 @@ import {
   useEffect,
   useState,
 } from "react";
+import { callAxios } from "../hooks/useAxios";
 
 type ContextType = {
-  status: boolean;
+  isAuthenticated: boolean;
 };
 
 const AuthContext = createContext<ContextType | undefined>(undefined);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
-  const [token, setToken] = useState<string>(
-    localStorage.getItem("ACCESS_TOKEN") || ""
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(
+    !!localStorage.getItem("ACCESS_TOKEN")
   );
-  const [status, setStatus] = useState<boolean>(false);
 
   useEffect(() => {
-    if (token !== "") {
-      setStatus(true);
-    } else {
-      axios.config({
+    if (!isAuthenticated) {
+      const response = callAxios({
         url: "https://accounts.spotify.com/api/token",
         method: "post",
         headers: {
@@ -35,10 +33,13 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
           client_secret: import.meta.env.VITE_SPOTIFY_SECRET_KEY,
         },
       });
+      console.log(response);
     }
   }, []);
   return (
-    <AuthContext.Provider value={{ status }}>{children}</AuthContext.Provider>
+    <AuthContext.Provider value={{ isAuthenticated }}>
+      {children}
+    </AuthContext.Provider>
   );
 };
 
