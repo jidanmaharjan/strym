@@ -6,11 +6,11 @@ interface AxiosConfig extends AxiosRequestConfig {
 
 export const callAxios = async (props: AxiosConfig) => {
   const { isAuth } = props;
-  const token = localStorage.getItem("token");
+  const token = localStorage.getItem("ACCESS_TOKEN");
   return axios({
     ...props,
     headers: {
-      Authorization: isAuth ? `Bearer ${token}` : undefined,
+      Authorization: !isAuth ? `Bearer ${token}` : undefined,
       ...props.headers,
     },
   })

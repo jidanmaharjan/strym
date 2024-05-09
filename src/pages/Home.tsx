@@ -10,7 +10,7 @@ import { Link } from "react-router-dom";
 import { ClipLoader } from "react-spinners";
 import ErrorPage from "../components/Error";
 import { useTheme } from "../context/ThemeContext";
-import { searchSongs } from "../queries/songs";
+import { getNewReleases, searchSongs } from "../queries/songs";
 
 const Home = () => {
   const [items, setItems] = useState();
@@ -27,6 +27,12 @@ const Home = () => {
     }
   );
 
+  const {
+    data: newReleases,
+    isLoading: newReleasesLoading,
+    isFetching: newReleasesFetching,
+  } = useQuery(["new_releases"], () => getNewReleases());
+
   const changePage = (pageNumber: number) => {
     localStorage.setItem("page", String(pageNumber));
     setPage(pageNumber);
@@ -37,8 +43,21 @@ const Home = () => {
     <ErrorPage />;
   }
 
+  if (isLoading || isFetching || newReleasesLoading || newReleasesFetching) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <ClipLoader size={40} color="#f97316" />
+      </div>
+    );
+  }
+
   return (
     <div className="p-4 bg-slate-200 dark:bg-gray-900 dark:text-gray-200 min-h-screen w-full">
+      {newReleases?.albums?.items?.map((item: any) => (
+        <div>
+          {item.name} - {item.artists[0].name}
+        </div>
+      ))}
       {search.length < 1 && (
         <div className="fixed left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%] ">
           Search for any song

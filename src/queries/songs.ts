@@ -1,4 +1,5 @@
 import axios from "axios";
+import { callAxios } from "../hooks/useAxios";
 
 export const searchSongs = async ({
   search,
@@ -18,3 +19,11 @@ export const searchSongs = async ({
   };
   return axios.request(options);
 };
+const baseUrl = import.meta.env.VITE_SPOTIFY_URL;
+
+export const getNewReleases = () =>
+  callAxios({
+    method: "GET",
+    url: `${baseUrl}/browse/new-releases`,
+    params: { offset: 0, limit: 20 },
+  });
