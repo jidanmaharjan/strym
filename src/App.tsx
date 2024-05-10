@@ -5,6 +5,7 @@ import Scrolltotop from "./components/Scrolltotop";
 import Artist from "./pages/Artist";
 import Home from "./pages/Home";
 import Song from "./pages/Song";
+import Error from "./pages/Error";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/song/:songId/*" element={<Song />} />
         <Route path="/artist/:artistId/*" element={<Artist />} />
+        <Route path="*" element={<Error />} />
       </Routes>
     </>
   );
