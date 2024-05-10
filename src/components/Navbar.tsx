@@ -14,7 +14,7 @@ const Navbar = () => {
       <Link to={"/"} className="w-fit">
         <div className="flex items-center gap-2 ">
           <img src={logo} alt="logo" className="h-8 w-8" />
-          <h3 className="">MusicRepo.</h3>
+          <h3 className="">Strym.</h3>
         </div>
       </Link>
       <form
