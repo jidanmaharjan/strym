@@ -1,3 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+.ant-tabs-tab-btn {
+    display: inline-flex;
+    align-items: center;
+}
