@@ -10,7 +10,7 @@ const Navbar = () => {
   const navigate = useNavigate();
 
   return (
-    <div className={`w-full flex gap-4 items-center p-4 shadow-sm bg-white fixed top-0`}>
+    <div className={`w-full flex gap-4 items-center p-4 shadow-sm bg-white fixed top-0 z-50`}>
       <Link to={"/"} className="w-fit">
         <div className="flex items-center gap-2 ">
           <img src={logo} alt="logo" className="h-8 w-8" />

@@ -14,6 +14,7 @@ import { searchSongs } from "../queries/songs";
 import NewReleases from "../components/NewReleases";
 import { Tabs, TabsProps } from "antd";
 import { TbCategory } from "react-icons/tb";
+import Loader from "../components/Loader";
 
 const Home = () => {
   const [items, setItems] = useState();
@@ -59,9 +60,7 @@ const Home = () => {
 
   if (isLoading || isFetching) {
     return (
-      <div className="flex justify-center items-center h-screen">
-        <ClipLoader size={40} color="#f97316" />
-      </div>
+      <Loader />
     );
   }
 
@@ -71,6 +70,7 @@ const Home = () => {
       <Tabs
         defaultActiveKey="1"
         items={tabItems}
+        
       />
 
 

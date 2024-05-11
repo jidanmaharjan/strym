@@ -1,8 +1,6 @@
 import { useQuery } from 'react-query';
 import { getNewReleases } from '../queries/songs';
-import { Tabs, TabsProps } from 'antd';
-import { MdOutlineNewReleases } from 'react-icons/md';
-import { TbCategory } from 'react-icons/tb';
+import Loader from './Loader';
 
 const NewReleases = () => {
     const {
@@ -11,12 +9,17 @@ const NewReleases = () => {
         isFetching: newReleasesFetching,
       } = useQuery(["new_releases"], () => getNewReleases());
 
+
+      if(newReleasesLoading){
+        return <Loader />
+      }
       
   return (
     <div>
         
         {newReleases?.albums?.items?.map((item: any) => (
-        <div>
+        <div key={item.id}>
+            <img src={item.images.filter((x: any)=>x.height === 300)[0].url} />
           {item.name} - {item.artists[0].name}
         </div>
       ))}
