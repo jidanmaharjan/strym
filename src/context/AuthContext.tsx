@@ -34,6 +34,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
           client_id: import.meta.env.VITE_SPOTIFY_CLIENT_KEY,
           client_secret: import.meta.env.VITE_SPOTIFY_SECRET_KEY,
         },
+        isAuth: true
       }),
     {
       onSuccess: (res) => {
