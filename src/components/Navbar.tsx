@@ -1,9 +1,11 @@
-import { Button, Input } from "antd";
-import { FiSearch } from "react-icons/fi";
-import { MdDarkMode, MdLightMode } from "react-icons/md";
+import { Avatar, Button, Input, Switch } from "antd";
+import { FiMoon, FiSearch, FiSun } from "react-icons/fi";
+import { MdDarkMode, MdLightMode, MdOutlineWbSunny } from "react-icons/md";
 import { Link, useNavigate } from "react-router-dom";
 import logo from "../assets/logo.png";
 import { useTheme } from "../context/ThemeContext";
+import { IoIosNotificationsOutline } from "react-icons/io";
+import { CiSettings } from "react-icons/ci";
 
 const Navbar = () => {
   const { search, setSearch, theme, toggleTheme } = useTheme();
@@ -32,6 +34,12 @@ const Navbar = () => {
           onChange={(e) => setSearch(e.target.value)}
         />
       </form>
+      <div>
+      {/* <Switch
+      checkedChildren={<FiMoon size={20} />}
+      unCheckedChildren={<FiSun size={20} />}
+      defaultChecked
+    /> */}
       <Button type="link" onClick={() => toggleTheme()}>
         {theme === "light" ? (
           <MdLightMode size={20} />
@@ -39,6 +47,15 @@ const Navbar = () => {
           <MdDarkMode size={20} />
         )}
       </Button>
+      <Button type="link" onClick={() => toggleTheme()}>
+      <IoIosNotificationsOutline size={20} />
+      </Button>
+      <Button type="link" onClick={() => toggleTheme()}>
+      <CiSettings size={20} />
+  
+      </Button>
+      <Avatar style={{ backgroundColor: '#fde3cf', color: '#f56a00' }}>U</Avatar>
+      </div>
     </div>
   );
 };
