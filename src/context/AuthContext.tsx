@@ -40,6 +40,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       onSuccess: (res) => {
         localStorage.setItem("ACCESS_TOKEN", res.access_token);
         setIsAuthenticated(true);
+        window.location.reload()
       },
       onError: () => {
         navigate("/connection-error");

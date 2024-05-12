@@ -13,7 +13,7 @@ const Sidebar = () => {
 
 
     const items: MenuItem[] = [
-        { key: 'home', icon: <FiMusic />, label: 'Home' },
+        { key: '', icon: <FiMusic />, label: 'Home' },
         { key: 'genre', icon: <BiVolumeFull />, label: 'Genre' },
         { key: 'library', icon: <LuLibrary />, label: 'Library' },
         {type: 'divider'},
@@ -23,8 +23,7 @@ const Sidebar = () => {
       ];
   return (
     <Menu
-    defaultSelectedKeys={['1']}
-    defaultOpenKeys={['sub1']}
+    defaultSelectedKeys={['']}
     mode="inline"
     theme="light"
     items={items}

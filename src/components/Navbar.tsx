@@ -13,7 +13,7 @@ const Navbar = () => {
 
   return (
     <div className={`w-full flex gap-4 items-center p-4 shadow-sm bg-white fixed top-0 z-50`}>
-      <Link to={"/"} className="w-fit">
+      <Link to={"/"} className="w-fit mr-4">
         <div className="flex items-center gap-2 ">
           <img src={logo} alt="logo" className="h-8 w-8" />
           <h3 className="">Strym.</h3>
@@ -29,28 +29,28 @@ const Navbar = () => {
         <Input
           prefix={<FiSearch size={20} className="text-gray0" />}
           placeholder="Search"
-          className="w-full md:w-[50%]"
+          className="rounded-full"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
         />
       </form>
-      <div>
+      <div className="flex gap-2 items-center">
       {/* <Switch
       checkedChildren={<FiMoon size={20} />}
       unCheckedChildren={<FiSun size={20} />}
       defaultChecked
     /> */}
-      <Button type="link" onClick={() => toggleTheme()}>
+      <Button className="w-fit p-0 text-black" type="link" onClick={() => toggleTheme()}>
         {theme === "light" ? (
           <MdLightMode size={20} />
         ) : (
           <MdDarkMode size={20} />
         )}
       </Button>
-      <Button type="link" onClick={() => toggleTheme()}>
+      <Button className="w-fit p-0" type="link" onClick={() => toggleTheme()}>
       <IoIosNotificationsOutline size={20} />
       </Button>
-      <Button type="link" onClick={() => toggleTheme()}>
+      <Button className="w-fit p-0" type="link" onClick={() => toggleTheme()}>
       <CiSettings size={20} />
   
       </Button>

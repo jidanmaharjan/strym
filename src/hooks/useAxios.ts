@@ -16,6 +16,9 @@ export const callAxios = async (props: AxiosConfig) => {
   })
     .then((response) => response.data)
     .catch((error) => {
+      if(error.response.data.error.message === 'The access token expired'){
+        localStorage.removeItem('ACCESS_TOKEN')
+      }
       throw new Error(error);
     });
 };
