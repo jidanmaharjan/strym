@@ -28,7 +28,7 @@ const NewReleases = () => {
             <img
               alt="example"
               src={item.images.filter((x: any) => x.height === 300)[0].url}
-              className="min-w-60 h-48 object-cover"
+              className="min-w-60 h-40 object-cover"
             />
           }
           actions={[

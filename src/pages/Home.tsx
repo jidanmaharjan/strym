@@ -8,6 +8,7 @@ import Loader from "../components/Loader";
 import NewReleases from "../components/NewReleases";
 import { useTheme } from "../context/ThemeContext";
 import { searchSongs } from "../queries/songs";
+import Featured from "../components/Featured";
 
 const Home = () => {
   const [items, setItems] = useState();
@@ -57,6 +58,7 @@ const Home = () => {
     <div className="p-4  w-full ">
       {/* <Tabs defaultActiveKey="1" items={tabItems} />
        */}
+      <Featured />
       <div className="mb-4">
         <h3 className="font-semibold ">New Releases</h3>
         <p className="text-sm text-gray-400">
