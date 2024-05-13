@@ -54,10 +54,15 @@ const Home = () => {
   }
 
   return (
-    <div className="p-4 min-h-screen w-full pt-20">
+    <div className="p-4  w-full ">
       {/* <Tabs defaultActiveKey="1" items={tabItems} />
        */}
-      <h3 className="font-semibold mb-4">New Releases</h3>
+      <div className="mb-4">
+        <h3 className="font-semibold ">New Releases</h3>
+        <p className="text-sm text-gray-400">
+          Discover some fresh albums out of the box.
+        </p>
+      </div>
       <NewReleases />
     </div>
   );

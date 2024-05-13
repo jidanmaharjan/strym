@@ -1,15 +1,11 @@
-import { useQuery } from "react-query";
-import { getNewReleases } from "../queries/songs";
-import Loader from "./Loader";
-import { Card, Avatar, Divider, Tooltip } from "antd";
+import { Avatar, Card, Tooltip } from "antd";
 import Meta from "antd/es/card/Meta";
 import { IoHeartOutline } from "react-icons/io5";
-import { LiaMicrophoneAltSolid } from "react-icons/lia";
 import { TbMusicSearch } from "react-icons/tb";
-import {
-  generatePrimaryAndSecondaryColors,
-  getRandomColorPair,
-} from "../constants/helpers";
+import { useQuery } from "react-query";
+import { getRandomColorPair } from "../constants/helpers";
+import { getNewReleases } from "../queries/songs";
+import Loader from "./Loader";
 
 const NewReleases = () => {
   const {
@@ -23,7 +19,7 @@ const NewReleases = () => {
   }
 
   return (
-    <div className="flex gap-4">
+    <div className="flex gap-4 w-full overflow-x-scroll hide-scrollbar snap-x snap-mandatory">
       {newReleases?.albums?.items?.map((item: any) => (
         <Card
           key={item.id}
@@ -32,6 +28,7 @@ const NewReleases = () => {
             <img
               alt="example"
               src={item.images.filter((x: any) => x.height === 300)[0].url}
+              className="min-w-60 h-48 object-cover"
             />
           }
           actions={[

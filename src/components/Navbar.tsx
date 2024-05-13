@@ -12,7 +12,7 @@ const Navbar = () => {
 
   return (
     <div
-      className={`w-full flex gap-4 items-center p-4 shadow-sm bg-white fixed top-0 z-40`}
+      className={`w-full flex gap-4 p-4 shadow-sm bg-white sticky top-0 z-40`}
     >
       <form
         className="flex-grow flex justify-center"
@@ -24,12 +24,12 @@ const Navbar = () => {
         <Input
           prefix={<FiSearch size={20} className="text-gray0" />}
           placeholder="Search"
-          className="rounded-full w-fit"
+          className="rounded-full"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
         />
       </form>
-      <div className="flex gap-2 items-center">
+      <div className="flex gap-4 items-center w-fit">
         {/* <Switch
       checkedChildren={<FiMoon size={20} />}
       unCheckedChildren={<FiSun size={20} />}

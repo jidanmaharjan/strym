@@ -10,11 +10,11 @@ import Sidebar from "./components/Sidebar";
 
 function App() {
   return (
-    <section className="flex">
+    <section className="flex w-full min-h-screen">
       <Scrolltotop />
       <Sidebar />
 
-      <div className="pl-60">
+      <div className="pl-60 w-full">
         <Navbar />
         <Routes>
           <Route path="/" element={<Home />} />
