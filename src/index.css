@@ -2,8 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
-
 .ant-tabs-tab-btn {
-    display: inline-flex;
-    align-items: center;
+  display: inline-flex;
+  align-items: center;
+}
+
+.ant-card-actions li {
+  display: flex;
+  justify-content: center;
 }
