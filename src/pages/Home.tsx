@@ -1,20 +1,13 @@
+import { Tabs, TabsProps } from "antd";
 import { useState } from "react";
-import {
-  HiChevronDoubleLeft,
-  HiChevronLeft,
-  HiChevronRight,
-} from "react-icons/hi";
-import { MdOutlineNewReleases, MdVerified } from "react-icons/md";
+import { MdOutlineNewReleases } from "react-icons/md";
+import { TbCategory } from "react-icons/tb";
 import { useQuery } from "react-query";
-import { Link } from "react-router-dom";
-import { ClipLoader } from "react-spinners";
 import ErrorPage from "../components/Error";
+import Loader from "../components/Loader";
+import NewReleases from "../components/NewReleases";
 import { useTheme } from "../context/ThemeContext";
 import { searchSongs } from "../queries/songs";
-import NewReleases from "../components/NewReleases";
-import { Tabs, TabsProps } from "antd";
-import { TbCategory } from "react-icons/tb";
-import Loader from "../components/Loader";
 
 const Home = () => {
   const [items, setItems] = useState();
@@ -31,50 +24,41 @@ const Home = () => {
     }
   );
 
-
-
   const changePage = (pageNumber: number) => {
     localStorage.setItem("page", String(pageNumber));
     setPage(pageNumber);
     window.scrollTo(0, 0);
   };
 
-  const tabItems: TabsProps['items'] = [
+  const tabItems: TabsProps["items"] = [
     {
-      key: '1',
-      label: 'New Releases',
+      key: "1",
+      label: "New Releases",
       children: <NewReleases />,
-      icon: <MdOutlineNewReleases />
+      icon: <MdOutlineNewReleases />,
     },
     {
-      key: '2',
-      label: 'Genres',
+      key: "2",
+      label: "Genres",
       children: null,
-      icon: <TbCategory />
-    }
-  ]
+      icon: <TbCategory />,
+    },
+  ];
 
   if (isError) {
     <ErrorPage />;
   }
 
   if (isLoading || isFetching) {
-    return (
-      <Loader />
-    );
+    return <Loader />;
   }
 
   return (
     <div className="p-4 min-h-screen w-full pt-20">
-
-      <Tabs
-        defaultActiveKey="1"
-        items={tabItems}
-        
-      />
-
-
-
+      {/* <Tabs defaultActiveKey="1" items={tabItems} />
+       */}
+      <h3 className="font-semibold mb-4">New Releases</h3>
+      <NewReleases />
     </div>
   );
 };

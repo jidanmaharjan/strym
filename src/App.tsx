@@ -12,17 +12,16 @@ function App() {
   return (
     <section className="flex">
       <Scrolltotop />
-      <Navbar />
-
       <Sidebar />
-      <div>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/song/:songId/*" element={<Song />} />
-        <Route path="/artist/:artistId/*" element={<Artist />} />
-        <Route path="*" element={<Error />} />
-      </Routes>
 
+      <div className="pl-60">
+        <Navbar />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/song/:songId/*" element={<Song />} />
+          <Route path="/artist/:artistId/*" element={<Artist />} />
+          <Route path="*" element={<Error />} />
+        </Routes>
       </div>
     </section>
   );
