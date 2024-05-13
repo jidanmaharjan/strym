@@ -12,11 +12,11 @@ const Featured = () => {
   };
   const randomColor = getRandomColorPair();
   return (
-    <Carousel className="mb-4 h-48 rounded-lg">
+    <Carousel className="mb-4">
       <div>
         <div
           style={{ background: randomColor.primaryColor }}
-          className="w-full h-48 flex justify-between rounded-lg"
+          className="w-full h-48 flex justify-between rounded-lg overflow-clip"
         >
           <div className="p-4">
             <p className="text-gray-200 text-sm mb-6">Personally Selected</p>
@@ -30,16 +30,18 @@ const Featured = () => {
               >
                 Listen Now
               </Button>
-              <Button className="rounded-full w-8 h-8">
-                <IoHeartOutline />
-              </Button>
+              <Button
+                className=" bg-background/30 text-white"
+                shape="circle"
+                icon={<IoHeartOutline />}
+              ></Button>
             </div>
           </div>
           <div>
             <img
               src="https://source.unsplash.com/random/800x600"
               alt="cover"
-              className="h-full w-full object-cover rounded-lg"
+              className="h-full w-full object-cover "
             />
           </div>
         </div>

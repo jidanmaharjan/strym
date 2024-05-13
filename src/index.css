@@ -6,7 +6,10 @@
   display: inline-flex;
   align-items: center;
 }
-
+.ant-btn {
+  display: inline-flex;
+  align-items: center;
+}
 .ant-card-actions li {
   display: flex;
   justify-content: center;
