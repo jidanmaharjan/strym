@@ -9,6 +9,11 @@ const Featured = () => {
       autoplay
       touchMove
       draggable
+      vertical
+      verticalSwiping
+      autoplaySpeed={5000}
+      dots={false}
+      fade
       className="mb-4 rounded-lg overflow-clip"
     >
       {[1, 2, 3, 4].map((item) => {
@@ -18,14 +23,12 @@ const Featured = () => {
           <div key={item}>
             <div
               style={{ background: randomColor.primaryColor }}
-              className="w-full h-48 flex justify-between rounded-lg overflow-clip"
+              className="w-full h-80 flex justify-between rounded-lg overflow-clip"
             >
-              <div className="p-4">
-                <p className="text-gray-200 text-sm mb-6">
-                  Personally Selected
-                </p>
-                <h2 className="text-white text-3xl font-bold mb-2">Title</h2>
-                <h3 className="text-white font-semibold">Artist</h3>
+              <div className="p-12 flex flex-col justify-center">
+                <p className="text-gray-100 mb-6">Personally Selected</p>
+                <h2 className="text-white text-6xl font-bold mb-2">Title</h2>
+                <h3 className="text-white text-lg font-semibold">Artist</h3>
                 <div className="mt-4 flex items-center gap-4">
                   <Button
                     icon={<FaHeadphonesSimple />}

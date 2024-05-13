@@ -15,7 +15,7 @@ function App() {
       <Scrolltotop />
       <Sidebar />
 
-      <div className="pl-60 w-full">
+      <div className="pl-60 w-full pb-24">
         <Navbar />
         <Routes>
           <Route path="/" element={<Home />} />
