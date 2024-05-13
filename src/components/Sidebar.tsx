@@ -30,7 +30,7 @@ const Sidebar = () => {
         mode="inline"
         theme="light"
         items={items}
-        className="h-screen w-60 mt-4"
+        className="h-screen w-60 pt-4"
         onClick={(e) => navigate(e.key)}
       />
     </div>
