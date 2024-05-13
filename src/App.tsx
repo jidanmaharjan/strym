@@ -7,6 +7,7 @@ import Home from "./pages/Home";
 import Song from "./pages/Song";
 import Error from "./pages/Error";
 import Sidebar from "./components/Sidebar";
+import Player from "./components/Player";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
           <Route path="*" element={<Error />} />
         </Routes>
       </div>
+      <Player />
     </section>
   );
 }
