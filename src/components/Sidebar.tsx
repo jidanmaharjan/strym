@@ -4,20 +4,21 @@ import { FiMusic } from "react-icons/fi";
 import { IoHeartOutline } from "react-icons/io5";
 import { LuLibrary } from "react-icons/lu";
 import { MdOutlineAddBox } from "react-icons/md";
+import { useLocation, useNavigate } from "react-router-dom";
 import logo from "../assets/logo.png";
-import { Link, useNavigate } from "react-router-dom";
 
 const Sidebar = () => {
+  const { pathname } = useLocation();
   const navigate = useNavigate();
   type MenuItem = Required<MenuProps>["items"][number];
 
   const items: MenuItem[] = [
-    { key: "", icon: <FiMusic />, label: "Home" },
-    { key: "genre", icon: <BiVolumeFull />, label: "Genre" },
-    { key: "library", icon: <LuLibrary />, label: "Library" },
+    { key: "/", icon: <FiMusic />, label: "Home" },
+    { key: "/genre", icon: <BiVolumeFull />, label: "Genre" },
+    { key: "/library", icon: <LuLibrary />, label: "Library" },
     { type: "divider" },
-    { key: "library/add", icon: <MdOutlineAddBox />, label: "Add Library" },
-    { key: "liked_songs", icon: <IoHeartOutline />, label: "Liked Songs" },
+    { key: "/library/add", icon: <MdOutlineAddBox />, label: "Add Library" },
+    { key: "/favourites", icon: <IoHeartOutline />, label: "Favourites" },
   ];
   return (
     <div className="fixed left-0 min-h-screen z-50 bg-white w-60">
@@ -26,7 +27,7 @@ const Sidebar = () => {
         <h3 className="">Strym.</h3>
       </div>
       <Menu
-        defaultSelectedKeys={[""]}
+        defaultSelectedKeys={[pathname]}
         mode="inline"
         theme="light"
         items={items}
