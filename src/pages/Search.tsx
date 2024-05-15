@@ -8,6 +8,7 @@ import ArtistCards from "./components/ArtistCards";
 import TrackCards from "./components/TrackCards";
 import AlbumCards from "./components/AlbumCards";
 import PlaylistCards from "./components/PlaylistCards";
+import { TbDatabaseSearch } from "react-icons/tb";
 
 const Search = () => {
   const navigate = useNavigate();
@@ -56,7 +57,7 @@ const Search = () => {
           onChange={(e) => setQuery(e.target.value)}
         />
       </form>
-      {query && (
+      {query ? (
         <div className="mt-4 grid gap-2">
           <ArtistCards
             data={data?.artists?.items}
@@ -74,6 +75,11 @@ const Search = () => {
             data={data?.playlists?.items}
             loading={isLoading || isFetching}
           />
+        </div>
+      ) : (
+        <div className="flex flex-col justify-center items-center mt-4 p-8 w-full h-80 gap-4 text-grey">
+          <TbDatabaseSearch size={40} />
+          <h2>Search Strym.</h2>
         </div>
       )}
     </div>
