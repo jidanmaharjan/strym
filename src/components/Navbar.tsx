@@ -1,34 +1,16 @@
-import { Avatar, Input } from "antd";
+import { Avatar } from "antd";
 import { CiSettings } from "react-icons/ci";
-import { FiSearch } from "react-icons/fi";
 import { IoIosNotificationsOutline } from "react-icons/io";
 import { MdDarkMode, MdLightMode } from "react-icons/md";
-import { useNavigate } from "react-router-dom";
 import { useTheme } from "../context/ThemeContext";
 
 const Navbar = () => {
-  const { search, setSearch, theme, toggleTheme } = useTheme();
-  const navigate = useNavigate();
+  const { theme, toggleTheme } = useTheme();
 
   return (
     <div
-      className={`w-full flex gap-4 p-4 shadow-sm bg-white sticky top-0 z-40`}
+      className={`w-full flex justify-end gap-4 p-4 shadow-sm bg-white sticky top-0 z-40`}
     >
-      <form
-        className="flex-grow flex justify-center"
-        onSubmit={(e) => {
-          e.preventDefault();
-          navigate("/");
-        }}
-      >
-        <Input
-          prefix={<FiSearch size={20} className="text-gray0" />}
-          placeholder="Search"
-          className="rounded-full"
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-        />
-      </form>
       <div className="flex gap-4 items-center w-fit">
         {/* <Switch
       checkedChildren={<FiMoon size={20} />}

@@ -1,6 +1,6 @@
 import { Menu, MenuProps } from "antd";
 import { BiVolumeFull } from "react-icons/bi";
-import { FiMusic } from "react-icons/fi";
+import { FiMusic, FiSearch } from "react-icons/fi";
 import { IoHeartOutline } from "react-icons/io5";
 import { LuLibrary } from "react-icons/lu";
 import { MdOutlineAddBox } from "react-icons/md";
@@ -14,6 +14,7 @@ const Sidebar = () => {
 
   const items: MenuItem[] = [
     { key: "/", icon: <FiMusic />, label: "Home" },
+    { key: "/search", icon: <FiSearch />, label: "Search" },
     { key: "/genre", icon: <BiVolumeFull />, label: "Genre" },
     { key: "/library", icon: <LuLibrary />, label: "Library" },
     { type: "divider" },

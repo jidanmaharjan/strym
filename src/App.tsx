@@ -10,6 +10,7 @@ import Player from "./components/Player";
 import Genre from "./pages/Genre";
 import Library from "./pages/Library";
 import Favourites from "./pages/Favourites";
+import Search from "./pages/Search";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
         <Navbar />
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/search" element={<Search />} />
           <Route path="/genre" element={<Genre />} />
           <Route path="/library" element={<Library />} />
           <Route path="/favourites" element={<Favourites />} />

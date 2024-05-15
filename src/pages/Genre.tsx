@@ -61,7 +61,7 @@ const Genre = () => {
         }}
         size="small"
         columns={columns}
-        dataSource={genres.genres}
+        dataSource={genres?.genres}
       />
     </div>
   );
