@@ -55,12 +55,14 @@ const Search = () => {
           onChange={(e) => setQuery(e.target.value)}
         />
       </form>
-      <div className="mt-4">
-        <ArtistCards
-          data={data?.artists?.items}
-          loading={isLoading || isFetching}
-        />
-      </div>
+      {query && (
+        <div className="mt-4">
+          <ArtistCards
+            data={data?.artists?.items}
+            loading={isLoading || isFetching}
+          />
+        </div>
+      )}
     </div>
   );
 };

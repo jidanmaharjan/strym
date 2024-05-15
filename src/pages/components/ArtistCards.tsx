@@ -4,6 +4,8 @@ import { IoHeartOutline } from "react-icons/io5";
 import { TbMusicSearch } from "react-icons/tb";
 import Loader from "../../components/Loader";
 import { getRandomColorPair } from "../../constants/helpers";
+import { LuUsers2 } from "react-icons/lu";
+import { useNavigate } from "react-router-dom";
 
 type ArtistSingleType = {
   external_urls: {
@@ -33,6 +35,7 @@ interface ArtistCardsProps {
 }
 const ArtistCards = (props: ArtistCardsProps) => {
   const { data, loading } = props;
+  const navigate = useNavigate();
 
   if (loading) {
     return <Loader />;
@@ -45,24 +48,34 @@ const ArtistCards = (props: ArtistCardsProps) => {
         {data?.map((item) => (
           <Card
             key={item.id}
-            style={{ width: 300 }}
+            className="w-60"
             cover={
               <img
-                alt="example"
-                src={item.images?.[1]?.url}
-                className="min-w-60 h-40 object-cover"
+                alt={item.name}
+                src={item.images?.[1]?.url || item.images?.[0]?.url}
+                className="min-w-60 max-w-60 h-40 object-cover"
               />
             }
             actions={[
-              <TbMusicSearch key="tracks" />,
+              <TbMusicSearch
+                key="tracks"
+                onClick={() => navigate(`/artist/${item.id}`)}
+              />,
               // <LiaMicrophoneAltSolid key="artists" />,
               <IoHeartOutline key="favourite" />,
             ]}
           >
+            <div className="absolute top-0 left-2 font-semibold bg-primary p-2 w-8 h-8 grid place-content-center text-white rounded-b-md">
+              {item.popularity}
+            </div>
             <Meta
               title={item.name}
               description={
-                <div className="flex gap-2 flex-grow">
+                <div className="flex flex-col gap-2 flex-grow">
+                  <div className="flex gap-2 items-center">
+                    <LuUsers2 />
+                    <p>{item.followers?.total}</p>
+                  </div>
                   <div className="flex gap-2 overflow-x-scroll hide-scrollbar">
                     {item.genres.map((genre) => {
                       const color = getRandomColorPair();
