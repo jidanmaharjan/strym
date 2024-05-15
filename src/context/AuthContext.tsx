@@ -8,6 +8,7 @@ import {
 import { useMutation } from "react-query";
 import { useNavigate } from "react-router-dom";
 import { callAxios } from "../hooks/useAxios";
+import axios from "axios";
 
 type ContextType = {
   isAuthenticated: boolean;
@@ -23,7 +24,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   const fetchToken = useMutation(
     () =>
-      callAxios({
+      axios({
         url: "https://accounts.spotify.com/api/token",
         method: "post",
         headers: {
@@ -34,13 +35,12 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
           client_id: import.meta.env.VITE_SPOTIFY_CLIENT_KEY,
           client_secret: import.meta.env.VITE_SPOTIFY_SECRET_KEY,
         },
-        isAuth: true
       }),
     {
       onSuccess: (res) => {
-        localStorage.setItem("ACCESS_TOKEN", res.access_token);
+        localStorage.setItem("ACCESS_TOKEN", res.data?.access_token);
         setIsAuthenticated(true);
-        window.location.reload()
+        window.location.reload();
       },
       onError: () => {
         navigate("/connection-error");
