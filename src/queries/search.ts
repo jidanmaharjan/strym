@@ -1,7 +1,8 @@
 import { callAxios } from "../hooks/useAxios";
 
-export const getGenres = () =>
+export const searchSpotfy = (params: any) =>
   callAxios({
     method: "GET",
-    url: `recommendations/available-genre-seeds`,
+    url: `search`,
+    params,
   });

@@ -1,5 +1,5 @@
 import { Input } from "antd";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FiSearch } from "react-icons/fi";
 import { useNavigate, useSearchParams } from "react-router-dom";
 
@@ -7,13 +7,20 @@ const Search = () => {
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
   const [query, setQuery] = useState(searchParams.get("q") || "");
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      console.log("search called");
+    }, 700);
+    return () => clearTimeout(timer);
+  }, [query]);
+
   return (
     <div className="p-4">
       <form
         className="flex-grow flex justify-center"
         onSubmit={(e) => {
           e.preventDefault();
-          navigate("/");
         }}
       >
         <Input
