@@ -1,21 +1,18 @@
 import { Card, Tag } from "antd";
 import Meta from "antd/es/card/Meta";
 import { IoHeartOutline } from "react-icons/io5";
-import { TbMusicSearch } from "react-icons/tb";
+import { TbMusic, TbMusicSearch } from "react-icons/tb";
 import Loader from "../../components/Loader";
 import { getRandomColorPair } from "../../constants/helpers";
-import { LuUsers2 } from "react-icons/lu";
+import { LuUser, LuUsers2 } from "react-icons/lu";
 import { Link, useNavigate } from "react-router-dom";
 
-type ArtistSingleType = {
+type PlaylistSingleType = {
+  collaborative: boolean;
+  description: string;
   external_urls: {
     spotify: string;
   };
-  followers: {
-    href: any;
-    total: number;
-  };
-  genres: Array<string>;
   href: string;
   id: string;
   images: Array<{
@@ -24,16 +21,32 @@ type ArtistSingleType = {
     width: number;
   }>;
   name: string;
-  popularity: number;
+  owner: {
+    display_name: string;
+    external_urls: {
+      spotify: string;
+    };
+    href: string;
+    id: string;
+    type: string;
+    uri: string;
+  };
+  primary_color: any;
+  public: any;
+  snapshot_id: string;
+  tracks: {
+    href: string;
+    total: number;
+  };
   type: string;
   uri: string;
 };
 
-interface ArtistCardsProps {
-  data: ArtistSingleType[];
+interface PlaylistCardsProps {
+  data: PlaylistSingleType[];
   loading: boolean;
 }
-const ArtistCards = (props: ArtistCardsProps) => {
+const PlaylistCards = (props: PlaylistCardsProps) => {
   const { data, loading } = props;
   const navigate = useNavigate();
 
@@ -43,7 +56,7 @@ const ArtistCards = (props: ArtistCardsProps) => {
 
   return (
     <>
-      <h3 className="font-semibold">Artists</h3>
+      <h3 className="font-semibold">Playlists</h3>
       <div className="flex gap-4 w-full overflow-x-scroll hide-scrollbar snap-x snap-mandatory">
         {data?.map((item) => (
           <Card
@@ -59,35 +72,25 @@ const ArtistCards = (props: ArtistCardsProps) => {
             actions={[
               <TbMusicSearch
                 key="tracks"
-                onClick={() => navigate(`/artist/${item.id}`)}
+                onClick={() => navigate(`/playlist/${item.id}`)}
               />,
-              // <LiaMicrophoneAltSolid key="artists" />,
+              // <LiaMicrophoneAltSolid key="playlists" />,
               <IoHeartOutline key="favourite" />,
             ]}
           >
-            <div className="absolute top-0 left-2 font-semibold bg-primary p-2 w-8 h-8 grid place-content-center text-white rounded-b-md">
-              {item.popularity}
-            </div>
             <Meta
-              title={<Link to={`/artist/${item.id}`}>{item.name}</Link>}
+              title={<Link to={`/playlist/${item.id}`}>{item.name}</Link>}
               description={
                 <div className="flex flex-col gap-2 flex-grow">
                   <div className="flex gap-2 items-center">
-                    <LuUsers2 />
-                    <p>{item.followers?.total}</p>
+                    <LuUser />
+                    <p className="overflow-x-scroll whitespace-nowrap hide-scrollbar">
+                      {item.owner?.display_name}
+                    </p>
                   </div>
-                  <div className="flex gap-2 overflow-x-scroll hide-scrollbar">
-                    {item.genres.map((genre) => {
-                      const color = getRandomColorPair();
-                      return (
-                        <Tag key={genre} color={color.primaryColor}>
-                          {genre}
-                        </Tag>
-                      );
-                    })}
-                    {item.genres.length === 0 && (
-                      <Tag color="default">No genres</Tag>
-                    )}
+                  <div className="flex gap-2 items-center">
+                    <TbMusic />
+                    <p>{item.tracks?.total}</p>
                   </div>
                 </div>
               }
@@ -99,4 +102,4 @@ const ArtistCards = (props: ArtistCardsProps) => {
   );
 };
 
-export default ArtistCards;
+export default PlaylistCards;

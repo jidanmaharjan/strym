@@ -5,6 +5,9 @@ import { useQuery } from "react-query";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { searchSpotfy } from "../queries/search";
 import ArtistCards from "./components/ArtistCards";
+import TrackCards from "./components/TrackCards";
+import AlbumCards from "./components/AlbumCards";
+import PlaylistCards from "./components/PlaylistCards";
 
 const Search = () => {
   const navigate = useNavigate();
@@ -37,12 +40,10 @@ const Search = () => {
     return () => clearTimeout(timer);
   }, [query]);
 
-  console.log(data);
-
   return (
     <div className="p-4">
       <form
-        className="flex-grow flex justify-center"
+        className="flex-grow flex justify-center sticky top-20 z-40"
         onSubmit={(e) => {
           e.preventDefault();
         }}
@@ -56,9 +57,21 @@ const Search = () => {
         />
       </form>
       {query && (
-        <div className="mt-4">
+        <div className="mt-4 grid gap-2">
           <ArtistCards
             data={data?.artists?.items}
+            loading={isLoading || isFetching}
+          />
+          <AlbumCards
+            data={data?.albums?.items}
+            loading={isLoading || isFetching}
+          />
+          <TrackCards
+            data={data?.tracks?.items}
+            loading={isLoading || isFetching}
+          />
+          <PlaylistCards
+            data={data?.playlists?.items}
             loading={isLoading || isFetching}
           />
         </div>
