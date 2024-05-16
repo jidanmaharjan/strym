@@ -70,7 +70,7 @@ const Featured = (props: FeaturedProps) => {
                   {item.name}
                 </Link>
                 <h3 className="text-white text-lg font-semibold">
-                  {item.artists.map((a) => a.name)?.join(",")}
+                  {item.artists.map((a) => a.name)?.join(", ")}
                 </h3>
                 <div className="mt-4 flex items-center gap-4">
                   <Button
