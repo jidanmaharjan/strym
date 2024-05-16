@@ -1,14 +1,12 @@
+import { TbDatabaseSearch } from "react-icons/tb";
 import { useQuery } from "react-query";
 import {
   getMultipleAlbums,
   getMultipleArtists,
-  getMultiplePlaylists,
   getMultipleTracks,
 } from "../queries/multidata";
-import { TbDatabaseSearch } from "react-icons/tb";
 import AlbumCards from "./components/AlbumCards";
 import ArtistCards from "./components/ArtistCards";
-import PlaylistCards from "./components/PlaylistCards";
 import TrackCards from "./components/TrackCards";
 
 const Library = () => {
@@ -21,17 +19,16 @@ const Library = () => {
   const favouriteTracks = JSON.parse(
     localStorage.getItem("favouriteTracks") || "[]"
   );
-  const favouritePlaylists = JSON.parse(
-    localStorage.getItem("favouritePlaylists") || "[]"
-  );
+  // const favouritePlaylists = JSON.parse(
+  //   localStorage.getItem("favouritePlaylists") || "[]"
+  // );
 
   const hasArtists = favouriteArtists.length > 0;
   const hasAlbums = favouriteAlbums.length > 0;
   const hasTracks = favouriteTracks.length > 0;
-  const hasPlaylists = favouritePlaylists.length > 0;
+  // const hasPlaylists = favouritePlaylists.length > 0;
 
-  const atLeastOneFavourite =
-    hasArtists || hasAlbums || hasTracks || hasPlaylists;
+  const atLeastOneFavourite = hasArtists || hasAlbums || hasTracks;
 
   const { data: artistData, isFetching: artistFetching } = useQuery(
     ["selectedArtists"],

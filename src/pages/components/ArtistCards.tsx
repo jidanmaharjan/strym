@@ -70,16 +70,16 @@ const ArtistCards = (props: ArtistCardsProps) => {
                 className="text-primary cursor-pointer text-lg"
                 key="favourite"
                 onClick={() => {
+                  let newFav = null;
                   if (favouriteArtists.includes(item.id)) {
-                    setFavouriteArtists(
-                      favouriteArtists.filter((id) => id !== item.id)
-                    );
+                    newFav = favouriteArtists.filter((id) => id !== item.id);
                   } else {
-                    setFavouriteArtists([...favouriteArtists, item.id]);
+                    newFav = [...favouriteArtists, item.id];
                   }
+                  setFavouriteArtists(newFav);
                   localStorage.setItem(
                     "favouriteArtists",
-                    JSON.stringify([...favouriteArtists, item.id])
+                    JSON.stringify(newFav)
                   );
                 }}
               >

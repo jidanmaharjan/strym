@@ -81,16 +81,16 @@ const AlbumCards = (props: AlbumCardsProps) => {
                     className="text-primary cursor-pointer text-lg"
                     key="favourite"
                     onClick={() => {
+                      let newFav = null;
                       if (favouriteAlbums.includes(item.id)) {
-                        setFavouriteAlbums(
-                          favouriteAlbums.filter((id) => id !== item.id)
-                        );
+                        newFav = favouriteAlbums.filter((id) => id !== item.id);
                       } else {
-                        setFavouriteAlbums([...favouriteAlbums, item.id]);
+                        newFav = [...favouriteAlbums, item.id];
                       }
+                      setFavouriteAlbums(newFav);
                       localStorage.setItem(
                         "favouriteAlbums",
-                        JSON.stringify([...favouriteAlbums, item.id])
+                        JSON.stringify(newFav)
                       );
                     }}
                   >
