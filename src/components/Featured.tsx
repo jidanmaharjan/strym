@@ -1,9 +1,30 @@
 import { Button, Carousel } from "antd";
 import { FaHeadphonesSimple } from "react-icons/fa6";
-import { IoHeartOutline } from "react-icons/io5";
+import { IoHeart, IoHeartOutline } from "react-icons/io5";
 import { getRandomColorPair } from "../constants/helpers";
+import { TrackSingleType } from "../pages/components/TrackCards";
+import Loader from "./Loader";
+import { useState } from "react";
 
-const Featured = () => {
+interface FeaturedProps {
+  data: TrackSingleType[];
+  loading: boolean;
+}
+
+const Featured = (props: FeaturedProps) => {
+  const { data, loading } = props;
+
+  const [favouriteTracks, setFavouriteTracks] = useState<string[]>(
+    JSON.parse(localStorage.getItem("favouriteTracks") || "[]")
+  );
+
+  if (loading) {
+    return (
+      <div className="h-80 flex rounded-lg mb-4 overflow-clip">
+        <Loader type="lg" />
+      </div>
+    );
+  }
   return (
     <Carousel
       autoplay
@@ -16,19 +37,23 @@ const Featured = () => {
       fade
       className="mb-4 rounded-lg overflow-clip"
     >
-      {[1, 2, 3, 4].map((item) => {
+      {data.map((item) => {
         const randomColor = getRandomColorPair();
 
         return (
-          <div key={item}>
+          <div key={item.id} className="shadow-sm">
             <div
               style={{ background: randomColor.primaryColor }}
-              className="w-full h-80 flex justify-between rounded-lg overflow-clip"
+              className="w-full h-80 flex justify-between shadow-sm rounded-lg overflow-clip"
             >
               <div className="p-12 flex flex-col justify-center">
-                <p className="text-gray-100 mb-6">Personally Selected</p>
-                <h2 className="text-white text-6xl font-bold mb-2">Title</h2>
-                <h3 className="text-white text-lg font-semibold">Artist</h3>
+                <p className="text-gray-100 mb-6">{item.album.album_type}</p>
+                <h2 className="text-white text-6xl font-bold mb-2">
+                  {item.name}
+                </h2>
+                <h3 className="text-white text-lg font-semibold">
+                  {item.artists.map((a) => a.name)?.join(",")}
+                </h3>
                 <div className="mt-4 flex items-center gap-4">
                   <Button
                     icon={<FaHeadphonesSimple />}
@@ -40,14 +65,33 @@ const Featured = () => {
                   <Button
                     className=" bg-background/30 text-white"
                     shape="circle"
-                    icon={<IoHeartOutline />}
+                    icon={
+                      favouriteTracks.includes(item.id) ? (
+                        <IoHeart className="text-primary" />
+                      ) : (
+                        <IoHeartOutline />
+                      )
+                    }
+                    onClick={() => {
+                      let newFav = null;
+                      if (favouriteTracks.includes(item.id)) {
+                        newFav = favouriteTracks.filter((id) => id !== item.id);
+                      } else {
+                        newFav = [...favouriteTracks, item.id];
+                      }
+                      setFavouriteTracks(newFav);
+                      localStorage.setItem(
+                        "favouriteTracks",
+                        JSON.stringify(newFav)
+                      );
+                    }}
                   ></Button>
                 </div>
               </div>
               <div>
                 <img
-                  src="https://source.unsplash.com/random/800x600"
-                  alt="cover"
+                  src={item.album.images?.[0]?.url}
+                  alt={item.name}
                   className="h-full w-full object-cover "
                 />
               </div>

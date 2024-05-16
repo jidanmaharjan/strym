@@ -8,7 +8,7 @@ import Loader from "../../components/Loader";
 import { getRandomColorPair } from "../../constants/helpers";
 import { useState } from "react";
 
-type TrackSingleType = {
+export type TrackSingleType = {
   album: {
     album_type: string;
     artists: Array<{
