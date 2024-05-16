@@ -5,6 +5,7 @@ import { getRandomColorPair } from "../constants/helpers";
 import { TrackSingleType } from "../pages/components/TrackCards";
 import Loader from "./Loader";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 interface FeaturedProps {
   data: TrackSingleType[];
@@ -56,10 +57,18 @@ const Featured = (props: FeaturedProps) => {
               className="w-full h-80 flex justify-between shadow-sm rounded-lg overflow-clip"
             >
               <div className="p-12 flex flex-col justify-center">
-                <p className="text-gray-100 mb-6">{item.album.album_type}</p>
-                <h2 className="text-white text-6xl font-bold mb-2">
+                <Link
+                  to={`/album/${item.album.id}`}
+                  className="text-gray-100 mb-6"
+                >
+                  {item.album.name} - {item.album.album_type}
+                </Link>
+                <Link
+                  to={`/track/${item.id}`}
+                  className="text-white text-6xl font-bold mb-2"
+                >
                   {item.name}
-                </h2>
+                </Link>
                 <h3 className="text-white text-lg font-semibold">
                   {item.artists.map((a) => a.name)?.join(",")}
                 </h3>
