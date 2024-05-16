@@ -5,12 +5,14 @@ import { IoHeart, IoHeartOutline } from "react-icons/io5";
 import { FiMusic } from "react-icons/fi";
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import Search from "antd/es/input/Search";
 interface DataType {
   key: React.Key;
   name: string;
 }
 
 const Genre = () => {
+  const [query, setQuery] = useState<string>("");
   const {
     data: genres,
     isLoading: genresLoading,
@@ -76,10 +78,15 @@ const Genre = () => {
 
   return (
     <div className="p-4 grid gap-4">
-      <h3 className="font-semibold ">Genres</h3>
+      <Search
+        placeholder="Search for genre"
+        value={query}
+        onChange={(e) => setQuery(e.target.value)}
+      />
 
       <Table
         sticky
+        bordered
         loading={genresLoading || genresFetching}
         rowSelection={{
           type: "checkbox",
