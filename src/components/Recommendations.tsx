@@ -42,18 +42,6 @@ const Recommendations = () => {
       },
     })
   );
-  console.log(
-    [
-      ...defaultSeedArtists,
-      ...storedSeedArtists.slice(
-        random(
-          0,
-          storedSeedArtists.length > 2 ? storedSeedArtists.length - 2 : 0
-        ),
-        2
-      ),
-    ].join(",")
-  );
 
   return <Featured data={data?.tracks} loading={isFetching} />;
 };

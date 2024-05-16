@@ -1,9 +1,10 @@
 import { useQuery } from "react-query";
 import { getGenres } from "../queries/genre";
 import { Button, Table, TableColumnsType } from "antd";
-import { IoHeartOutline } from "react-icons/io5";
+import { IoHeart, IoHeartOutline } from "react-icons/io5";
 import { FiMusic } from "react-icons/fi";
 import { Link } from "react-router-dom";
+import { useState } from "react";
 interface DataType {
   key: React.Key;
   name: string;
@@ -15,7 +16,10 @@ const Genre = () => {
     isLoading: genresLoading,
     isFetching: genresFetching,
   } = useQuery(["genres"], () => getGenres());
-  console.log(genres);
+
+  const [favouriteGenres, setFavouriteGenres] = useState<string[]>(
+    JSON.parse(localStorage.getItem("favouriteGenres") || "[]")
+  );
 
   const columns: TableColumnsType<DataType> = [
     {
@@ -26,9 +30,30 @@ const Genre = () => {
     {
       title: "Action",
       dataIndex: "",
-      render: (text: string) => (
+      render: (item: string) => (
         <div>
-          <Button type="text" icon={<IoHeartOutline size={20} />} />
+          <Button
+            type="text"
+            onClick={() => {
+              let newFav = null;
+              if (favouriteGenres.includes(item)) {
+                newFav = favouriteGenres.filter(
+                  (genre: string) => genre !== item
+                );
+              } else {
+                newFav = [...favouriteGenres, item];
+              }
+              setFavouriteGenres(newFav);
+              localStorage.setItem("favouriteGenres", JSON.stringify(newFav));
+            }}
+            icon={
+              favouriteGenres.includes(item) ? (
+                <IoHeart size={20} />
+              ) : (
+                <IoHeartOutline size={20} />
+              )
+            }
+          />
           <Button type="text" icon={<FiMusic size={20} />} />
         </div>
       ),
@@ -55,6 +80,7 @@ const Genre = () => {
 
       <Table
         sticky
+        loading={genresLoading || genresFetching}
         rowSelection={{
           type: "checkbox",
           ...rowSelection,

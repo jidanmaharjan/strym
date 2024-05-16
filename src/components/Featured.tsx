@@ -65,6 +65,7 @@ const Featured = (props: FeaturedProps) => {
                 </h3>
                 <div className="mt-4 flex items-center gap-4">
                   <Button
+                    disabled={!item.preview_url}
                     icon={<FaHeadphonesSimple />}
                     type="primary"
                     className="rounded-full"
