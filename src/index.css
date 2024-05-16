@@ -19,3 +19,23 @@
   scrollbar-width: none;
   -ms-overflow-style: none;
 }
+
+/* width */
+::-webkit-scrollbar {
+  width: 7px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f3f3f3;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #8d7ab4;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #7c5daf;
+}
