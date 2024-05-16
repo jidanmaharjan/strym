@@ -1,18 +1,17 @@
-import { useQuery } from "react-query";
-import { getGenres } from "../queries/genre";
 import { Button, Table, TableColumnsType } from "antd";
-import { IoHeart, IoHeartOutline } from "react-icons/io5";
-import { FiMusic } from "react-icons/fi";
-import { Link } from "react-router-dom";
-import { useState } from "react";
 import Search from "antd/es/input/Search";
+import { useState } from "react";
+import { IoHeart, IoHeartOutline } from "react-icons/io5";
+import { useQuery } from "react-query";
+import { Link } from "react-router-dom";
+import useFuse from "../hooks/useFuse";
+import { getGenres } from "../queries/genre";
 interface DataType {
   key: React.Key;
   name: string;
 }
 
 const Genre = () => {
-  const [query, setQuery] = useState<string>("");
   const {
     data: genres,
     isLoading: genresLoading,
@@ -23,11 +22,16 @@ const Genre = () => {
     JSON.parse(localStorage.getItem("favouriteGenres") || "[]")
   );
 
+  const { query, setQuery, results } = useFuse({
+    data: genres?.genres?.map((genre: string) => ({ item: genre })) || [],
+    keys: ["item"],
+  });
+
   const columns: TableColumnsType<DataType> = [
     {
       title: "Genre",
       dataIndex: "",
-      render: (text: string) => <Link to={text}>{text}</Link>,
+      render: (text) => text,
     },
     {
       title: "Action",
@@ -94,7 +98,7 @@ const Genre = () => {
         }}
         size="small"
         columns={columns}
-        dataSource={genres?.genres}
+        dataSource={results.map((a: { item: string }) => a.item)}
       />
     </div>
   );
