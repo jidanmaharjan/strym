@@ -54,7 +54,7 @@ const Genre = () => {
               )
             }
           />
-          <Button type="text" icon={<FiMusic size={20} />} />
+          {/* <Button type="text" icon={<FiMusic size={20} />} /> */}
         </div>
       ),
     },
