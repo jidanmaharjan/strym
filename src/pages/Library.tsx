@@ -1,4 +1,4 @@
-import { TbDatabaseSearch } from "react-icons/tb";
+import { TbDatabaseSearch, TbHeartSearch } from "react-icons/tb";
 import { useQuery } from "react-query";
 import {
   getMultipleAlbums,
@@ -8,6 +8,8 @@ import {
 import AlbumCards from "./components/AlbumCards";
 import ArtistCards from "./components/ArtistCards";
 import TrackCards from "./components/TrackCards";
+import { FloatButton } from "antd";
+import { RiRefreshLine } from "react-icons/ri";
 
 const Library = () => {
   const favouriteArtists = JSON.parse(
@@ -30,7 +32,11 @@ const Library = () => {
 
   const atLeastOneFavourite = hasArtists || hasAlbums || hasTracks;
 
-  const { data: artistData, isFetching: artistFetching } = useQuery(
+  const {
+    data: artistData,
+    isFetching: artistFetching,
+    ...artistResult
+  } = useQuery(
     ["selectedArtists"],
     () => getMultipleArtists(favouriteArtists.join(",")),
     {
@@ -40,7 +46,11 @@ const Library = () => {
     }
   );
 
-  const { data: albumData, isFetching: albumFetching } = useQuery(
+  const {
+    data: albumData,
+    isFetching: albumFetching,
+    ...albumResult
+  } = useQuery(
     ["selectedAlbums"],
     () => getMultipleAlbums(favouriteAlbums.join(",")),
     {
@@ -49,7 +59,11 @@ const Library = () => {
       refetchOnMount: false,
     }
   );
-  const { data: trackData, isFetching: trackFetching } = useQuery(
+  const {
+    data: trackData,
+    isFetching: trackFetching,
+    ...tracksResult
+  } = useQuery(
     ["selectedTracks"],
     () => getMultipleTracks(favouriteTracks.join(",")),
     {
@@ -58,6 +72,18 @@ const Library = () => {
       refetchOnMount: false,
     }
   );
+
+  const refreshData = () => {
+    if (hasArtists) {
+      artistResult.refetch();
+    }
+    if (hasAlbums) {
+      albumResult.refetch();
+    }
+    if (hasTracks) {
+      tracksResult.refetch();
+    }
+  };
   // const { data: playlistData, isFetching: playlistFetching } = useQuery(
   //   ["selectedPlaylists"],
   //   () => getMultiplePlaylists(favouritePlaylists.join(",")),
@@ -69,6 +95,11 @@ const Library = () => {
   // );
   return (
     <div className="p-4">
+      <FloatButton
+        onClick={refreshData}
+        className="mb-12"
+        icon={<RiRefreshLine />}
+      />
       {atLeastOneFavourite ? (
         <div className="mt-4 grid gap-2">
           {hasArtists && (
@@ -85,9 +116,9 @@ const Library = () => {
           )} */}
         </div>
       ) : (
-        <div className="flex flex-col justify-center items-center mt-4 p-8 w-full h-80 gap-4 text-grey">
-          <TbDatabaseSearch size={40} />
-          <h2>Search Strym.</h2>
+        <div className="flex flex-col justify-center items-center mt-4 p-8 w-full h-[calc(100vh-20rem)] gap-4 text-grey">
+          <TbHeartSearch size={40} />
+          <h2>Couldn't find your data. Try adding some.</h2>
         </div>
       )}
     </div>
