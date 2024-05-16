@@ -25,6 +25,7 @@ const Recommendations = () => {
           storedSeedGenres.length > 0
             ? storedSeedGenres?.slice(2).join(",")
             : defaultSeedGenres.join(","),
+        include_external: "audio",
       },
     })
   );
