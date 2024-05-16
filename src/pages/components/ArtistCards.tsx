@@ -1,11 +1,12 @@
 import { Card, Tag } from "antd";
 import Meta from "antd/es/card/Meta";
-import { IoHeartOutline } from "react-icons/io5";
+import { IoHeart, IoHeartOutline } from "react-icons/io5";
 import { TbMusicSearch } from "react-icons/tb";
 import Loader from "../../components/Loader";
 import { getRandomColorPair } from "../../constants/helpers";
 import { LuUsers2 } from "react-icons/lu";
 import { Link, useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 type ArtistSingleType = {
   external_urls: {
@@ -35,6 +36,9 @@ interface ArtistCardsProps {
 }
 const ArtistCards = (props: ArtistCardsProps) => {
   const { data, loading } = props;
+  const [favouriteArtists, setFavouriteArtists] = useState<string[]>(
+    JSON.parse(localStorage.getItem("favouriteArtists") || "[]")
+  );
   const navigate = useNavigate();
 
   if (loading) {
@@ -62,7 +66,29 @@ const ArtistCards = (props: ArtistCardsProps) => {
                 onClick={() => navigate(`/artist/${item.id}`)}
               />,
               // <LiaMicrophoneAltSolid key="artists" />,
-              <IoHeartOutline key="favourite" />,
+              <div
+                className="text-primary cursor-pointer text-lg"
+                key="favourite"
+                onClick={() => {
+                  if (favouriteArtists.includes(item.id)) {
+                    setFavouriteArtists(
+                      favouriteArtists.filter((id) => id !== item.id)
+                    );
+                  } else {
+                    setFavouriteArtists([...favouriteArtists, item.id]);
+                  }
+                  localStorage.setItem(
+                    "favouriteArtists",
+                    JSON.stringify([...favouriteArtists, item.id])
+                  );
+                }}
+              >
+                {favouriteArtists.includes(item.id) ? (
+                  <IoHeart />
+                ) : (
+                  <IoHeartOutline />
+                )}
+              </div>,
             ]}
           >
             <div className="absolute top-0 left-2 font-semibold bg-primary p-2 w-8 h-8 grid place-content-center text-white rounded-b-md">

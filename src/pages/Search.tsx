@@ -1,14 +1,14 @@
 import { Button, Checkbox, Input, Modal } from "antd";
 import { useEffect, useState } from "react";
 import { FiSearch } from "react-icons/fi";
+import { TbDatabaseSearch, TbFilter } from "react-icons/tb";
 import { useQuery } from "react-query";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { searchSpotfy } from "../queries/search";
-import ArtistCards from "./components/ArtistCards";
-import TrackCards from "./components/TrackCards";
+import { searchSpotify } from "../queries/search";
 import AlbumCards from "./components/AlbumCards";
+import ArtistCards from "./components/ArtistCards";
 import PlaylistCards from "./components/PlaylistCards";
-import { TbDatabaseSearch, TbFilter } from "react-icons/tb";
+import TrackCards from "./components/TrackCards";
 
 const filterOptions = [
   { label: "Track", value: "track" },
@@ -33,7 +33,7 @@ const Search = () => {
   const { data, isLoading, isFetching, refetch } = useQuery(
     ["searchSpotify"],
     () =>
-      searchSpotfy({
+      searchSpotify({
         q: query,
         type: filters.join(","),
         limit: 10,

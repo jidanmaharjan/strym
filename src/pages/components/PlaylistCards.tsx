@@ -1,11 +1,12 @@
 import { Card, Tag } from "antd";
 import Meta from "antd/es/card/Meta";
-import { IoHeartOutline } from "react-icons/io5";
+import { IoHeart, IoHeartOutline } from "react-icons/io5";
 import { TbMusic, TbMusicSearch } from "react-icons/tb";
 import Loader from "../../components/Loader";
 import { getRandomColorPair } from "../../constants/helpers";
 import { LuUser, LuUsers2 } from "react-icons/lu";
 import { Link, useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 type PlaylistSingleType = {
   collaborative: boolean;
@@ -48,6 +49,9 @@ interface PlaylistCardsProps {
 }
 const PlaylistCards = (props: PlaylistCardsProps) => {
   const { data, loading } = props;
+  const [favouritePlaylists, setFavouritePlaylists] = useState<string[]>(
+    JSON.parse(localStorage.getItem("favouritePlaylists") || "[]")
+  );
   const navigate = useNavigate();
 
   if (loading) {
@@ -75,7 +79,29 @@ const PlaylistCards = (props: PlaylistCardsProps) => {
                 onClick={() => navigate(`/playlist/${item.id}`)}
               />,
               // <LiaMicrophoneAltSolid key="playlists" />,
-              <IoHeartOutline key="favourite" />,
+              <div
+                className="text-primary cursor-pointer text-lg"
+                key="favourite"
+                onClick={() => {
+                  if (favouritePlaylists.includes(item.id)) {
+                    setFavouritePlaylists(
+                      favouritePlaylists.filter((id) => id !== item.id)
+                    );
+                  } else {
+                    setFavouritePlaylists([...favouritePlaylists, item.id]);
+                  }
+                  localStorage.setItem(
+                    "favouritePlaylists",
+                    JSON.stringify([...favouritePlaylists, item.id])
+                  );
+                }}
+              >
+                {favouritePlaylists.includes(item.id) ? (
+                  <IoHeart />
+                ) : (
+                  <IoHeartOutline />
+                )}
+              </div>,
             ]}
           >
             <Meta

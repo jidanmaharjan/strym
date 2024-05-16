@@ -1,11 +1,12 @@
 import { Avatar, Card, Tooltip } from "antd";
 import Meta from "antd/es/card/Meta";
 import { BiAlbum } from "react-icons/bi";
-import { IoHeartOutline } from "react-icons/io5";
+import { IoHeart, IoHeartOutline } from "react-icons/io5";
 import { TbMusicSearch } from "react-icons/tb";
 import { Link, useNavigate } from "react-router-dom";
 import Loader from "../../components/Loader";
 import { getRandomColorPair } from "../../constants/helpers";
+import { useState } from "react";
 
 type TrackSingleType = {
   album: {
@@ -75,6 +76,9 @@ interface TrackCardsProps {
 }
 const TrackCards = (props: TrackCardsProps) => {
   const { data, loading } = props;
+  const [favouriteTracks, setFavouriteTracks] = useState<string[]>(
+    JSON.parse(localStorage.getItem("favouriteTracks") || "[]")
+  );
   const navigate = useNavigate();
 
   if (loading) {
@@ -102,7 +106,29 @@ const TrackCards = (props: TrackCardsProps) => {
                 onClick={() => navigate(`/track/${item.id}`)}
               />,
               // <LiaMicrophoneAltSolid key="tracks" />,
-              <IoHeartOutline key="favourite" />,
+              <div
+                className="text-primary cursor-pointer text-lg"
+                key="favourite"
+                onClick={() => {
+                  let newFav = null;
+                  if (favouriteTracks.includes(item.id)) {
+                    newFav = favouriteTracks.filter((id) => id !== item.id);
+                  } else {
+                    newFav = [...favouriteTracks, item.id];
+                  }
+                  setFavouriteTracks(newFav);
+                  localStorage.setItem(
+                    "favouriteTracks",
+                    JSON.stringify(newFav)
+                  );
+                }}
+              >
+                {favouriteTracks.includes(item.id) ? (
+                  <IoHeart />
+                ) : (
+                  <IoHeartOutline />
+                )}
+              </div>,
             ]}
           >
             <div className="absolute top-0 left-2 font-semibold bg-primary p-2 w-8 h-8 grid place-content-center text-white rounded-b-md">

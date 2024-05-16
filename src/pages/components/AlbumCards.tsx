@@ -1,11 +1,12 @@
 import { Avatar, Card, Tooltip } from "antd";
 import Meta from "antd/es/card/Meta";
 import { BiAlbum } from "react-icons/bi";
-import { IoAlbumsOutline, IoHeartOutline } from "react-icons/io5";
+import { IoAlbumsOutline, IoHeart, IoHeartOutline } from "react-icons/io5";
 import { TbMusicSearch } from "react-icons/tb";
 import { Link, useNavigate } from "react-router-dom";
 import Loader from "../../components/Loader";
 import { getRandomColorPair } from "../../constants/helpers";
+import { useState } from "react";
 
 type AlbumSingleType = {
   album_type: string;
@@ -44,6 +45,9 @@ interface AlbumCardsProps {
 }
 const AlbumCards = (props: AlbumCardsProps) => {
   const { data, loading } = props;
+  const [favouriteAlbums, setFavouriteAlbums] = useState<string[]>(
+    JSON.parse(localStorage.getItem("favouriteAlbums") || "[]")
+  );
   const navigate = useNavigate();
 
   if (loading) {
@@ -54,64 +58,89 @@ const AlbumCards = (props: AlbumCardsProps) => {
     <>
       <h3 className="font-semibold">Albums</h3>
       <div className="flex gap-4 w-full overflow-x-scroll hide-scrollbar snap-x snap-mandatory">
-        {data?.map((item) => (
-          <Card
-            key={item.id}
-            className="w-60"
-            cover={
-              <img
-                alt={item.name}
-                src={item.images?.[1]?.url || item.images?.[0]?.url}
-                className="min-w-60 max-w-60 h-40 object-cover"
-              />
-            }
-            actions={[
-              <TbMusicSearch
-                key="albums"
-                onClick={() => navigate(`/album/${item.id}`)}
-              />,
-              // <LiaMicrophoneAltSolid key="albums" />,
-              <IoHeartOutline key="favourite" />,
-            ]}
-          >
-            {/* <div className="absolute top-0 left-2 font-semibold bg-primary p-2 w-8 h-8 grid place-content-center text-white rounded-b-md">
+        {data?.map(
+          (item) =>
+            item && (
+              <Card
+                key={item.id}
+                className="w-60"
+                cover={
+                  <img
+                    alt={item.name}
+                    src={item.images?.[1]?.url || item.images?.[0]?.url}
+                    className="min-w-60 max-w-60 h-40 object-cover"
+                  />
+                }
+                actions={[
+                  <TbMusicSearch
+                    key="albums"
+                    onClick={() => navigate(`/album/${item.id}`)}
+                  />,
+                  // <LiaMicrophoneAltSolid key="albums" />,
+                  <div
+                    className="text-primary cursor-pointer text-lg"
+                    key="favourite"
+                    onClick={() => {
+                      if (favouriteAlbums.includes(item.id)) {
+                        setFavouriteAlbums(
+                          favouriteAlbums.filter((id) => id !== item.id)
+                        );
+                      } else {
+                        setFavouriteAlbums([...favouriteAlbums, item.id]);
+                      }
+                      localStorage.setItem(
+                        "favouriteAlbums",
+                        JSON.stringify([...favouriteAlbums, item.id])
+                      );
+                    }}
+                  >
+                    {favouriteAlbums.includes(item.id) ? (
+                      <IoHeart />
+                    ) : (
+                      <IoHeartOutline />
+                    )}
+                  </div>,
+                ]}
+              >
+                {/* <div className="absolute top-0 left-2 font-semibold bg-primary p-2 w-8 h-8 grid place-content-center text-white rounded-b-md">
               {item.popularity}
             </div> */}
-            <Meta
-              title={<Link to={`/album/${item.id}`}>{item.name}</Link>}
-              description={
-                <div className="flex flex-col gap-2 flex-grow">
-                  <div className="flex gap-2 items-center">
-                    <IoAlbumsOutline />
-                    <p className="overflow-x-scroll whitespace-nowrap hide-scrollbar">
-                      {item.album_type}
-                    </p>
-                  </div>
-                  <div className="flex gap-2 overflow-x-scroll hide-scrollbar">
-                    {item.artists.map((artist) => {
-                      const color = getRandomColorPair();
-                      return (
-                        <Tooltip key={artist.id} title={artist.name}>
-                          <Link to={`/artist/${artist.id}`}>
-                            <Avatar
-                              key={artist.id}
-                              style={{
-                                backgroundColor: color.secondaryColor,
-                                color: color.primaryColor,
-                              }}
-                            >
-                              {artist.name[0]}
-                            </Avatar>
-                          </Link>
-                        </Tooltip>
-                      );
-                    })}
-                  </div>
-                </div>
-              }
-            />
-          </Card>
-        ))}
+                <Meta
+                  title={<Link to={`/album/${item.id}`}>{item.name}</Link>}
+                  description={
+                    <div className="flex flex-col gap-2 flex-grow">
+                      <div className="flex gap-2 items-center">
+                        <IoAlbumsOutline />
+                        <p className="overflow-x-scroll whitespace-nowrap hide-scrollbar">
+                          {item.album_type}
+                        </p>
+                      </div>
+                      <div className="flex gap-2 overflow-x-scroll hide-scrollbar">
+                        {item.artists.map((artist) => {
+                          const color = getRandomColorPair();
+                          return (
+                            <Tooltip key={artist.id} title={artist.name}>
+                              <Link to={`/artist/${artist.id}`}>
+                                <Avatar
+                                  key={artist.id}
+                                  style={{
+                                    backgroundColor: color.secondaryColor,
+                                    color: color.primaryColor,
+                                  }}
+                                >
+                                  {artist.name[0]}
+                                </Avatar>
+                              </Link>
+                            </Tooltip>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  }
+                />
+              </Card>
+            )
+        )}
       </div>
     </>
   );
