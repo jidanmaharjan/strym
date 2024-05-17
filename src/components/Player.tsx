@@ -83,7 +83,7 @@ const Player = () => {
         </div>
       </div>
       <div>
-        <div className="flex items-center gap-4 w-80 justify-center">
+        <div className="flex items-center gap-4 w-[24rem] justify-center">
           <Button
             className=""
             onClick={() => {
@@ -160,8 +160,20 @@ const Player = () => {
             type="text"
           />
         </div>
-        <div>
-          <Slider tooltip={{ open: false }} autoFocus ref={sliderRef} />
+        <div className="flex items-center gap-4 ">
+          <p className="text-sm font-semibold text-fade">00:00</p>
+          <Slider
+            styles={{
+              track: {
+                backgroundColor: import.meta.env.VITE_LIGHT_COLOR,
+              },
+            }}
+            className="w-full"
+            tooltip={{ open: false }}
+            autoFocus
+            ref={sliderRef}
+          />
+          <p className="text-sm font-semibold text-fade">03:32</p>
         </div>
       </div>
       <div className="flex items-center h-fit gap-2">
@@ -211,6 +223,7 @@ const Player = () => {
           }
           type="text"
         />
+
         <Slider
           styles={{
             track: {
