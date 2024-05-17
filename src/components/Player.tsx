@@ -1,5 +1,6 @@
-import { Button } from "antd";
-import { getRandomColorPair } from "../constants/helpers";
+import { Button, Slider } from "antd";
+import { useEffect, useRef, useState } from "react";
+import { MdOutlineSkipNext, MdOutlineSkipPrevious } from "react-icons/md";
 import {
   TbArrowsShuffle,
   TbPlayerPause,
@@ -7,9 +8,7 @@ import {
   TbRepeat,
   TbRepeatOnce,
 } from "react-icons/tb";
-import { useState } from "react";
-import { IoPause, IoPlay, IoRepeat } from "react-icons/io5";
-import { MdOutlineSkipPrevious, MdOutlineSkipNext } from "react-icons/md";
+import { getRandomColorPair } from "../constants/helpers";
 
 const Player = () => {
   const color = getRandomColorPair();
@@ -19,6 +18,30 @@ const Player = () => {
     isRepeat: false,
     repeatOne: false,
   });
+  const sliderRef = useRef<any>();
+  const playPauseRef = useRef<any>();
+  useEffect(() => {
+    window.addEventListener("keydown", (e) => {
+      if (e.key === "ArrowRight" || e.key === "ArrowLeft") {
+        sliderRef.current.focus();
+        sliderRef.current.focus();
+      }
+      if (e.key === " ") {
+        if (!playPauseRef.current.hasFocus()) {
+          playPauseRef.current.click();
+        }
+        playPauseRef.current.focus();
+      }
+    });
+    return () => {
+      window.removeEventListener("keydown", (e) => {
+        if (e.key === "ArrowRight" || e.key === "ArrowLeft") {
+          sliderRef.current.focus();
+          sliderRef.current.focus();
+        }
+      });
+    };
+  }, []);
   return (
     <div
       //gradient background
@@ -28,12 +51,19 @@ const Player = () => {
       }}
       className={`w-full fixed bottom-0 h-24 z-[100] flex justify-between p-4 border-t-2 border-t-primary backdrop-filter backdrop-blur-lg bg-opacity-90 filterbackdrop`}
     >
-      <div>
-        <h2>Player</h2>
-        <p>Player 1</p>
+      <div className="ml-4">
+        <img
+          className="w-20 h-20 rounded-lg absolute top-0 -translate-y-4 shadow-md"
+          src="https://i.scdn.co/image/ab67616d0000b273acff57715feae966d794bb95"
+          alt=""
+        />
+        <div className="pl-24">
+          <h2 className="font-semibold">Maria</h2>
+          <p className="text-sm text-fade">Hwasa</p>
+        </div>
       </div>
       <div>
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-4 w-80 justify-center">
           <Button
             className=""
             onClick={() => {
@@ -64,6 +94,7 @@ const Player = () => {
                 isPlaying: !playerStates.isPlaying,
               });
             }}
+            ref={playPauseRef}
             icon={playerStates.isPlaying ? <TbPlayerPause /> : <TbPlayerPlay />}
             type="default"
           />
@@ -109,7 +140,9 @@ const Player = () => {
             type="text"
           />
         </div>
-        <div>visualizer</div>
+        <div>
+          <Slider tooltip={{ open: false }} autoFocus ref={sliderRef} />
+        </div>
       </div>
       <div>right icons</div>
     </div>
