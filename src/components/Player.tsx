@@ -26,13 +26,21 @@ const Player = () => {
         sliderRef.current.focus();
         sliderRef.current.focus();
       }
-      if (e.key === " ") {
-        if (!playPauseRef.current.hasFocus()) {
-          playPauseRef.current.click();
-        }
-        playPauseRef.current.focus();
-      }
     });
+    window.addEventListener(
+      "keydown",
+      (e) => {
+        if (e.key === " ") {
+          console.log(playPauseRef.current !== document.activeElement);
+
+          if (playPauseRef.current !== document.activeElement) {
+            playPauseRef.current.click();
+          }
+          playPauseRef.current.focus();
+        }
+      },
+      { once: true }
+    );
     return () => {
       window.removeEventListener("keydown", (e) => {
         if (e.key === "ArrowRight" || e.key === "ArrowLeft") {
