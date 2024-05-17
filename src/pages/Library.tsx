@@ -97,7 +97,7 @@ const Library = () => {
     <div className="p-4">
       <FloatButton
         onClick={refreshData}
-        className="mb-12"
+        className="mb-16"
         icon={<RiRefreshLine />}
       />
       {atLeastOneFavourite ? (
