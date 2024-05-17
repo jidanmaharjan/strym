@@ -21,7 +21,13 @@ const Player = () => {
   });
   return (
     <div
-      className={`w-full fixed bottom-0 h-24 z-[100] flex justify-between p-4 border-t-2 border-t-primary bg-gradient-to-r from-fade to-background`}
+      //gradient background
+      style={{
+        background: `linear-gradient(to right, ${color.primaryColor}, ${color.secondaryColor})`,
+        opacity: 0.9,
+        backdropFilter: "blur(20px)",
+      }}
+      className={`w-full fixed bottom-0 h-24 z-[100] flex justify-between p-4 border-t-2 border-t-primary bg-gradient-to-r from-[${color.primaryColor}] to-[${color.secondaryColor}] `}
     >
       <div>
         <h2>Player</h2>
@@ -80,7 +86,12 @@ const Player = () => {
                   setPlayerStates((prev) => ({
                     ...prev,
                     repeatOne: true,
-                    isRepeat: !playerStates.repeatOne,
+                  }));
+                } else {
+                  setPlayerStates((prev) => ({
+                    ...prev,
+                    repeatOne: false,
+                    isRepeat: true,
                   }));
                 }
               }
