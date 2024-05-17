@@ -36,7 +36,18 @@ const Player = () => {
         <div className="flex items-center gap-4">
           <Button
             className=""
-            icon={<TbArrowsShuffle size={20} />}
+            onClick={() => {
+              setPlayerStates({
+                ...playerStates,
+                isShuffled: !playerStates.isShuffled,
+              });
+            }}
+            icon={
+              <TbArrowsShuffle
+                className={`${playerStates.isShuffled && "text-light"}`}
+                size={20}
+              />
+            }
             type="text"
           />
           <Button
