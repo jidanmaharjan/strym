@@ -5,10 +5,15 @@ import {
   TbArrowsShuffle,
   TbPlayerPause,
   TbPlayerPlay,
+  TbPlaylist,
   TbRepeat,
   TbRepeatOnce,
+  TbVolume,
 } from "react-icons/tb";
 import { getRandomColorPair } from "../constants/helpers";
+import { BsFullscreen } from "react-icons/bs";
+import { CgMiniPlayer, CgToolbarBottom } from "react-icons/cg";
+import { PiDevices } from "react-icons/pi";
 
 const Player = () => {
   const color = getRandomColorPair();
@@ -17,9 +22,13 @@ const Player = () => {
     isShuffled: false,
     isRepeat: false,
     repeatOne: false,
+    fullscreen: false,
+    voulume: 100,
+    mute: false,
   });
   const sliderRef = useRef<any>();
   const playPauseRef = useRef<any>();
+  const volumeRef = useRef<any>();
   useEffect(() => {
     window.addEventListener("keydown", (e) => {
       if (e.key === "ArrowRight" || e.key === "ArrowLeft") {
@@ -152,7 +161,29 @@ const Player = () => {
           <Slider tooltip={{ open: false }} autoFocus ref={sliderRef} />
         </div>
       </div>
-      <div>right icons</div>
+      <div className="flex items-center h-fit gap-2">
+        <Button className="" icon={<TbPlaylist size={20} />} type="text" />
+        <Button
+          className=""
+          onClick={() => {
+            setPlayerStates({
+              ...playerStates,
+              fullscreen: !playerStates.fullscreen,
+            });
+          }}
+          icon={
+            playerStates.fullscreen ? (
+              <BsFullscreen />
+            ) : (
+              <CgToolbarBottom size={20} />
+            )
+          }
+          type="text"
+        />
+        <Button className="" icon={<PiDevices size={20} />} type="text" />
+        <Button className="" icon={<TbVolume size={20} />} type="text" />
+        <Slider className="w-20" tooltip={{ open: false }} ref={volumeRef} />
+      </div>
     </div>
   );
 };
