@@ -23,11 +23,10 @@ const Player = () => {
     <div
       //gradient background
       style={{
-        background: `linear-gradient(to right, ${color.primaryColor}, ${color.secondaryColor})`,
+        // background: `linear-gradient(to right, ${color.primaryColor}, ${color.secondaryColor})`,
         opacity: 0.9,
-        backdropFilter: "blur(20px)",
       }}
-      className={`w-full fixed bottom-0 h-24 z-[100] flex justify-between p-4 border-t-2 border-t-primary bg-gradient-to-r from-[${color.primaryColor}] to-[${color.secondaryColor}] `}
+      className={`w-full fixed bottom-0 h-24 z-[100] flex justify-between p-4 border-t-2 border-t-primary backdrop-filter backdrop-blur-lg bg-opacity-90 filterbackdrop`}
     >
       <div>
         <h2>Player</h2>
