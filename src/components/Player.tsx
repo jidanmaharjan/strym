@@ -1,6 +1,9 @@
 import { Button, Slider } from "antd";
 import { useEffect, useRef, useState } from "react";
+import { BsFullscreen } from "react-icons/bs";
+import { CgToolbarBottom } from "react-icons/cg";
 import { MdOutlineSkipNext, MdOutlineSkipPrevious } from "react-icons/md";
+import { PiDevices } from "react-icons/pi";
 import {
   TbArrowsShuffle,
   TbPlayerPause,
@@ -13,9 +16,8 @@ import {
   TbVolume3,
 } from "react-icons/tb";
 import { getRandomColorPair } from "../constants/helpers";
-import { BsFullscreen } from "react-icons/bs";
-import { CgMiniPlayer, CgToolbarBottom } from "react-icons/cg";
-import { PiDevices } from "react-icons/pi";
+
+import axios from "axios";
 
 const Player = () => {
   const color = getRandomColorPair();
@@ -31,6 +33,13 @@ const Player = () => {
   const sliderRef = useRef<any>();
   const playPauseRef = useRef<any>();
   const volumeRef = useRef<any>();
+
+  const [accessToken, setAccessToken] = useState<string | null>(
+    "BQCqxFA53IJRXmHp87Q-_C79MIfNOIrya7djQb03p7P5nus1h4YM8fa0EKHk0_W_jIaxynxVJDBCfq2hQea-Q_Up2h_QJIcLMDMZA8qu2tFTGatmD3WpPKmg0gOaH65C5RvKXP4ulksgx9T5wjnBoF6WswGVLjElfB-MftJn-sQOtyVxcn-4or4y52iuIP-Xs2e2YsYo64XFzp-udZ6BG6nUaAqO"
+  );
+  const [player, setPlayer] = useState<any>(null);
+  const [deviceId, setDeviceId] = useState(null);
+
   useEffect(() => {
     window.addEventListener("keydown", (e) => {
       if (e.key === "ArrowRight" || e.key === "ArrowLeft") {
@@ -61,6 +70,58 @@ const Player = () => {
       });
     };
   }, []);
+
+  useEffect(() => {
+    if (accessToken) {
+      const script = document.createElement("script");
+      script.src = "https://sdk.scdn.co/spotify-player.js";
+      script.async = true;
+
+      document.body.appendChild(script);
+
+      (window as any).onSpotifyWebPlaybackSDKReady = () => {
+        const token = accessToken;
+        const player = new (window as any).Spotify.Player({
+          name: "Web Playback SDK",
+          getOAuthToken: (cb: any) => {
+            cb(token);
+          },
+          volume: 0.5,
+        });
+
+        setPlayer(player);
+
+        player.addListener("ready", ({ device_id }: any) => {
+          setDeviceId(device_id);
+          console.log("Ready with Device ID", device_id);
+        });
+
+        player.addListener("not_ready", ({ device_id }: any) => {
+          console.log("Device ID has gone offline", device_id);
+        });
+
+        player.addListener("initialization_error", ({ message }: any) => {
+          console.error(message);
+        });
+
+        player.addListener("authentication_error", ({ message }: any) => {
+          console.error(message);
+        });
+
+        player.addListener("account_error", ({ message }: any) => {
+          console.error(message);
+        });
+        playPauseRef.current.onclick = function () {
+          console.log("Play/Pause clicked");
+          console.log(player);
+
+          player.togglePlay();
+        };
+
+        player.connect();
+      };
+    }
+  }, [accessToken]);
 
   return (
     <div
