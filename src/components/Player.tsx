@@ -9,6 +9,8 @@ import {
   TbRepeat,
   TbRepeatOnce,
   TbVolume,
+  TbVolume2,
+  TbVolume3,
 } from "react-icons/tb";
 import { getRandomColorPair } from "../constants/helpers";
 import { BsFullscreen } from "react-icons/bs";
@@ -59,6 +61,7 @@ const Player = () => {
       });
     };
   }, []);
+
   return (
     <div
       //gradient background
@@ -181,8 +184,59 @@ const Player = () => {
           type="text"
         />
         <Button className="" icon={<PiDevices size={20} />} type="text" />
-        <Button className="" icon={<TbVolume size={20} />} type="text" />
-        <Slider className="w-20" tooltip={{ open: false }} ref={volumeRef} />
+        <Button
+          className=""
+          onClick={() => {
+            if (playerStates.voulume === 0) {
+              setPlayerStates((prev) => ({
+                ...prev,
+                mute: false,
+                voulume: 5,
+              }));
+            } else {
+              setPlayerStates((prev) => ({
+                ...prev,
+                mute: !prev.mute,
+              }));
+            }
+          }}
+          icon={
+            playerStates.mute ? (
+              <TbVolume3 size={20} />
+            ) : playerStates.voulume < 50 ? (
+              <TbVolume2 size={20} />
+            ) : (
+              <TbVolume size={20} />
+            )
+          }
+          type="text"
+        />
+        <Slider
+          styles={{
+            track: {
+              backgroundColor: import.meta.env.VITE_LIGHT_COLOR,
+            },
+          }}
+          value={playerStates.voulume}
+          onChange={(v) => {
+            if (v === 0) {
+              setPlayerStates((prev) => ({
+                ...prev,
+                mute: true,
+                voulume: v,
+              }));
+            } else {
+              setPlayerStates((prev) => ({
+                ...prev,
+                mute: false,
+                voulume: v,
+              }));
+            }
+          }}
+          className="w-20"
+          tooltip={{ open: false }}
+          ref={volumeRef}
+        />
       </div>
     </div>
   );
