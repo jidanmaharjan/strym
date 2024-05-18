@@ -82,7 +82,7 @@ const TrackCards = (props: TrackCardsProps) => {
     JSON.parse(localStorage.getItem("favouriteTracks") || "[]")
   );
 
-  const { queue, setQueue } = useAuth();
+  const { queue, setQueue, setPlayerStates } = useAuth();
   const navigate = useNavigate();
 
   if (loading) {
@@ -109,6 +109,12 @@ const TrackCards = (props: TrackCardsProps) => {
                 key="play"
                 onClick={() => {
                   setQueue([item]);
+                  setPlayerStates &&
+                    setPlayerStates((prev) => ({
+                      ...prev,
+                      current: 0,
+                      isPlaying: true,
+                    }));
                 }}
                 type="text"
               >
