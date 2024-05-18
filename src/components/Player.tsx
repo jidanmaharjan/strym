@@ -76,12 +76,6 @@ const Player = () => {
 
   useEffect(() => {
     if (accessToken) {
-      const script = document.createElement("script");
-      script.src = "https://sdk.scdn.co/spotify-player.js";
-      script.async = true;
-
-      document.body.appendChild(script);
-
       (window as any).onSpotifyWebPlaybackSDKReady = () => {
         const token = accessToken;
         const player = new (window as any).Spotify.Player({
@@ -124,6 +118,12 @@ const Player = () => {
         });
       };
     }
+    return () => {
+      if (player) {
+        player.disconnect();
+        player.removeListener("ready");
+      }
+    };
   }, [accessToken]);
 
   const playMusic = async () => {
@@ -217,6 +217,7 @@ const Player = () => {
                 ...playerStates,
                 isPlaying: !playerStates.isPlaying,
               });
+              player.togglePlay();
             }}
             ref={playPauseRef}
             icon={playerStates.isPlaying ? <TbPlayerPause /> : <TbPlayerPlay />}
