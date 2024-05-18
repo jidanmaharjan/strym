@@ -18,6 +18,7 @@ import {
 import { getRandomColorPair } from "../constants/helpers";
 
 import axios from "axios";
+import { useAuth } from "../context/AuthContext";
 
 const Player = () => {
   const color = getRandomColorPair();
@@ -30,12 +31,14 @@ const Player = () => {
     voulume: 100,
     mute: false,
   });
+
+  const { playUri } = useAuth();
   const sliderRef = useRef<any>();
   const playPauseRef = useRef<any>();
   const volumeRef = useRef<any>();
 
   const [accessToken, setAccessToken] = useState<string | null>(
-    "BQCqxFA53IJRXmHp87Q-_C79MIfNOIrya7djQb03p7P5nus1h4YM8fa0EKHk0_W_jIaxynxVJDBCfq2hQea-Q_Up2h_QJIcLMDMZA8qu2tFTGatmD3WpPKmg0gOaH65C5RvKXP4ulksgx9T5wjnBoF6WswGVLjElfB-MftJn-sQOtyVxcn-4or4y52iuIP-Xs2e2YsYo64XFzp-udZ6BG6nUaAqO"
+    import.meta.env.VITE_SPOTIFY_ACCESS_TOKEN
   );
   const [player, setPlayer] = useState<any>(null);
   const [deviceId, setDeviceId] = useState(null);
@@ -111,17 +114,57 @@ const Player = () => {
         player.addListener("account_error", ({ message }: any) => {
           console.error(message);
         });
-        playPauseRef.current.onclick = function () {
-          console.log("Play/Pause clicked");
-          console.log(player);
 
-          player.togglePlay();
-        };
-
-        player.connect();
+        player.connect().then((success: any) => {
+          if (success) {
+            console.log(
+              "The Web Playback SDK successfully connected to Spotify!"
+            );
+          }
+        });
       };
     }
   }, [accessToken]);
+
+  const playMusic = async () => {
+    if (!accessToken || !deviceId || !player) return;
+
+    const playUrl = `https://api.spotify.com/v1/me/player/play`;
+
+    const data = {
+      device_id: deviceId,
+      context_uri: playUri, // Example album URI
+      offset: { position: 5 },
+      position_ms: 0,
+    };
+
+    await axios
+      .put(playUrl, data, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          "Content-Type": "application/json",
+        },
+      })
+      .then((response) => {
+        if (response.status === 204) {
+          console.log("Playback started successfully");
+          player
+            .togglePlay()
+            .catch((error: { message: string }) =>
+              console.error("Error toggling play", error)
+            );
+        }
+      })
+      .catch((error) => {
+        console.error("Failed to start playback", error);
+      });
+  };
+
+  useEffect(() => {
+    if (playUri) {
+      playMusic();
+    }
+  }, [playUri]);
 
   return (
     <div
@@ -181,6 +224,7 @@ const Player = () => {
           />
           <Button
             className=""
+            onClick={() => player.nextTrack()}
             icon={<MdOutlineSkipNext size={20} />}
             type="text"
           />

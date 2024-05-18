@@ -1,3 +1,4 @@
+import axios from "axios";
 import {
   ReactNode,
   createContext,
@@ -7,11 +8,11 @@ import {
 } from "react";
 import { useMutation } from "react-query";
 import { useNavigate } from "react-router-dom";
-import { callAxios } from "../hooks/useAxios";
-import axios from "axios";
 
 type ContextType = {
   isAuthenticated: boolean;
+  playUri: string;
+  setPlayUri: (uri: string) => void;
 };
 
 const AuthContext = createContext<ContextType | undefined>(undefined);
@@ -20,6 +21,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(
     !!localStorage.getItem("ACCESS_TOKEN")
   );
+  const [playUri, setPlayUri] = useState("");
   const navigate = useNavigate();
 
   const fetchToken = useMutation(
@@ -55,7 +57,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated }}>
+    <AuthContext.Provider value={{ isAuthenticated, playUri, setPlayUri }}>
       {children}
     </AuthContext.Provider>
   );

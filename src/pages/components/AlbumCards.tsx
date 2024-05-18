@@ -2,10 +2,11 @@ import { Avatar, Card, Tooltip } from "antd";
 import Meta from "antd/es/card/Meta";
 import { useState } from "react";
 import { IoAlbumsOutline, IoHeart, IoHeartOutline } from "react-icons/io5";
-import { TbMusicSearch } from "react-icons/tb";
+import { TbMusicSearch, TbPlayerPlay } from "react-icons/tb";
 import { Link, useNavigate } from "react-router-dom";
 import Loader from "../../components/Loader";
 import { getRandomColorPair } from "../../constants/helpers";
+import { useAuth } from "../../context/AuthContext";
 
 export type AlbumSingleType = {
   album_type: string;
@@ -44,6 +45,7 @@ interface AlbumCardsProps {
 }
 const AlbumCards = (props: AlbumCardsProps) => {
   const { data, loading } = props;
+  const { setPlayUri } = useAuth();
   const [favouriteAlbums, setFavouriteAlbums] = useState<string[]>(
     JSON.parse(localStorage.getItem("favouriteAlbums") || "[]")
   );
@@ -71,6 +73,10 @@ const AlbumCards = (props: AlbumCardsProps) => {
                   />
                 }
                 actions={[
+                  <TbPlayerPlay
+                    key="play"
+                    onClick={() => setPlayUri(item.uri)}
+                  />,
                   <TbMusicSearch
                     key="albums"
                     onClick={() => navigate(`/album/${item.id}`)}
