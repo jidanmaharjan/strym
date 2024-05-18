@@ -107,6 +107,7 @@ const TrackCards = (props: TrackCardsProps) => {
             actions={[
               <Button
                 key="play"
+                disabled={!item.preview_url}
                 onClick={() => {
                   if (item.preview_url) {
                     setQueue([item]);

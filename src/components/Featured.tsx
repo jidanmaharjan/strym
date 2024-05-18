@@ -6,6 +6,7 @@ import { TrackSingleType } from "../pages/components/TrackCards";
 import Loader from "./Loader";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 
 interface FeaturedProps {
   data: TrackSingleType[];
@@ -14,6 +15,8 @@ interface FeaturedProps {
 
 const Featured = (props: FeaturedProps) => {
   const { data, loading } = props;
+
+  const { setQueue, setPlayerStates } = useAuth();
 
   const [favouriteTracks, setFavouriteTracks] = useState<string[]>(
     JSON.parse(localStorage.getItem("favouriteTracks") || "[]")
@@ -78,7 +81,20 @@ const Featured = (props: FeaturedProps) => {
                     icon={<FaHeadphonesSimple />}
                     type="primary"
                     className="rounded-full"
-                    onClick={() => playMusic(item?.preview_url)}
+                    onClick={() => {
+                      if (item.preview_url) {
+                        setQueue([item]);
+                        setPlayerStates &&
+                          setPlayerStates((prev) => ({
+                            ...prev,
+                            current: 0,
+                            isPlaying: true,
+                            seek: 0,
+                            played: 0,
+                            playedSeconds: 0,
+                          }));
+                      }
+                    }}
                   >
                     Listen Now
                   </Button>
