@@ -41,9 +41,10 @@ export type AlbumSingleType = {
 interface AlbumCardsProps {
   data: AlbumSingleType[];
   loading: boolean;
+  hideLabel?: boolean;
 }
 const AlbumCards = (props: AlbumCardsProps) => {
-  const { data, loading } = props;
+  const { data, loading, hideLabel = false } = props;
   const [favouriteAlbums, setFavouriteAlbums] = useState<string[]>(
     JSON.parse(localStorage.getItem("favouriteAlbums") || "[]")
   );
@@ -55,7 +56,7 @@ const AlbumCards = (props: AlbumCardsProps) => {
 
   return (
     <>
-      <h3 className="font-semibold">Albums</h3>
+      {hideLabel ? null : <h3 className="font-semibold">Albums</h3>}
       <div className="flex gap-4 w-full overflow-x-scroll hide-scrollbar snap-x snap-mandatory">
         {data?.map((item) => {
           const images = item?.images;

@@ -18,6 +18,7 @@ const NewReleases = () => {
       <AlbumCards
         data={newReleases?.albums?.items}
         loading={newReleasesFetching}
+        hideLabel
       />
     </div>
   );
