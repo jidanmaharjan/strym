@@ -10,10 +10,23 @@ import { useMutation } from "react-query";
 import { useNavigate } from "react-router-dom";
 import { TrackSingleType } from "../pages/components/TrackCards";
 
+type playerStatesType = {
+  isPlaying: boolean;
+  isShuffled: boolean;
+  isRepeat: boolean;
+  repeatOne: boolean;
+  fullscreen: boolean;
+  voulume: number;
+  mute: boolean;
+  current: number;
+};
+
 type ContextType = {
   isAuthenticated: boolean;
   queue: TrackSingleType[];
   setQueue: React.Dispatch<React.SetStateAction<TrackSingleType[]>>;
+  playerStates?: playerStatesType;
+  setPlayerStates?: React.Dispatch<React.SetStateAction<playerStatesType>>;
 };
 
 const AuthContext = createContext<ContextType | undefined>(undefined);
@@ -23,6 +36,16 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     !!localStorage.getItem("ACCESS_TOKEN")
   );
   const [queue, setQueue] = useState<TrackSingleType[]>([]);
+  const [playerStates, setPlayerStates] = useState({
+    isPlaying: false,
+    isShuffled: false,
+    isRepeat: false,
+    repeatOne: false,
+    fullscreen: false,
+    voulume: 100,
+    mute: false,
+    current: 0,
+  });
   const navigate = useNavigate();
 
   const fetchToken = useMutation(
@@ -58,7 +81,15 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated, queue, setQueue }}>
+    <AuthContext.Provider
+      value={{
+        isAuthenticated,
+        queue,
+        setQueue,
+        playerStates,
+        setPlayerStates,
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );

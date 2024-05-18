@@ -22,17 +22,8 @@ import { useAuth } from "../context/AuthContext";
 
 const Player = () => {
   const color = getRandomColorPair();
-  const [playerStates, setPlayerStates] = useState({
-    isPlaying: false,
-    isShuffled: false,
-    isRepeat: false,
-    repeatOne: false,
-    fullscreen: false,
-    voulume: 100,
-    mute: false,
-  });
 
-  const { queue } = useAuth();
+  const { queue, playerStates, setPlayerStates } = useAuth();
 
   const sliderRef = useRef<any>();
   const playPauseRef = useRef<any>();
@@ -75,6 +66,10 @@ const Player = () => {
     }
   }, [queue]);
 
+  if (queue.length === 0 || !playerStates || !setPlayerStates) return null;
+
+  const currentTrack = queue[playerStates.current];
+
   return (
     <div
       //gradient background
@@ -87,12 +82,14 @@ const Player = () => {
       <div className="ml-4">
         <img
           className="w-20 h-20 rounded-lg absolute top-0 -translate-y-4 shadow-md"
-          src="https://i.scdn.co/image/ab67616d0000b273acff57715feae966d794bb95"
-          alt=""
+          src={currentTrack.album.images[1].url}
+          alt={currentTrack.name}
         />
         <div className="pl-24">
-          <h2 className="font-semibold">Maria</h2>
-          <p className="text-sm text-fade">Hwasa</p>
+          <h2 className="font-semibold">{currentTrack.name}</h2>
+          <p className="text-sm text-fade">
+            {currentTrack.artists.map((a) => a.name)?.join(", ")}
+          </p>
         </div>
       </div>
       <div>
