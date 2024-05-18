@@ -1,12 +1,14 @@
-import { Avatar, Card, Tooltip } from "antd";
+import { Avatar, Button, Card, Tooltip } from "antd";
 import Meta from "antd/es/card/Meta";
+import { useState } from "react";
 import { BiAlbum } from "react-icons/bi";
 import { IoHeart, IoHeartOutline } from "react-icons/io5";
-import { TbMusicSearch } from "react-icons/tb";
+import { RiMenuAddFill } from "react-icons/ri";
+import { TbPlayerPlay } from "react-icons/tb";
 import { Link, useNavigate } from "react-router-dom";
 import Loader from "../../components/Loader";
 import { getRandomColorPair } from "../../constants/helpers";
-import { useState } from "react";
+import { useAuth } from "../../context/AuthContext";
 
 export type TrackSingleType = {
   album: {
@@ -79,6 +81,8 @@ const TrackCards = (props: TrackCardsProps) => {
   const [favouriteTracks, setFavouriteTracks] = useState<string[]>(
     JSON.parse(localStorage.getItem("favouriteTracks") || "[]")
   );
+
+  const { queue, setQueue } = useAuth();
   const navigate = useNavigate();
 
   if (loading) {
@@ -101,13 +105,25 @@ const TrackCards = (props: TrackCardsProps) => {
               />
             }
             actions={[
-              <TbMusicSearch
-                key="tracks"
-                onClick={() => navigate(`/track/${item.id}`)}
-              />,
-              // <LiaMicrophoneAltSolid key="tracks" />,
-              <div
+              <Button
+                key="play"
+                onClick={() => {
+                  setQueue([item]);
+                }}
+                type="text"
+              >
+                <TbPlayerPlay />
+              </Button>,
+              <Button
+                key="queue"
+                onClick={() => setQueue((prev) => [...prev, item])}
+                type="text"
+              >
+                <RiMenuAddFill />
+              </Button>,
+              <Button
                 className="text-primary cursor-pointer text-lg"
+                type="text"
                 key="favourite"
                 onClick={() => {
                   let newFav = null;
@@ -128,7 +144,7 @@ const TrackCards = (props: TrackCardsProps) => {
                 ) : (
                   <IoHeartOutline />
                 )}
-              </div>,
+              </Button>,
             ]}
           >
             <div className="absolute top-0 left-2 font-semibold bg-primary p-2 w-8 h-8 grid place-content-center text-white rounded-b-md">

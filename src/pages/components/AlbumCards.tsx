@@ -1,12 +1,11 @@
-import { Avatar, Card, Tooltip } from "antd";
+import { Avatar, Button, Card, Tooltip } from "antd";
 import Meta from "antd/es/card/Meta";
 import { useState } from "react";
 import { IoAlbumsOutline, IoHeart, IoHeartOutline } from "react-icons/io5";
-import { TbMusicSearch, TbPlayerPlay } from "react-icons/tb";
+import { TbListDetails, TbMusicSearch } from "react-icons/tb";
 import { Link, useNavigate } from "react-router-dom";
 import Loader from "../../components/Loader";
 import { getRandomColorPair } from "../../constants/helpers";
-import { useAuth } from "../../context/AuthContext";
 
 export type AlbumSingleType = {
   album_type: string;
@@ -45,7 +44,6 @@ interface AlbumCardsProps {
 }
 const AlbumCards = (props: AlbumCardsProps) => {
   const { data, loading } = props;
-  const { setPlayUri } = useAuth();
   const [favouriteAlbums, setFavouriteAlbums] = useState<string[]>(
     JSON.parse(localStorage.getItem("favouriteAlbums") || "[]")
   );
@@ -73,16 +71,15 @@ const AlbumCards = (props: AlbumCardsProps) => {
                   />
                 }
                 actions={[
-                  <TbPlayerPlay
-                    key="play"
-                    onClick={() => setPlayUri(item.uri)}
-                  />,
-                  <TbMusicSearch
-                    key="albums"
+                  <Button
+                    type="text"
+                    key="tracks"
                     onClick={() => navigate(`/album/${item.id}`)}
-                  />,
-                  // <LiaMicrophoneAltSolid key="albums" />,
-                  <div
+                  >
+                    <TbMusicSearch />
+                  </Button>,
+                  <Button
+                    type="text"
                     className="text-primary cursor-pointer text-lg"
                     key="favourite"
                     onClick={() => {
@@ -104,7 +101,7 @@ const AlbumCards = (props: AlbumCardsProps) => {
                     ) : (
                       <IoHeartOutline />
                     )}
-                  </div>,
+                  </Button>,
                 ]}
               >
                 {/* <div className="absolute top-0 left-2 font-semibold bg-primary p-2 w-8 h-8 grid place-content-center text-white rounded-b-md">

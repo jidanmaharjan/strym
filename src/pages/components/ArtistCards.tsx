@@ -1,7 +1,7 @@
-import { Card, Tag } from "antd";
+import { Button, Card, Tag } from "antd";
 import Meta from "antd/es/card/Meta";
 import { IoHeart, IoHeartOutline } from "react-icons/io5";
-import { TbMusicSearch } from "react-icons/tb";
+import { TbListDetails, TbMusicSearch } from "react-icons/tb";
 import Loader from "../../components/Loader";
 import { getRandomColorPair } from "../../constants/helpers";
 import { LuUsers2 } from "react-icons/lu";
@@ -61,12 +61,16 @@ const ArtistCards = (props: ArtistCardsProps) => {
               />
             }
             actions={[
-              <TbMusicSearch
+              <Button
+                type="text"
                 key="tracks"
                 onClick={() => navigate(`/artist/${item.id}`)}
-              />,
+              >
+                <TbListDetails />
+              </Button>,
               // <LiaMicrophoneAltSolid key="artists" />,
-              <div
+              <Button
+                type="text"
                 className="text-primary cursor-pointer text-lg"
                 key="favourite"
                 onClick={() => {
@@ -88,7 +92,7 @@ const ArtistCards = (props: ArtistCardsProps) => {
                 ) : (
                   <IoHeartOutline />
                 )}
-              </div>,
+              </Button>,
             ]}
           >
             <div className="absolute top-0 left-2 font-semibold bg-primary p-2 w-8 h-8 grid place-content-center text-white rounded-b-md">

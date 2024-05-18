@@ -32,16 +32,11 @@ const Player = () => {
     mute: false,
   });
 
-  const { playUri } = useAuth();
+  const { queue } = useAuth();
+
   const sliderRef = useRef<any>();
   const playPauseRef = useRef<any>();
   const volumeRef = useRef<any>();
-
-  const [accessToken, setAccessToken] = useState<string | null>(
-    import.meta.env.VITE_SPOTIFY_ACCESS_TOKEN
-  );
-  const [player, setPlayer] = useState<any>(null);
-  const [deviceId, setDeviceId] = useState(null);
 
   useEffect(() => {
     window.addEventListener("keydown", (e) => {
@@ -75,96 +70,10 @@ const Player = () => {
   }, []);
 
   useEffect(() => {
-    if (accessToken) {
-      (window as any).onSpotifyWebPlaybackSDKReady = () => {
-        const token = accessToken;
-        const player = new (window as any).Spotify.Player({
-          name: "Web Playback SDK",
-          getOAuthToken: (cb: any) => {
-            cb(token);
-          },
-          volume: 0.5,
-        });
-
-        setPlayer(player);
-
-        player.addListener("ready", ({ device_id }: any) => {
-          setDeviceId(device_id);
-          console.log("Ready with Device ID", device_id);
-        });
-
-        player.addListener("not_ready", ({ device_id }: any) => {
-          console.log("Device ID has gone offline", device_id);
-        });
-
-        player.addListener("initialization_error", ({ message }: any) => {
-          console.error(message);
-        });
-
-        player.addListener("authentication_error", ({ message }: any) => {
-          console.error(message);
-        });
-
-        player.addListener("account_error", ({ message }: any) => {
-          console.error(message);
-        });
-
-        player.connect().then((success: any) => {
-          if (success) {
-            console.log(
-              "The Web Playback SDK successfully connected to Spotify!"
-            );
-          }
-        });
-      };
+    if (queue.length > 0) {
+      console.log(queue);
     }
-    return () => {
-      if (player) {
-        player.disconnect();
-        player.removeListener("ready");
-      }
-    };
-  }, [accessToken]);
-
-  const playMusic = async () => {
-    if (!accessToken || !deviceId || !player) return;
-
-    const playUrl = `https://api.spotify.com/v1/me/player/play`;
-
-    const data = {
-      device_id: deviceId,
-      context_uri: playUri, // Example album URI
-      offset: { position: 5 },
-      position_ms: 0,
-    };
-
-    await axios
-      .put(playUrl, data, {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-          "Content-Type": "application/json",
-        },
-      })
-      .then((response) => {
-        if (response.status === 204) {
-          console.log("Playback started successfully");
-          player
-            .togglePlay()
-            .catch((error: { message: string }) =>
-              console.error("Error toggling play", error)
-            );
-        }
-      })
-      .catch((error) => {
-        console.error("Failed to start playback", error);
-      });
-  };
-
-  useEffect(() => {
-    if (playUri) {
-      playMusic();
-    }
-  }, [playUri]);
+  }, [queue]);
 
   return (
     <div
@@ -217,7 +126,6 @@ const Player = () => {
                 ...playerStates,
                 isPlaying: !playerStates.isPlaying,
               });
-              player.togglePlay();
             }}
             ref={playPauseRef}
             icon={playerStates.isPlaying ? <TbPlayerPause /> : <TbPlayerPlay />}
@@ -225,7 +133,9 @@ const Player = () => {
           />
           <Button
             className=""
-            onClick={() => player.nextTrack()}
+            onClick={() => {
+              console.log("next");
+            }}
             icon={<MdOutlineSkipNext size={20} />}
             type="text"
           />
