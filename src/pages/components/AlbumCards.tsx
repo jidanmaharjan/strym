@@ -2,7 +2,7 @@ import { Avatar, Button, Card, Tooltip } from "antd";
 import Meta from "antd/es/card/Meta";
 import { useState } from "react";
 import { IoAlbumsOutline, IoHeart, IoHeartOutline } from "react-icons/io5";
-import { TbListDetails, TbMusicSearch } from "react-icons/tb";
+import { TbMusicSearch } from "react-icons/tb";
 import { Link, useNavigate } from "react-router-dom";
 import Loader from "../../components/Loader";
 import { getRandomColorPair } from "../../constants/helpers";

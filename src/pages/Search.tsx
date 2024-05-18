@@ -14,7 +14,7 @@ const filterOptions = [
   { label: "Track", value: "track" },
   { label: "Artist", value: "artist" },
   { label: "Album", value: "album" },
-  { label: "Playlist", value: "playlist" },
+  // { label: "Playlist", value: "playlist" },
 ];
 
 const Search = () => {
@@ -27,7 +27,7 @@ const Search = () => {
     "track",
     "artist",
     "album",
-    "playlist",
+    // "playlist",
   ]);
 
   const { data, isLoading, isFetching, refetch } = useQuery(
@@ -111,12 +111,12 @@ const Search = () => {
               loading={isLoading || isFetching}
             />
           )}
-          {filters.includes("playlist") && (
+          {/* {filters.includes("playlist") && (
             <PlaylistCards
               data={data?.playlists?.items}
               loading={isLoading || isFetching}
             />
-          )}
+          )} */}
         </div>
       ) : (
         <div className="flex flex-col justify-center items-center mt-4 p-8 w-full h-80 gap-4 text-grey">
