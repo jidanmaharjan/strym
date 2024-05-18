@@ -1,5 +1,5 @@
 import { Button, Slider } from "antd";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { BsFullscreen } from "react-icons/bs";
 import { CgToolbarBottom } from "react-icons/cg";
 import { MdOutlineSkipNext, MdOutlineSkipPrevious } from "react-icons/md";
@@ -17,7 +17,7 @@ import {
 } from "react-icons/tb";
 import { getRandomColorPair } from "../constants/helpers";
 
-import axios from "axios";
+import ReactPlayer from "react-player";
 import { useAuth } from "../context/AuthContext";
 
 const Player = () => {
@@ -25,6 +25,7 @@ const Player = () => {
 
   const { queue, playerStates, setPlayerStates } = useAuth();
 
+  const playerRef = useRef<any>();
   const sliderRef = useRef<any>();
   const playPauseRef = useRef<any>();
   const volumeRef = useRef<any>();
@@ -70,6 +71,10 @@ const Player = () => {
 
   const currentTrack = queue[playerStates.current];
 
+  const seekPlayer = (seek: string, type: string) => {
+    playerRef?.current?.seekTo(parseFloat(seek), type);
+  };
+
   return (
     <div
       //gradient background
@@ -79,6 +84,59 @@ const Player = () => {
       }}
       className={`w-full fixed bottom-0 h-24 z-[100] flex justify-between p-4 border-t-2 border-t-primary backdrop-filter backdrop-blur-lg bg-opacity-90 filterbackdrop`}
     >
+      <div className="absolute">
+        <ReactPlayer
+          playing={playerStates.isPlaying}
+          url={currentTrack.preview_url}
+          width={"100%"}
+          height={"100%"}
+          playsinline
+          controls={playerStates.fullscreen}
+          volume={playerStates.voulume / 100}
+          suppressHydrationWarning
+          stopOnUnmount={false}
+          onProgress={(progress: any) => {
+            setPlayerStates((prev) => ({
+              ...prev,
+              played: progress.played,
+              loaded: progress.loaded,
+              playedSeconds: progress.playedSeconds,
+            }));
+          }}
+          onEnded={() => {
+            if (playerStates.repeatOne) {
+              playerRef.current.seekTo(0);
+            } else {
+              if (playerStates.isShuffled) {
+                setPlayerStates((prev) => ({
+                  ...prev,
+                  current: Math.floor(Math.random() * queue.length),
+                }));
+              } else {
+                if (playerStates.current === queue.length - 1) {
+                  setPlayerStates((prev) => ({
+                    ...prev,
+                    current: 0,
+                  }));
+                } else {
+                  setPlayerStates((prev) => ({
+                    ...prev,
+                    current: prev.current + 1,
+                  }));
+                }
+              }
+            }
+          }}
+          config={{
+            youtube: {
+              playerVars: {
+                disablekb: 1,
+              },
+            },
+          }}
+          ref={playerRef}
+        ></ReactPlayer>
+      </div>
       <div className="ml-4">
         <img
           className="w-20 h-20 rounded-lg absolute top-0 -translate-y-4 shadow-md"
@@ -185,6 +243,12 @@ const Player = () => {
             tooltip={{ open: false }}
             autoFocus
             ref={sliderRef}
+            min={0}
+            max={playerRef.current?.getDuration()}
+            value={playerStates.playedSeconds}
+            onChange={(e) => {
+              seekPlayer(String(e), "seconds");
+            }}
           />
           <p className="text-sm font-semibold text-fade">03:32</p>
         </div>

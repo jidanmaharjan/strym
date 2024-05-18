@@ -11,6 +11,10 @@ import { useNavigate } from "react-router-dom";
 import { TrackSingleType } from "../pages/components/TrackCards";
 
 type playerStatesType = {
+  seek: number | undefined;
+  played: number | undefined;
+  playedSeconds: number | undefined;
+  loaded: number | undefined;
   isPlaying: boolean;
   isShuffled: boolean;
   isRepeat: boolean;
@@ -36,7 +40,11 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     !!localStorage.getItem("ACCESS_TOKEN")
   );
   const [queue, setQueue] = useState<TrackSingleType[]>([]);
-  const [playerStates, setPlayerStates] = useState({
+  const [playerStates, setPlayerStates] = useState<playerStatesType>({
+    seek: undefined,
+    played: undefined,
+    playedSeconds: undefined,
+    loaded: undefined,
     isPlaying: false,
     isShuffled: false,
     isRepeat: false,
