@@ -108,13 +108,18 @@ const TrackCards = (props: TrackCardsProps) => {
               <Button
                 key="play"
                 onClick={() => {
-                  setQueue([item]);
-                  setPlayerStates &&
-                    setPlayerStates((prev) => ({
-                      ...prev,
-                      current: 0,
-                      isPlaying: true,
-                    }));
+                  if (item.preview_url) {
+                    setQueue([item]);
+                    setPlayerStates &&
+                      setPlayerStates((prev) => ({
+                        ...prev,
+                        current: 0,
+                        isPlaying: true,
+                        seek: 0,
+                        played: 0,
+                        playedSeconds: 0,
+                      }));
+                  }
                 }}
                 type="text"
               >
@@ -122,7 +127,9 @@ const TrackCards = (props: TrackCardsProps) => {
               </Button>,
               <Button
                 key="queue"
-                onClick={() => setQueue((prev) => [...prev, item])}
+                onClick={() =>
+                  item.preview_url && setQueue((prev) => [...prev, item])
+                }
                 type="text"
               >
                 <RiMenuAddFill />

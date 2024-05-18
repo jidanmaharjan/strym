@@ -113,16 +113,30 @@ const Player = () => {
                   current: Math.floor(Math.random() * queue.length),
                 }));
               } else {
-                if (playerStates.current === queue.length - 1) {
-                  setPlayerStates((prev) => ({
-                    ...prev,
-                    current: 0,
-                  }));
+                if (playerStates.isRepeat) {
+                  if (playerStates.current === queue.length - 1) {
+                    setPlayerStates((prev) => ({
+                      ...prev,
+                      current: 0,
+                    }));
+                  } else {
+                    setPlayerStates((prev) => ({
+                      ...prev,
+                      current: prev.current + 1,
+                    }));
+                  }
                 } else {
-                  setPlayerStates((prev) => ({
-                    ...prev,
-                    current: prev.current + 1,
-                  }));
+                  if (playerStates.current === queue.length - 1) {
+                    setPlayerStates((prev) => ({
+                      ...prev,
+                      isPlaying: false,
+                    }));
+                  } else {
+                    setPlayerStates((prev) => ({
+                      ...prev,
+                      current: prev.current + 1,
+                    }));
+                  }
                 }
               }
             }
