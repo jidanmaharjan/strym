@@ -57,16 +57,18 @@ const AlbumCards = (props: AlbumCardsProps) => {
     <>
       <h3 className="font-semibold">Albums</h3>
       <div className="flex gap-4 w-full overflow-x-scroll hide-scrollbar snap-x snap-mandatory">
-        {data?.map(
-          (item) =>
-            item && (
+        {data?.map((item) => {
+          const images = item?.images;
+          const sortedImages = images?.sort((a, b) => b.height - a.height);
+          if (item) {
+            return (
               <Card
                 key={item.id}
                 className="w-60"
                 cover={
                   <img
                     alt={item.name}
-                    src={item.images?.[1]?.url || item.images?.[0]?.url}
+                    src={sortedImages?.[1]?.url || sortedImages?.[0]?.url}
                     className="min-w-60 max-w-60 h-40 object-cover"
                   />
                 }
@@ -105,8 +107,8 @@ const AlbumCards = (props: AlbumCardsProps) => {
                 ]}
               >
                 {/* <div className="absolute top-0 left-2 font-semibold bg-primary p-2 w-8 h-8 grid place-content-center text-white rounded-b-md">
-              {item.popularity}
-            </div> */}
+                 {item.popularity}
+               </div> */}
                 <Meta
                   title={<Link to={`/album/${item.id}`}>{item.name}</Link>}
                   description={
@@ -141,8 +143,9 @@ const AlbumCards = (props: AlbumCardsProps) => {
                   }
                 />
               </Card>
-            )
-        )}
+            );
+          }
+        })}
       </div>
     </>
   );
