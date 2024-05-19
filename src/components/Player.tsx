@@ -61,12 +61,6 @@ const Player = () => {
     };
   }, []);
 
-  useEffect(() => {
-    if (queue.length > 0) {
-      console.log(queue);
-    }
-  }, [queue]);
-
   if (queue.length === 0 || !playerStates || !setPlayerStates) return null;
 
   const currentTrack = queue[playerStates.current];
@@ -192,6 +186,40 @@ const Player = () => {
             className=""
             icon={<MdOutlineSkipPrevious size={20} />}
             type="text"
+            onClick={() => {
+              if (playerStates.isShuffled) {
+                setPlayerStates((prev) => ({
+                  ...prev,
+                  current: Math.floor(Math.random() * queue.length),
+                }));
+              } else {
+                if (playerStates.isRepeat) {
+                  if (playerStates.current === queue.length - 1) {
+                    setPlayerStates((prev) => ({
+                      ...prev,
+                      current: 0,
+                    }));
+                  } else {
+                    setPlayerStates((prev) => ({
+                      ...prev,
+                      current: prev.current + 1,
+                    }));
+                  }
+                } else {
+                  if (playerStates.current === queue.length - 1) {
+                    setPlayerStates((prev) => ({
+                      ...prev,
+                      current: 0,
+                    }));
+                  } else {
+                    setPlayerStates((prev) => ({
+                      ...prev,
+                      current: prev.current + 1,
+                    }));
+                  }
+                }
+              }
+            }}
           />
           <Button
             className=""
