@@ -128,6 +128,7 @@ const TrackCards = (props: TrackCardsProps) => {
               </Button>,
               <Button
                 key="queue"
+                disabled={!item.preview_url}
                 onClick={() =>
                   item.preview_url && setQueue((prev) => [...prev, item])
                 }
