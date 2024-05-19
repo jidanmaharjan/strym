@@ -82,14 +82,16 @@ const Player = () => {
         // background: `linear-gradient(to right, ${color.primaryColor}, ${color.secondaryColor})`,
         opacity: 0.9,
       }}
-      className={`w-full fixed bottom-0 h-24 z-[100] flex justify-between p-4 border-t-2 border-t-primary backdrop-filter backdrop-blur-lg bg-opacity-90 filterbackdrop`}
+      className={`w-full fixed bottom-0 ${
+        playerStates.fullscreen ? "h-screen items-end" : "h-24"
+      } z-[100] flex justify-between p-4 border-t-2 border-t-primary transition-all duration-300 backdrop-filter backdrop-blur-lg bg-opacity-90 filterbackdrop`}
     >
       <div className="absolute">
         <ReactPlayer
           playing={playerStates.isPlaying}
           url={currentTrack.preview_url}
-          width={"100%"}
-          height={"100%"}
+          width={"0"}
+          height={"0"}
           playsinline
           controls={playerStates.fullscreen}
           volume={playerStates.voulume / 100}
@@ -151,13 +153,23 @@ const Player = () => {
           ref={playerRef}
         ></ReactPlayer>
       </div>
-      <div className="ml-4 w-80">
+      <div
+        className={`${
+          playerStates.fullscreen
+            ? "absolute left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%] flex flex-col text-center"
+            : "ml-4 w-80"
+        }`}
+      >
         <img
-          className="w-20 h-20 rounded-lg absolute top-0 -translate-y-4 shadow-md"
+          className={`${
+            playerStates.fullscreen
+              ? "w-40 h-40 rounded-lg shadow-md mx-auto"
+              : " w-20 h-20 rounded-lg absolute top-0 -translate-y-4 shadow-md"
+          }`}
           src={currentTrack.album.images[1].url}
           alt={currentTrack.name}
         />
-        <div className="pl-24">
+        <div className={`${!playerStates.fullscreen && "pl-24"}`}>
           <h2 className="font-semibold">{currentTrack.name}</h2>
           <p className="text-sm text-fade">
             {currentTrack.artists.map((a) => a.name)?.join(", ")}
@@ -348,9 +360,9 @@ const Player = () => {
           }}
           icon={
             playerStates.fullscreen ? (
-              <BsFullscreen />
-            ) : (
               <CgToolbarBottom size={20} />
+            ) : (
+              <BsFullscreen />
             )
           }
           type="text"
