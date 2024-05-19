@@ -1,5 +1,5 @@
 import { Button, Slider } from "antd";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { BsFullscreen } from "react-icons/bs";
 import { CgToolbarBottom } from "react-icons/cg";
 import { MdOutlineSkipNext, MdOutlineSkipPrevious } from "react-icons/md";
@@ -73,6 +73,12 @@ const Player = () => {
 
   const seekPlayer = (seek: string, type: string) => {
     playerRef?.current?.seekTo(parseFloat(seek), type);
+  };
+
+  const getTimeStringFromSeconds = (seconds: number) => {
+    const minutes = Math.floor(seconds / 60);
+    seconds = Math.floor(seconds) - minutes * 60;
+    return `${minutes}:${seconds < 10 ? "0" + seconds : seconds}`;
   };
 
   return (
@@ -151,7 +157,7 @@ const Player = () => {
           ref={playerRef}
         ></ReactPlayer>
       </div>
-      <div className="ml-4">
+      <div className="ml-4 w-80">
         <img
           className="w-20 h-20 rounded-lg absolute top-0 -translate-y-4 shadow-md"
           src={currentTrack.album.images[1].url}
@@ -203,7 +209,38 @@ const Player = () => {
           <Button
             className=""
             onClick={() => {
-              console.log("next");
+              if (playerStates.isShuffled) {
+                setPlayerStates((prev) => ({
+                  ...prev,
+                  current: Math.floor(Math.random() * queue.length),
+                }));
+              } else {
+                if (playerStates.isRepeat) {
+                  if (playerStates.current === 0) {
+                    setPlayerStates((prev) => ({
+                      ...prev,
+                      current: queue.length - 1,
+                    }));
+                  } else {
+                    setPlayerStates((prev) => ({
+                      ...prev,
+                      current: prev.current - 1,
+                    }));
+                  }
+                } else {
+                  if (playerStates.current === 0) {
+                    setPlayerStates((prev) => ({
+                      ...prev,
+                      current: queue.length - 1,
+                    }));
+                  } else {
+                    setPlayerStates((prev) => ({
+                      ...prev,
+                      current: prev.current - 1,
+                    }));
+                  }
+                }
+              }
             }}
             icon={<MdOutlineSkipNext size={20} />}
             type="text"
@@ -246,7 +283,9 @@ const Player = () => {
           />
         </div>
         <div className="flex items-center gap-4 ">
-          <p className="text-sm font-semibold text-fade">00:00</p>
+          <p className="text-sm font-semibold text-fade">
+            {getTimeStringFromSeconds(playerStates?.playedSeconds || 0)}
+          </p>
           <Slider
             styles={{
               track: {
@@ -264,7 +303,9 @@ const Player = () => {
               seekPlayer(String(e), "seconds");
             }}
           />
-          <p className="text-sm font-semibold text-fade">03:32</p>
+          <p className="text-sm font-semibold text-fade">
+            {getTimeStringFromSeconds(playerRef.current?.getDuration() || 0)}
+          </p>
         </div>
       </div>
       <div className="flex items-center h-fit gap-2">
