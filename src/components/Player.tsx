@@ -434,7 +434,7 @@ const Player = () => {
         />
       </div>
       <Drawer
-        title="Basic Drawer"
+        title="Queue"
         onClose={() =>
           setPlayerStates((prev) => ({
             ...prev,
@@ -443,9 +443,26 @@ const Player = () => {
         }
         open={playerStates.openQueue}
       >
-        <p>Some contents...</p>
-        <p>Some contents...</p>
-        <p>Some contents...</p>
+        {queue.map((track, i) => (
+          <div
+            key={i}
+            className={`flex items-center gap-4 ${
+              playerStates.current === i && "bg-light"
+            }`}
+          >
+            <img
+              className="w-10 h-10 rounded-lg"
+              src={track.album.images[1].url}
+              alt={track.name}
+            />
+            <div>
+              <h2 className="font-semibold">{track.name}</h2>
+              <p className="text-sm text-fade">
+                {track.artists.map((a) => a.name)?.join(", ")}
+              </p>
+            </div>
+          </div>
+        ))}
       </Drawer>
     </div>
   );
