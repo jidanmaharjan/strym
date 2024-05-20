@@ -443,26 +443,44 @@ const Player = () => {
         }
         open={playerStates.openQueue}
       >
-        {queue.map((track, i) => (
-          <div
-            key={i}
-            className={`flex items-center gap-4 ${
-              playerStates.current === i && "bg-light"
-            }`}
-          >
-            <img
-              className="w-10 h-10 rounded-lg"
-              src={track.album.images[1].url}
-              alt={track.name}
-            />
-            <div>
-              <h2 className="font-semibold">{track.name}</h2>
-              <p className="text-sm text-fade">
-                {track.artists.map((a) => a.name)?.join(", ")}
-              </p>
+        <div className="grid">
+          {queue.map((track, i) => (
+            <div
+              key={i}
+              className={`flex items-center gap-4 p-2 ${
+                playerStates.current === i && "border border-primary rounded-sm"
+              }`}
+            >
+              <img
+                className="w-10 h-10 rounded-md"
+                src={track.album.images[1].url}
+                alt={track.name}
+              />
+              <div>
+                <h2 className="font-semibold">{track.name}</h2>
+                <p className="text-sm text-fade">
+                  {track.artists.map((a) => a.name)?.join(", ")}
+                </p>
+              </div>
+              {playerStates.current !== i && (
+                <Button
+                  className="ml-auto"
+                  type="text"
+                  shape="circle"
+                  onClick={() =>
+                    setPlayerStates((prev) => ({
+                      ...prev,
+                      current: i,
+                      isPlaying: true,
+                    }))
+                  }
+                >
+                  <TbPlayerPlay />
+                </Button>
+              )}
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </Drawer>
     </div>
   );
