@@ -23,6 +23,7 @@ type playerStatesType = {
   voulume: number;
   mute: boolean;
   current: number;
+  openQueue: boolean;
 };
 
 type ContextType = {
@@ -53,6 +54,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     voulume: 100,
     mute: false,
     current: 0,
+    openQueue: false,
   });
   const navigate = useNavigate();
 

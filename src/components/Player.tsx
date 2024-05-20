@@ -1,4 +1,4 @@
-import { Button, Slider } from "antd";
+import { Button, Drawer, Slider } from "antd";
 import { useEffect, useRef, useState } from "react";
 import { BsFullscreen } from "react-icons/bs";
 import { CgToolbarBottom } from "react-icons/cg";
@@ -349,7 +349,17 @@ const Player = () => {
         </div>
       </div>
       <div className="flex items-center h-fit gap-2">
-        <Button className="" icon={<TbPlaylist size={20} />} type="text" />
+        <Button
+          className=""
+          onClick={() =>
+            setPlayerStates((prev) => ({
+              ...prev,
+              openQueue: true,
+            }))
+          }
+          icon={<TbPlaylist size={20} />}
+          type="text"
+        />
         <Button
           className=""
           onClick={() => {
@@ -423,6 +433,20 @@ const Player = () => {
           ref={volumeRef}
         />
       </div>
+      <Drawer
+        title="Basic Drawer"
+        onClose={() =>
+          setPlayerStates((prev) => ({
+            ...prev,
+            openQueue: false,
+          }))
+        }
+        open={playerStates.openQueue}
+      >
+        <p>Some contents...</p>
+        <p>Some contents...</p>
+        <p>Some contents...</p>
+      </Drawer>
     </div>
   );
 };
