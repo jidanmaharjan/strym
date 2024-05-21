@@ -40,6 +40,7 @@ const Genre = () => {
         <div>
           <Button
             type="text"
+            className="text-light"
             onClick={() => {
               let newFav = null;
               if (favouriteGenres.includes(item)) {
