@@ -43,15 +43,24 @@ type PlaylistSingleType = {
   uri: string;
 };
 
+interface IFavoutirePlaylists {
+  id: string;
+  name: string;
+  images: Array<{
+    height: number;
+    url: string;
+    width: number;
+  }>;
+}
 interface PlaylistCardsProps {
   data: PlaylistSingleType[];
   loading: boolean;
 }
 const PlaylistCards = (props: PlaylistCardsProps) => {
   const { data, loading } = props;
-  const [favouritePlaylists, setFavouritePlaylists] = useState<string[]>(
-    JSON.parse(localStorage.getItem("favouritePlaylists") || "[]")
-  );
+  const [favouritePlaylists, setFavouritePlaylists] = useState<
+    IFavoutirePlaylists[]
+  >(JSON.parse(localStorage.getItem("favouritePlaylists") || "[]"));
   const navigate = useNavigate();
 
   if (loading) {
@@ -83,20 +92,26 @@ const PlaylistCards = (props: PlaylistCardsProps) => {
                 className="text-primary cursor-pointer text-lg"
                 key="favourite"
                 onClick={() => {
-                  if (favouritePlaylists.includes(item.id)) {
+                  if (favouritePlaylists.find((x) => x.id === item.id)) {
                     setFavouritePlaylists(
-                      favouritePlaylists.filter((id) => id !== item.id)
+                      favouritePlaylists.filter((fav) => fav.id !== item.id)
                     );
                   } else {
-                    setFavouritePlaylists([...favouritePlaylists, item.id]);
+                    setFavouritePlaylists([
+                      ...favouritePlaylists,
+                      { id: item.id, name: item.name, images: item.images },
+                    ]);
                   }
                   localStorage.setItem(
                     "favouritePlaylists",
-                    JSON.stringify([...favouritePlaylists, item.id])
+                    JSON.stringify([
+                      ...favouritePlaylists,
+                      { id: item.id, name: item.name, images: item.images },
+                    ])
                   );
                 }}
               >
-                {favouritePlaylists.includes(item.id) ? (
+                {favouritePlaylists.find((x) => x.id === item.id) ? (
                   <IoHeart />
                 ) : (
                   <IoHeartOutline />
