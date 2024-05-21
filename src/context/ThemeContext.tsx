@@ -22,8 +22,10 @@ export const ThemeProvider = ({ children }: { children: ReactNode }) => {
   const [search, setSearch] = useState<string>("");
 
   const toggleTheme = () => {
-    setTheme((prevTheme) => (prevTheme === "light" ? "dark" : "light"));
-    localStorage.setItem("theme", theme);
+    setTheme((prevTheme) => {
+      localStorage.setItem("theme", prevTheme === "light" ? "dark" : "light");
+      return prevTheme === "light" ? "dark" : "light";
+    });
   };
 
   useEffect(() => {

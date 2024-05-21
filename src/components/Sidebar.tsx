@@ -12,15 +12,35 @@ const Sidebar = () => {
   const navigate = useNavigate();
   type MenuItem = Required<MenuProps>["items"][number];
 
+  const pinnedAlbums: MenuItem[] = [
+    {
+      type: "divider",
+    },
+    {
+      key: "/album/oajsdoajsd",
+      icon: <img src="" alt="hey" />,
+      label: "The Album",
+    },
+    {
+      key: "/album/asdasd",
+      label: "Reputation",
+    },
+  ];
+
   const items: MenuItem[] = [
     { key: "/", icon: <FiMusic />, label: "Home" },
     { key: "/search", icon: <FiSearch />, label: "Search" },
     { key: "/genre", icon: <BiVolumeFull />, label: "Genre" },
     { key: "/library", icon: <LuLibrary />, label: "Library" },
     { type: "divider" },
-    { key: "/library/add", icon: <MdOutlineAddBox />, label: "Add Library" },
+    {
+      key: "/recommendations",
+      icon: <MdOutlineAddBox />,
+      label: "Recommendations",
+    },
     { key: "/favourites", icon: <IoHeartOutline />, label: "Favourites" },
   ];
+  items.push(...pinnedAlbums);
   return (
     <div className="fixed left-0 min-h-screen z-50 bg-white w-60">
       <div className="flex items-center gap-2 py-4 px-6">

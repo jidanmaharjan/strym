@@ -50,7 +50,7 @@ const Featured = (props: FeaturedProps) => {
       fade
       className="mb-4 rounded-lg overflow-clip"
     >
-      {data.map((item) => {
+      {data?.map((item) => {
         const randomColor = getRandomColorPair();
 
         return (
