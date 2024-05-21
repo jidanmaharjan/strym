@@ -10,22 +10,10 @@ import logo from "../assets/logo.png";
 const Sidebar = () => {
   const { pathname } = useLocation();
   const navigate = useNavigate();
+  const favouritePlaylists = JSON.parse(
+    localStorage.getItem("favouritePlaylists") || "[]"
+  );
   type MenuItem = Required<MenuProps>["items"][number];
-
-  const pinnedAlbums: MenuItem[] = [
-    {
-      type: "divider",
-    },
-    {
-      key: "/album/oajsdoajsd",
-      icon: <img src="" alt="hey" />,
-      label: "The Album",
-    },
-    {
-      key: "/album/asdasd",
-      label: "Reputation",
-    },
-  ];
 
   const items: MenuItem[] = [
     { key: "/", icon: <FiMusic />, label: "Home" },
@@ -40,7 +28,24 @@ const Sidebar = () => {
     },
     { key: "/favourites", icon: <IoHeartOutline />, label: "Favourites" },
   ];
-  items.push(...pinnedAlbums);
+  if (favouritePlaylists.length > 0) {
+    items.push({
+      type: "divider",
+    });
+  }
+  favouritePlaylists?.forEach((fav: any) =>
+    items.push({
+      key: `playlist/${fav.id}`,
+      icon: (
+        <img
+          className="w-8 h-8 rounded-md"
+          src={fav.images?.[fav?.images.length - 1].url}
+          alt={fav.name}
+        />
+      ),
+      label: fav.name,
+    })
+  );
   return (
     <div className="fixed left-0 min-h-screen z-50 bg-white w-60">
       <div className="flex items-center gap-2 py-4 px-6">
