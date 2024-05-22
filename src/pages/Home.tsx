@@ -55,7 +55,7 @@ const Home = () => {
   }
 
   return (
-    <div className="p-4  w-full bg-white dark:bg-background_semidark dark:text-white">
+    <div className="p-4  w-full ">
       {/* <Tabs defaultActiveKey="1" items={tabItems} />
        */}
       <Recommendations />
