@@ -1,9 +1,7 @@
 import { Avatar } from "antd";
-import { CiSettings } from "react-icons/ci";
-import { IoIosNotificationsOutline } from "react-icons/io";
 import { MdDarkMode, MdLightMode } from "react-icons/md";
-import { useTheme } from "../context/ThemeContext";
 import logo from "../assets/logo.png";
+import { useTheme } from "../context/ThemeContext";
 
 const Navbar = () => {
   const { theme, toggleTheme } = useTheme();
@@ -17,32 +15,15 @@ const Navbar = () => {
         <h3 className="">Strym.</h3>
       </div>
       <div className="flex gap-4 items-center w-fit">
-        {/* <Switch
-      checkedChildren={<FiMoon size={20} />}
-      unCheckedChildren={<FiSun size={20} />}
-      defaultChecked
-    /> */}
         <button
           className="w-fit p-0 hover:text-primary"
           onClick={() => toggleTheme()}
         >
           {theme === "light" ? (
-            <MdLightMode size={20} />
-          ) : (
             <MdDarkMode size={20} />
+          ) : (
+            <MdLightMode size={20} />
           )}
-        </button>
-        <button
-          className="w-fit p-0 hover:text-primary"
-          onClick={() => toggleTheme()}
-        >
-          <IoIosNotificationsOutline size={20} />
-        </button>
-        <button
-          className="w-fit p-0 hover:text-primary"
-          onClick={() => toggleTheme()}
-        >
-          <CiSettings size={20} />
         </button>
         <Avatar style={{ backgroundColor: "#fde3cf", color: "#f56a00" }}>
           U
