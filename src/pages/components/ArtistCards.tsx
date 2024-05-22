@@ -8,7 +8,7 @@ import { LuUsers2 } from "react-icons/lu";
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 
-type ArtistSingleType = {
+export type ArtistSingleType = {
   external_urls: {
     spotify: string;
   };
