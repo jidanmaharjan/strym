@@ -48,7 +48,7 @@ const Sidebar = () => {
     })
   );
   return (
-    <div className="fixed left-0 min-h-screen z-30 bg-white w-60 pt-16">
+    <div className="fixed left-0 min-h-screen z-30 w-60 pt-16">
       <Menu
         defaultSelectedKeys={[pathname]}
         mode="inline"

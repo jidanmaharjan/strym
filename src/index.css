@@ -15,6 +15,15 @@
   display: flex;
   justify-content: center;
 }
+.ant-card-actions li {
+  display: block !important;
+  margin: 0 !important;
+  padding: 0.5rem;
+}
+.ant-card-actions button {
+  padding: 1rem !important ;
+  width: 100%;
+}
 
 .hide-scrollbar {
   scrollbar-width: none;

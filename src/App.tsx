@@ -14,7 +14,7 @@ import Search from "./pages/Search";
 
 function App() {
   return (
-    <section className="flex w-full min-h-screen flex-col">
+    <section className="flex w-full min-h-screen flex-col bg-white dark:bg-background_semidark">
       <Scrolltotop />
       <Navbar />
 

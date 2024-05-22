@@ -65,7 +65,7 @@ const AlbumCards = (props: AlbumCardsProps) => {
             return (
               <Card
                 key={item.id}
-                className="w-60"
+                className="w-60 "
                 cover={
                   <img
                     alt={item.name}
