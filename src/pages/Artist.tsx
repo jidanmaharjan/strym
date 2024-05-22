@@ -5,10 +5,11 @@ import Loader from "../components/Loader";
 import { useQuery } from "react-query";
 import TopTracks from "./components/TopTracks";
 import TopAlbums from "./components/TopAlbums";
+import Error from "./Error";
 
 const Artist = () => {
   const { artistId } = useParams();
-  const { data, isFetching } = useQuery(["artist", artistId], () =>
+  const { data, isFetching, isError } = useQuery(["artist", artistId], () =>
     getArtistById(String(artistId))
   );
 
@@ -18,6 +19,9 @@ const Artist = () => {
         <Loader />
       </div>
     );
+  }
+  if (isError) {
+    return <Error />;
   }
   return (
     <div className="">

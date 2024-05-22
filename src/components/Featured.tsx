@@ -22,15 +22,6 @@ const Featured = (props: FeaturedProps) => {
     JSON.parse(localStorage.getItem("favouriteTracks") || "[]")
   );
 
-  const playMusic = (url: string) => {
-    if (!url) return;
-    //stop any playing audio
-    const audioElements = document.querySelectorAll("audio");
-    audioElements.forEach((audio) => audio.pause());
-    const audio = new Audio(url);
-    audio.play();
-  };
-
   if (loading) {
     return (
       <div className="h-80 flex rounded-lg mb-4 overflow-clip">
