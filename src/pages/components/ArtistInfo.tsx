@@ -13,7 +13,7 @@ const ArtistInfo = (props: { data: ArtistSingleType }) => {
   );
 
   return (
-    <div className="flex gap-4 items-end p-4">
+    <div className="flex gap-4 items-end sticky top-16 z-50 bg-white p-4">
       <div className="relative">
         <img
           src={data?.images?.[1]?.url}
@@ -43,6 +43,7 @@ const ArtistInfo = (props: { data: ArtistSingleType }) => {
         </div>
         <div className="mt-4 flex items-center gap-4">
           <Button
+            size="large"
             icon={<FaHeadphonesSimple />}
             type="primary"
             className="rounded-full"
@@ -53,6 +54,7 @@ const ArtistInfo = (props: { data: ArtistSingleType }) => {
             Listen Now
           </Button>
           <Button
+            size="large"
             shape="circle"
             icon={
               favouriteArtists.includes(data.id) ? (
