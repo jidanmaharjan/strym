@@ -65,7 +65,7 @@ const TopTracks = (props: { id: string | undefined }) => {
   return (
     <Table
       sticky
-      className="p-4"
+      className="p-4 w-2/3"
       bordered
       loading={isFetching}
       size="small"

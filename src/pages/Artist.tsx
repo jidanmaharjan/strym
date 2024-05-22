@@ -4,6 +4,7 @@ import ArtistInfo from "./components/ArtistInfo";
 import Loader from "../components/Loader";
 import { useQuery } from "react-query";
 import TopTracks from "./components/TopTracks";
+import TopAlbums from "./components/TopAlbums";
 
 const Artist = () => {
   const { artistId } = useParams();
@@ -21,7 +22,10 @@ const Artist = () => {
   return (
     <div className="">
       <ArtistInfo data={data} />
-      <TopTracks id={artistId} />
+      <div className="flex gap-4">
+        <TopTracks id={artistId} />
+        <TopAlbums id={artistId} />
+      </div>
     </div>
   );
 };
