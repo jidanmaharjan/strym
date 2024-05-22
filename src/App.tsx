@@ -14,12 +14,12 @@ import Search from "./pages/Search";
 
 function App() {
   return (
-    <section className="flex w-full min-h-screen">
+    <section className="flex w-full min-h-screen flex-col">
       <Scrolltotop />
-      <Sidebar />
+      <Navbar />
 
+      <Sidebar />
       <div className="pl-60 w-full pb-24">
-        <Navbar />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/search" element={<Search />} />

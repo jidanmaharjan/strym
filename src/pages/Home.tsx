@@ -1,4 +1,4 @@
-import { Tabs, TabsProps } from "antd";
+import { TabsProps } from "antd";
 import { useState } from "react";
 import { MdOutlineNewReleases } from "react-icons/md";
 import { TbCategory } from "react-icons/tb";
@@ -6,10 +6,9 @@ import { useQuery } from "react-query";
 import ErrorPage from "../components/Error";
 import Loader from "../components/Loader";
 import NewReleases from "../components/NewReleases";
+import Recommendations from "../components/Recommendations";
 import { useTheme } from "../context/ThemeContext";
 import { searchSongs } from "../queries/songs";
-import Featured from "../components/Featured";
-import Recommendations from "../components/Recommendations";
 
 const Home = () => {
   const [items, setItems] = useState();
@@ -56,7 +55,7 @@ const Home = () => {
   }
 
   return (
-    <div className="p-4  w-full ">
+    <div className="p-4  w-full bg-white dark:bg-background_semidark dark:text-white">
       {/* <Tabs defaultActiveKey="1" items={tabItems} />
        */}
       <Recommendations />

@@ -7,7 +7,7 @@ import { BrowserRouter } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { AuthProvider } from "./context/AuthContext.tsx";
 import { ConfigProvider } from "antd";
-import 'antd'
+import "antd";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -23,18 +23,17 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
     <QueryClientProvider client={queryClient}>
       <ThemeProvider>
         <BrowserRouter>
-        <ConfigProvider
-          theme={{
-            token: {
-              colorPrimary: '#6c40aa'
-            },
-          }}
-        >
-
-          <AuthProvider>
-            <App />
-          </AuthProvider>
-        </ConfigProvider>
+          <ConfigProvider
+            theme={{
+              token: {
+                colorPrimary: "#6c40aa",
+              },
+            }}
+          >
+            <AuthProvider>
+              <App />
+            </AuthProvider>
+          </ConfigProvider>
         </BrowserRouter>
       </ThemeProvider>
     </QueryClientProvider>
