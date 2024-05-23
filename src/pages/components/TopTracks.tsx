@@ -10,6 +10,7 @@ import { getTimeStringFromMilliseconds } from "../../components/Player";
 import { RiMenuAddFill } from "react-icons/ri";
 import { useAuth } from "../../context/AuthContext";
 import { TbPlayerPlay } from "react-icons/tb";
+import { PiWaveform } from "react-icons/pi";
 
 type TopTracksProps = {
   id: string | undefined;
@@ -18,7 +19,7 @@ type TopTracksProps = {
 
 const TopTracks = (props: TopTracksProps) => {
   const { id, setPlayableTracks } = props;
-  const { queue, setQueue, setPlayerStates } = useAuth();
+  const { queue, setQueue, playerStates, setPlayerStates } = useAuth();
 
   const [favouriteTracks, setFavouriteTracks] = useState<string[]>(
     JSON.parse(localStorage.getItem("favouriteTracks") || "[]")
@@ -81,7 +82,11 @@ const TopTracks = (props: TopTracksProps) => {
         <div className="flex">
           <Button
             key="play"
-            disabled={!item.preview_url}
+            disabled={
+              !item.preview_url ||
+              (playerStates?.isPlaying &&
+                queue[playerStates.current].id === item.id)
+            }
             onClick={() => {
               if (item.preview_url) {
                 setQueue([item]);
@@ -98,7 +103,12 @@ const TopTracks = (props: TopTracksProps) => {
             }}
             type="text"
           >
-            <TbPlayerPlay />
+            {playerStates?.isPlaying &&
+            queue[playerStates.current].id === item.id ? (
+              <PiWaveform className="animate-pulse" />
+            ) : (
+              <TbPlayerPlay />
+            )}
           </Button>
 
           <Button
