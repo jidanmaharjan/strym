@@ -130,7 +130,9 @@ const TrackCards = (props: TrackCardsProps) => {
                 key="queue"
                 disabled={!item.preview_url}
                 onClick={() =>
-                  item.preview_url && setQueue((prev) => [...prev, item])
+                  item.preview_url &&
+                  !queue.find((x) => x.id === item.id) &&
+                  setQueue((prev) => [...prev, item])
                 }
                 type="text"
               >

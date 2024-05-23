@@ -4,6 +4,12 @@ import Loader from "../../components/Loader";
 import { Button, Table } from "antd";
 import { FiHeart, FiPlay } from "react-icons/fi";
 import { TrackSingleType } from "./TrackCards";
+import { useState } from "react";
+import { IoHeart, IoHeartOutline } from "react-icons/io5";
+import { getTimeStringFromMilliseconds } from "../../components/Player";
+import { RiMenuAddFill } from "react-icons/ri";
+import { useAuth } from "../../context/AuthContext";
+import { TbPlayerPlay } from "react-icons/tb";
 
 type TopTracksProps = {
   id: string | undefined;
@@ -12,6 +18,11 @@ type TopTracksProps = {
 
 const TopTracks = (props: TopTracksProps) => {
   const { id, setPlayableTracks } = props;
+  const { queue, setQueue, setPlayerStates } = useAuth();
+
+  const [favouriteTracks, setFavouriteTracks] = useState<string[]>(
+    JSON.parse(localStorage.getItem("favouriteTracks") || "[]")
+  );
 
   const { data, isFetching } = useQuery(
     ["top-tracks", id],
@@ -57,15 +68,74 @@ const TopTracks = (props: TopTracksProps) => {
       key: "album_name",
     },
     {
+      dataIndex: "duration_ms",
+      key: "duration",
+      render: (duration: any) => getTimeStringFromMilliseconds(duration),
+      width: 100,
+    },
+    {
       dataIndex: "id",
       key: "actions",
-      render: () => (
-        <div>
-          <Button type="text" icon={<FiHeart size={20} />} />
-          <Button type="text" icon={<FiPlay size={20} />} />
+      width: "fit-content",
+      render: (id: string, item: any) => (
+        <div className="flex">
+          <Button
+            key="play"
+            disabled={!item.preview_url}
+            onClick={() => {
+              if (item.preview_url) {
+                setQueue([item]);
+                setPlayerStates &&
+                  setPlayerStates((prev) => ({
+                    ...prev,
+                    current: 0,
+                    isPlaying: true,
+                    seek: 0,
+                    played: 0,
+                    playedSeconds: 0,
+                  }));
+              }
+            }}
+            type="text"
+          >
+            <TbPlayerPlay />
+          </Button>
+
+          <Button
+            key="queue"
+            disabled={!item.preview_url}
+            onClick={() =>
+              item.preview_url &&
+              !queue.find((x) => x.id === item.id) &&
+              setQueue((prev) => [...prev, item])
+            }
+            type="text"
+          >
+            <RiMenuAddFill />
+          </Button>
+          <Button
+            className="text-primary cursor-pointer text-lg"
+            type="text"
+            key="favourite"
+            onClick={() => {
+              let newFav = null;
+              if (favouriteTracks.includes(item.id)) {
+                newFav = favouriteTracks.filter((id) => id !== item.id);
+              } else {
+                newFav = [...favouriteTracks, item.id];
+              }
+              setFavouriteTracks(newFav);
+              localStorage.setItem("favouriteTracks", JSON.stringify(newFav));
+            }}
+          >
+            {favouriteTracks.includes(item.id) ? (
+              <IoHeart />
+            ) : (
+              <IoHeartOutline />
+            )}
+          </Button>
         </div>
       ),
-      width: 100,
     },
   ];
   if (isFetching) {

@@ -20,6 +20,20 @@ import { getRandomColorPair } from "../constants/helpers";
 import ReactPlayer from "react-player";
 import { useAuth } from "../context/AuthContext";
 
+export const getTimeStringFromSeconds = (seconds: number) => {
+  const minutes = Math.floor(seconds / 60);
+  seconds = Math.floor(seconds) - minutes * 60;
+  return `${minutes}:${seconds < 10 ? "0" + seconds : seconds}`;
+};
+
+export const getTimeStringFromMilliseconds = (ms: number) => {
+  const seconds = Math.floor(ms / 1000);
+  const minutes = Math.floor(seconds / 60);
+  return `${minutes < 10 ? "0" + minutes : minutes} : ${
+    seconds % 60 < 10 ? "0" + (seconds % 60) : seconds % 60
+  }`;
+};
+
 const Player = () => {
   const color = getRandomColorPair();
 
@@ -67,12 +81,6 @@ const Player = () => {
 
   const seekPlayer = (seek: string, type: string) => {
     playerRef?.current?.seekTo(parseFloat(seek), type);
-  };
-
-  const getTimeStringFromSeconds = (seconds: number) => {
-    const minutes = Math.floor(seconds / 60);
-    seconds = Math.floor(seconds) - minutes * 60;
-    return `${minutes}:${seconds < 10 ? "0" + seconds : seconds}`;
   };
 
   return (

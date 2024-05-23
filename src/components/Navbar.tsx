@@ -8,7 +8,7 @@ const Navbar = () => {
 
   return (
     <div
-      className={`w-full flex justify-between gap-4 p-4 shadow-sm bg-white dark:bg-background_dark dark:text-white sticky top-0 z-40`}
+      className={`w-full flex justify-between gap-4 p-4 border-b shadow-sm bg-white dark:bg-background_dark dark:text-white sticky top-0 z-40`}
     >
       <div className="flex items-center gap-2 pl-4">
         <img src={logo} alt="logo" className="h-8 w-8" />
