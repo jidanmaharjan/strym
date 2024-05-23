@@ -93,6 +93,7 @@ const Player = () => {
           width={"0"}
           height={"0"}
           playsinline
+          muted={playerStates.mute}
           controls={playerStates.fullscreen}
           volume={playerStates.voulume / 100}
           suppressHydrationWarning
