@@ -52,7 +52,7 @@ const AllAlbums = (props: { id: string | undefined }) => {
       dataIndex: "id",
       key: "actions",
       width: "fit-content",
-      render: (id: string, item: any) => (
+      render: (_id: string, item: any) => (
         <div className="flex">
           <Button
             className="text-primary cursor-pointer text-lg ml-auto"

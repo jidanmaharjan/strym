@@ -1,5 +1,5 @@
 import { Button, Drawer, Slider } from "antd";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { BsFullscreen } from "react-icons/bs";
 import { CgToolbarBottom } from "react-icons/cg";
 import { MdOutlineSkipNext, MdOutlineSkipPrevious } from "react-icons/md";
@@ -15,7 +15,6 @@ import {
   TbVolume2,
   TbVolume3,
 } from "react-icons/tb";
-import { getRandomColorPair } from "../constants/helpers";
 
 import ReactPlayer from "react-player";
 import { useAuth } from "../context/AuthContext";
@@ -35,8 +34,6 @@ export const getTimeStringFromMilliseconds = (ms: number) => {
 };
 
 const Player = () => {
-  const color = getRandomColorPair();
-
   const { queue, playerStates, setPlayerStates } = useAuth();
 
   const playerRef = useRef<any>();

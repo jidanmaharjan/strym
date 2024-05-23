@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { FiSearch } from "react-icons/fi";
 import { TbDatabaseSearch, TbFilter } from "react-icons/tb";
 import { useQuery } from "react-query";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 import { searchSpotify } from "../queries/search";
 import AlbumCards from "./library/components/AlbumCards";
 import ArtistCards from "./library/components/ArtistCards";
@@ -18,7 +18,6 @@ const filterOptions = [
 ];
 
 const Search = () => {
-  const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
   const [query, setQuery] = useState(searchParams.get("q") || "");
 

@@ -1,12 +1,12 @@
 import { Button, Card, Tag } from "antd";
 import Meta from "antd/es/card/Meta";
+import { useState } from "react";
 import { IoHeart, IoHeartOutline } from "react-icons/io5";
-import { TbListDetails, TbMusicSearch } from "react-icons/tb";
+import { LuUsers2 } from "react-icons/lu";
+import { TbListDetails } from "react-icons/tb";
+import { Link, useNavigate } from "react-router-dom";
 import Loader from "../../../components/Loader";
 import { getRandomColorPair } from "../../../constants/helpers";
-import { LuUsers2 } from "react-icons/lu";
-import { Link, useNavigate } from "react-router-dom";
-import { useState } from "react";
 
 export type ArtistSingleType = {
   external_urls: {

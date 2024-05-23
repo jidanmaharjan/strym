@@ -5,7 +5,7 @@ import { BiAlbum } from "react-icons/bi";
 import { IoHeart, IoHeartOutline } from "react-icons/io5";
 import { RiMenuAddFill } from "react-icons/ri";
 import { TbPlayerPlay } from "react-icons/tb";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Loader from "../../../components/Loader";
 import { getRandomColorPair } from "../../../constants/helpers";
 import { useAuth } from "../../../context/AuthContext";
@@ -83,7 +83,6 @@ const TrackCards = (props: TrackCardsProps) => {
   );
 
   const { queue, setQueue, setPlayerStates } = useAuth();
-  const navigate = useNavigate();
 
   if (loading) {
     return <Loader />;

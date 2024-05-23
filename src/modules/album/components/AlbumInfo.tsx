@@ -1,11 +1,9 @@
-import { Button, Tag } from "antd";
-import { getRandomColorPair } from "../../../constants/helpers";
-import { AlbumSingleType } from "../../library/components/AlbumCards";
+import { Button } from "antd";
 import { useState } from "react";
 import { FaHeadphonesSimple } from "react-icons/fa6";
 import { IoAlbumsOutline, IoHeart, IoHeartOutline } from "react-icons/io5";
-import { LuUsers2 } from "react-icons/lu";
 import { Link } from "react-router-dom";
+import { AlbumSingleType } from "../../library/components/AlbumCards";
 
 type AlbumInfoProps = {
   data: AlbumSingleType;

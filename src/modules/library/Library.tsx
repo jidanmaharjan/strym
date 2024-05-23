@@ -1,4 +1,6 @@
-import { TbDatabaseSearch, TbHeartSearch } from "react-icons/tb";
+import { FloatButton } from "antd";
+import { RiRefreshLine } from "react-icons/ri";
+import { TbHeartSearch } from "react-icons/tb";
 import { useQuery } from "react-query";
 import {
   getMultipleAlbums,
@@ -8,8 +10,6 @@ import {
 import AlbumCards from "./components/AlbumCards";
 import ArtistCards from "./components/ArtistCards";
 import TrackCards from "./components/TrackCards";
-import { FloatButton } from "antd";
-import { RiRefreshLine } from "react-icons/ri";
 
 const Library = () => {
   const favouriteArtists = JSON.parse(

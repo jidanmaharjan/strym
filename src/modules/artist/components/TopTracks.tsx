@@ -77,7 +77,7 @@ const TopTracks = (props: TopTracksProps) => {
       dataIndex: "id",
       key: "actions",
       width: "fit-content",
-      render: (id: string, item: any) => (
+      render: (_id: string, item: any) => (
         <div className="flex">
           <Button
             key="play"

@@ -3,7 +3,6 @@ import Search from "antd/es/input/Search";
 import { useState } from "react";
 import { IoHeart, IoHeartOutline } from "react-icons/io5";
 import { useQuery } from "react-query";
-import { Link } from "react-router-dom";
 import useFuse from "../hooks/useFuse";
 import { getGenres } from "../queries/genre";
 interface DataType {

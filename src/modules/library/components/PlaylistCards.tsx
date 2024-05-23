@@ -1,12 +1,11 @@
-import { Card, Tag } from "antd";
+import { Card } from "antd";
 import Meta from "antd/es/card/Meta";
-import { IoHeart, IoHeartOutline } from "react-icons/io5";
-import { TbMusic, TbMusicSearch } from "react-icons/tb";
-import Loader from "../../../components/Loader";
-import { getRandomColorPair } from "../../../constants/helpers";
-import { LuUser, LuUsers2 } from "react-icons/lu";
-import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { IoHeart, IoHeartOutline } from "react-icons/io5";
+import { LuUser } from "react-icons/lu";
+import { TbMusic, TbMusicSearch } from "react-icons/tb";
+import { Link, useNavigate } from "react-router-dom";
+import Loader from "../../../components/Loader";
 
 type PlaylistSingleType = {
   collaborative: boolean;
