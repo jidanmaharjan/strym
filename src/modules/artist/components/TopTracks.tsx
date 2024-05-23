@@ -158,6 +158,7 @@ const TopTracks = (props: TopTracksProps) => {
     <Table
       sticky
       className="p-4"
+      rowKey={(record) => record.id}
       bordered
       loading={isFetching}
       size="small"

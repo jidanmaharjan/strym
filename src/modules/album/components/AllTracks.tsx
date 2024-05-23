@@ -182,6 +182,7 @@ const AllTracks = (props: AllTracksProps) => {
       sticky
       className="p-4"
       bordered
+      rowKey={(record) => record.id}
       loading={isFetching}
       size="small"
       columns={columns}

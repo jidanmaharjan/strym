@@ -91,6 +91,9 @@ const Genre = () => {
       <Table
         sticky
         bordered
+        rowKey={(record) => {
+          return String(record);
+        }}
         loading={genresLoading || genresFetching}
         rowSelection={{
           type: "checkbox",

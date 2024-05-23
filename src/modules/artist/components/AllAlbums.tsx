@@ -92,6 +92,7 @@ const AllAlbums = (props: { id: string | undefined }) => {
       <Table
         sticky
         loading={isFetching}
+        rowKey={(record) => record.id}
         size="small"
         columns={columns}
         dataSource={data.items || []}
