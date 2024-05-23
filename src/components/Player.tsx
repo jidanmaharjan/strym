@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { BsFullscreen } from "react-icons/bs";
 import { CgToolbarBottom } from "react-icons/cg";
 import { MdOutlineSkipNext, MdOutlineSkipPrevious } from "react-icons/md";
-import { PiDevices } from "react-icons/pi";
+import { PiDevices, PiWaveform } from "react-icons/pi";
 import {
   TbArrowsShuffle,
   TbPlayerPause,
@@ -463,7 +463,7 @@ const Player = () => {
                   {track.artists.map((a) => a.name)?.join(", ")}
                 </p>
               </div>
-              {playerStates.current !== i && (
+              {playerStates.current !== i ? (
                 <Button
                   className="ml-auto"
                   type="text"
@@ -478,6 +478,8 @@ const Player = () => {
                 >
                   <TbPlayerPlay />
                 </Button>
+              ) : (
+                <PiWaveform size={20} className="ml-auto mr-2 animate-pulse" />
               )}
             </div>
           ))}
