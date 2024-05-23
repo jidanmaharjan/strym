@@ -168,7 +168,7 @@ const TrackCards = (props: TrackCardsProps) => {
               {item.popularity}
             </div>
             <Meta
-              title={<Link to={`/track/${item.id}`}>{item.name}</Link>}
+              title={item.name}
               description={
                 <div className="flex flex-col gap-2 flex-grow">
                   <Link

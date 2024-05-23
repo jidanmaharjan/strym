@@ -57,14 +57,15 @@ const Featured = (props: FeaturedProps) => {
                 >
                   {item.album.name} - {item.album.album_type}
                 </Link>
-                <Link
-                  to={`/track/${item.id}`}
-                  className="text-white text-6xl font-bold mb-2"
-                >
+                <h2 className="text-white text-6xl font-bold mb-2">
                   {item.name}
-                </Link>
-                <h3 className="text-white text-lg font-semibold">
-                  {item.artists.map((a) => a.name)?.join(", ")}
+                </h2>
+                <h3 className="text-white text-lg font-semibold flex gap-4">
+                  {item.artists.map((a) => (
+                    <Link to={`/artist/${a.id}`} key={a.id}>
+                      {a.name}
+                    </Link>
+                  ))}
                 </h3>
                 <div className="mt-4 flex items-center gap-4">
                   <Button
