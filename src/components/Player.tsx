@@ -175,7 +175,7 @@ const Player = () => {
               ? "w-40 h-40 rounded-lg shadow-md mx-auto"
               : " w-20 h-20 rounded-lg absolute top-0 -translate-y-4 shadow-md"
           }`}
-          src={currentTrack.album.images[1].url}
+          src={currentTrack.album.images?.[1]?.url}
           alt={currentTrack.name}
         />
         <div className={`${!playerStates.fullscreen && "pl-24"}`}>

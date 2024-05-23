@@ -1,16 +1,16 @@
-import { Routes, Route } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import Navbar from "./components/Navbar";
-import Scrolltotop from "./components/Scrolltotop";
-import Artist from "./pages/Artist";
-import Home from "./pages/Home";
-import Song from "./pages/Song";
-import Error from "./pages/Error";
-import Sidebar from "./components/Sidebar";
 import Player from "./components/Player";
-import Genre from "./pages/Genre";
-import Library from "./pages/Library";
-import Favourites from "./pages/Favourites";
-import Search from "./pages/Search";
+import Scrolltotop from "./components/Scrolltotop";
+import Sidebar from "./components/Sidebar";
+import Error from "./modules/Error";
+import Favourites from "./modules/Favourites";
+import Genre from "./modules/Genre";
+import Home from "./modules/Home";
+import Search from "./modules/Search";
+import Artist from "./modules/artist/Artist";
+import Library from "./modules/library/Library";
+import Album from "./modules/album/Album";
 
 function App() {
   return (
@@ -26,8 +26,8 @@ function App() {
           <Route path="/genre" element={<Genre />} />
           <Route path="/library" element={<Library />} />
           <Route path="/favourites" element={<Favourites />} />
-          <Route path="/song/:songId/*" element={<Song />} />
           <Route path="/artist/:artistId/*" element={<Artist />} />
+          <Route path="/album/:albumId/*" element={<Album />} />
           <Route path="*" element={<Error />} />
         </Routes>
       </div>

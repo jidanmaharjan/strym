@@ -12,9 +12,15 @@ export const getTopTracks = async (id: string) =>
     method: "GET",
   });
 
-export const getTopAlbums = async (id: string) =>
+export const getAllAlbums = async (id: string) =>
   callAxios({
     url: `artists/${id}/albums`,
+    method: "GET",
+  });
+
+export const getRelatedArtists = async (id: string) =>
+  callAxios({
+    url: `artists/${id}/related-artists`,
     method: "GET",
     params: { limit: 10 },
   });

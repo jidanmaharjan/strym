@@ -4,7 +4,7 @@ import {
   getMultipleAlbums,
   getMultipleArtists,
   getMultipleTracks,
-} from "../queries/multidata";
+} from "../../queries/multidata";
 import AlbumCards from "./components/AlbumCards";
 import ArtistCards from "./components/ArtistCards";
 import TrackCards from "./components/TrackCards";

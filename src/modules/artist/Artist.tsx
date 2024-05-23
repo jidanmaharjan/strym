@@ -1,14 +1,15 @@
-import { useParams } from "react-router-dom";
-import { getArtistById } from "../queries/artist";
-import ArtistInfo from "./components/ArtistInfo";
-import Loader from "../components/Loader";
-import { useQuery } from "react-query";
-import TopTracks from "./components/TopTracks";
-import TopAlbums from "./components/TopAlbums";
-import Error from "./Error";
 import { useState } from "react";
-import { TrackSingleType } from "./components/TrackCards";
-import { useAuth } from "../context/AuthContext";
+import { useQuery } from "react-query";
+import { useParams } from "react-router-dom";
+import Loader from "../../components/Loader";
+import { useAuth } from "../../context/AuthContext";
+import { getArtistById } from "../../queries/artist";
+import Error from "../Error";
+import { TrackSingleType } from "../library/components/TrackCards";
+import ArtistInfo from "./components/ArtistInfo";
+import RelatedArtists from "./components/RelatedArtists";
+import AllAlbums from "./components/AllAlbums";
+import TopTracks from "./components/TopTracks";
 
 const Artist = () => {
   const { artistId } = useParams();
@@ -43,9 +44,10 @@ const Artist = () => {
   return (
     <div className="">
       <ArtistInfo data={data} playTracks={playableTracksHandler} />
+      <TopTracks id={artistId} setPlayableTracks={setPlayableTracks} />
       <div className="flex gap-4">
-        <TopTracks id={artistId} setPlayableTracks={setPlayableTracks} />
-        <TopAlbums id={artistId} />
+        <AllAlbums id={artistId} />
+        <RelatedArtists id={artistId} />
       </div>
     </div>
   );

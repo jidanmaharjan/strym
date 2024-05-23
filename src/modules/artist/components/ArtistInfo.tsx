@@ -1,6 +1,6 @@
 import { Button, Tag } from "antd";
-import { getRandomColorPair } from "../../constants/helpers";
-import { ArtistSingleType } from "./ArtistCards";
+import { getRandomColorPair } from "../../../constants/helpers";
+import { ArtistSingleType } from "../../library/components/ArtistCards";
 import { useState } from "react";
 import { FaHeadphonesSimple } from "react-icons/fa6";
 import { IoHeart, IoHeartOutline } from "react-icons/io5";
@@ -23,7 +23,7 @@ const ArtistInfo = (props: ArtistInfoProps) => {
         <img
           src={data?.images?.[1]?.url}
           alt={data.name}
-          className="w-60 h-60"
+          className="w-60 h-60 object-cover border"
         />
         <div className="absolute bottom-0 right-2 font-semibold bg-primary p-2 w-8 h-8 grid place-content-center text-white rounded-t-md">
           {data.popularity}

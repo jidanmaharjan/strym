@@ -1,5 +1,5 @@
 import { useQuery } from "react-query";
-import AlbumCards from "../pages/components/AlbumCards";
+import AlbumCards from "../modules/library/components/AlbumCards";
 import { getNewReleases } from "../queries/songs";
 import Loader from "./Loader";
 

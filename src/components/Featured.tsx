@@ -2,7 +2,7 @@ import { Button, Carousel } from "antd";
 import { FaHeadphonesSimple } from "react-icons/fa6";
 import { IoHeart, IoHeartOutline } from "react-icons/io5";
 import { getRandomColorPair } from "../constants/helpers";
-import { TrackSingleType } from "../pages/components/TrackCards";
+import { TrackSingleType } from "../modules/library/components/TrackCards";
 import Loader from "./Loader";
 import { useState } from "react";
 import { Link } from "react-router-dom";

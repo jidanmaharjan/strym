@@ -1,24 +1,54 @@
-import { useQuery } from "react-query";
-import { getTopTracks } from "../../queries/artist";
-import Loader from "../../components/Loader";
 import { Button, Table } from "antd";
-import { FiHeart, FiPlay } from "react-icons/fi";
-import { TrackSingleType } from "./TrackCards";
 import { useState } from "react";
 import { IoHeart, IoHeartOutline } from "react-icons/io5";
-import { getTimeStringFromMilliseconds } from "../../components/Player";
-import { RiMenuAddFill } from "react-icons/ri";
-import { useAuth } from "../../context/AuthContext";
-import { TbPlayerPlay } from "react-icons/tb";
 import { PiWaveform } from "react-icons/pi";
+import { RiMenuAddFill } from "react-icons/ri";
+import { TbPlayerPlay } from "react-icons/tb";
+import { useQuery } from "react-query";
+import Loader from "../../../components/Loader";
+import { getTimeStringFromMilliseconds } from "../../../components/Player";
+import { useAuth } from "../../../context/AuthContext";
+import { getAllTracks } from "../../../queries/album";
+import { AlbumSingleType } from "../../library/components/AlbumCards";
+import { omit } from "lodash";
+import { TrackSingleType } from "../../library/components/TrackCards";
 
-type TopTracksProps = {
-  id: string | undefined;
-  setPlayableTracks: React.Dispatch<React.SetStateAction<TrackSingleType[]>>;
+export type AlbumTrackType = {
+  artists: Array<{
+    external_urls: {
+      spotify: string;
+    };
+    href: string;
+    id: string;
+    name: string;
+    type: string;
+    uri: string;
+  }>;
+  available_markets: Array<string>;
+  disc_number: number;
+  duration_ms: number;
+  explicit: boolean;
+  external_urls: {
+    spotify: string;
+  };
+  href: string;
+  id: string;
+  is_local: boolean;
+  name: string;
+  preview_url: string;
+  track_number: number;
+  type: string;
+  uri: string;
 };
 
-const TopTracks = (props: TopTracksProps) => {
-  const { id, setPlayableTracks } = props;
+type AllTracksProps = {
+  id: string | undefined;
+  setPlayableTracks: React.Dispatch<React.SetStateAction<AlbumTrackType[]>>;
+  albumData: AlbumSingleType;
+};
+
+const AllTracks = (props: AllTracksProps) => {
+  const { id, setPlayableTracks, albumData } = props;
   const { queue, setQueue, playerStates, setPlayerStates } = useAuth();
 
   const [favouriteTracks, setFavouriteTracks] = useState<string[]>(
@@ -26,15 +56,13 @@ const TopTracks = (props: TopTracksProps) => {
   );
 
   const { data, isFetching } = useQuery(
-    ["top-tracks", id],
-    () => getTopTracks(id || ""),
+    ["all-tracks", id],
+    () => getAllTracks(id || ""),
     {
       enabled: !!id,
       onSuccess: (res) => {
         setPlayableTracks(
-          res.tracks?.filter(
-            (item: TrackSingleType) => item.preview_url !== null
-          )
+          res.items?.filter((item: AlbumTrackType) => item.preview_url !== null)
         );
       },
     }
@@ -47,26 +75,21 @@ const TopTracks = (props: TopTracksProps) => {
       key: "index",
       width: 60,
     },
-    {
-      dataIndex: "album",
-      render: (album: any) => (
-        <img
-          src={album.images[album.images.length - 1].url}
-          alt="track"
-          className="w-10 h-10"
-        />
-      ),
-      width: 60,
-      key: "album",
-    },
+    // {
+    //   dataIndex: "album",
+    //   render: (album: any) => (
+    //     <img
+    //       src={album.images[album.images.length - 1].url}
+    //       alt="track"
+    //       className="w-10 h-10"
+    //     />
+    //   ),
+    //   width: 60,
+    //   key: "album",
+    // },
     {
       dataIndex: "name",
       key: "name",
-    },
-    {
-      dataIndex: "album",
-      render: (album: any) => album.name,
-      key: "album_name",
     },
     {
       dataIndex: "duration_ms",
@@ -89,7 +112,12 @@ const TopTracks = (props: TopTracksProps) => {
             }
             onClick={() => {
               if (item.preview_url) {
-                setQueue([item]);
+                setQueue([
+                  {
+                    ...item,
+                    album: omit(albumData, ["tracks"]),
+                  } as TrackSingleType,
+                ]);
                 setPlayerStates &&
                   setPlayerStates((prev) => ({
                     ...prev,
@@ -117,7 +145,13 @@ const TopTracks = (props: TopTracksProps) => {
             onClick={() =>
               item.preview_url &&
               !queue.find((x) => x.id === item.id) &&
-              setQueue((prev) => [...prev, item])
+              setQueue((prev) => [
+                ...prev,
+                {
+                  ...item,
+                  album: omit(albumData, ["tracks"]),
+                } as TrackSingleType,
+              ])
             }
             type="text"
           >
@@ -158,15 +192,15 @@ const TopTracks = (props: TopTracksProps) => {
   return (
     <Table
       sticky
-      className="p-4 w-2/3"
+      className="p-4"
       bordered
       loading={isFetching}
       size="small"
       columns={columns}
-      dataSource={data.tracks || []}
+      dataSource={data.items || []}
       showHeader={false}
       pagination={false}
     />
   );
 };
-export default TopTracks;
+export default AllTracks;

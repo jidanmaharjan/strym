@@ -5,10 +5,10 @@ import { TbDatabaseSearch, TbFilter } from "react-icons/tb";
 import { useQuery } from "react-query";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { searchSpotify } from "../queries/search";
-import AlbumCards from "./components/AlbumCards";
-import ArtistCards from "./components/ArtistCards";
-import PlaylistCards from "./components/PlaylistCards";
-import TrackCards from "./components/TrackCards";
+import AlbumCards from "./library/components/AlbumCards";
+import ArtistCards from "./library/components/ArtistCards";
+import PlaylistCards from "./library/components/PlaylistCards";
+import TrackCards from "./library/components/TrackCards";
 
 const filterOptions = [
   { label: "Track", value: "track" },

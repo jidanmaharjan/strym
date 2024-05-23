@@ -8,7 +8,7 @@ import {
 } from "react";
 import { useMutation } from "react-query";
 import { useNavigate } from "react-router-dom";
-import { TrackSingleType } from "../pages/components/TrackCards";
+import { TrackSingleType } from "../modules/library/components/TrackCards";
 
 type playerStatesType = {
   seek: number | undefined;

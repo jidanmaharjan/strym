@@ -6,9 +6,9 @@ import { IoHeart, IoHeartOutline } from "react-icons/io5";
 import { RiMenuAddFill } from "react-icons/ri";
 import { TbPlayerPlay } from "react-icons/tb";
 import { Link, useNavigate } from "react-router-dom";
-import Loader from "../../components/Loader";
-import { getRandomColorPair } from "../../constants/helpers";
-import { useAuth } from "../../context/AuthContext";
+import Loader from "../../../components/Loader";
+import { getRandomColorPair } from "../../../constants/helpers";
+import { useAuth } from "../../../context/AuthContext";
 
 export type TrackSingleType = {
   album: {

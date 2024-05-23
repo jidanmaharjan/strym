@@ -4,8 +4,8 @@ import { useState } from "react";
 import { IoAlbumsOutline, IoHeart, IoHeartOutline } from "react-icons/io5";
 import { TbMusicSearch } from "react-icons/tb";
 import { Link, useNavigate } from "react-router-dom";
-import Loader from "../../components/Loader";
-import { getRandomColorPair } from "../../constants/helpers";
+import Loader from "../../../components/Loader";
+import { getRandomColorPair } from "../../../constants/helpers";
 
 export type AlbumSingleType = {
   album_type: string;
