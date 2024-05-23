@@ -6,8 +6,13 @@ import { FaHeadphonesSimple } from "react-icons/fa6";
 import { IoHeart, IoHeartOutline } from "react-icons/io5";
 import { LuUsers2 } from "react-icons/lu";
 
-const ArtistInfo = (props: { data: ArtistSingleType }) => {
-  const { data } = props;
+type ArtistInfoProps = {
+  data: ArtistSingleType;
+  playTracks: () => void;
+};
+
+const ArtistInfo = (props: ArtistInfoProps) => {
+  const { data, playTracks } = props;
   const [favouriteArtists, setFavouriteArtists] = useState<string[]>(
     JSON.parse(localStorage.getItem("favouriteArtists") || "[]")
   );
@@ -48,7 +53,7 @@ const ArtistInfo = (props: { data: ArtistSingleType }) => {
             type="primary"
             className="rounded-full"
             onClick={() => {
-              console.log("Listen Now");
+              playTracks();
             }}
           >
             Listen Now

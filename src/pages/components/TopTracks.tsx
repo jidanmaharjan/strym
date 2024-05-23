@@ -3,15 +3,28 @@ import { getTopTracks } from "../../queries/artist";
 import Loader from "../../components/Loader";
 import { Button, Table } from "antd";
 import { FiHeart, FiPlay } from "react-icons/fi";
+import { TrackSingleType } from "./TrackCards";
 
-const TopTracks = (props: { id: string | undefined }) => {
-  const { id } = props;
+type TopTracksProps = {
+  id: string | undefined;
+  setPlayableTracks: React.Dispatch<React.SetStateAction<TrackSingleType[]>>;
+};
+
+const TopTracks = (props: TopTracksProps) => {
+  const { id, setPlayableTracks } = props;
 
   const { data, isFetching } = useQuery(
     ["top-tracks", id],
     () => getTopTracks(id || ""),
     {
       enabled: !!id,
+      onSuccess: (res) => {
+        setPlayableTracks(
+          res.tracks?.filter(
+            (item: TrackSingleType) => item.preview_url !== null
+          )
+        );
+      },
     }
   );
 
