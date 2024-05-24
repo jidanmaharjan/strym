@@ -7,7 +7,7 @@ import { TbMusic, TbMusicSearch } from "react-icons/tb";
 import { Link, useNavigate } from "react-router-dom";
 import Loader from "../../../components/Loader";
 
-type PlaylistSingleType = {
+export type PlaylistSingleType = {
   collaborative: boolean;
   description: string;
   external_urls: {

@@ -11,6 +11,7 @@ import Search from "./modules/Search";
 import Artist from "./modules/artist/Artist";
 import Library from "./modules/library/Library";
 import Album from "./modules/album/Album";
+import Playlist from "./modules/playlist/Playlist";
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
           <Route path="/favourites" element={<Favourites />} />
           <Route path="/artist/:artistId/*" element={<Artist />} />
           <Route path="/album/:albumId/*" element={<Album />} />
+          <Route path="/playlist/:playlistId/*" element={<Playlist />} />
           <Route path="*" element={<Error />} />
         </Routes>
       </div>
