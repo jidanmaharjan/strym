@@ -136,9 +136,9 @@ type PlaylistInfoProps = {
 
 const PlaylistInfo = (props: PlaylistInfoProps) => {
   const { data, playTracks } = props;
-  const [favouritePlaylists, setFavouritePlaylists] = useState<string[]>(
-    JSON.parse(localStorage.getItem("favouritePlaylists") || "[]")
-  );
+  const [favouritePlaylists, setFavouritePlaylists] = useState<
+    PlaylistSingleType[]
+  >(JSON.parse(localStorage.getItem("favouritePlaylists") || "[]"));
 
   return (
     <div className="flex gap-4 items-end sticky top-16 z-50 bg-white p-4">
@@ -176,7 +176,9 @@ const PlaylistInfo = (props: PlaylistInfoProps) => {
             size="large"
             shape="circle"
             icon={
-              favouritePlaylists.includes(data.id) ? (
+              favouritePlaylists.find(
+                (x: PlaylistSingleType) => x.id === data.id
+              ) ? (
                 <IoHeart className="text-primary" />
               ) : (
                 <IoHeartOutline />
@@ -184,10 +186,16 @@ const PlaylistInfo = (props: PlaylistInfoProps) => {
             }
             onClick={() => {
               let newFav = null;
-              if (favouritePlaylists.includes(data.id)) {
-                newFav = favouritePlaylists.filter((id) => id !== data.id);
+              if (
+                favouritePlaylists.find(
+                  (x: PlaylistSingleType) => x.id === data.id
+                )
+              ) {
+                newFav = favouritePlaylists.filter(
+                  (x: PlaylistSingleType) => x.id !== data.id
+                );
               } else {
-                newFav = [...favouritePlaylists, data.id];
+                newFav = [...favouritePlaylists, data];
               }
               setFavouritePlaylists(newFav);
               localStorage.setItem(

@@ -53,15 +53,15 @@ const AllTracks = (props: AllTracksProps) => {
   );
 
   const { data, isFetching } = useQuery(
-    ["all-tracks", id],
+    ["all-playlist-tracks", id],
     () => getAllPlaylistTracks(id || ""),
     {
       enabled: !!id,
       onSuccess: (res) => {
         setPlayableTracks(
-          res.items?.filter(
-            (item: PlaylistTrackType) => item.preview_url !== null
-          )
+          res.items
+            ?.map((x: any) => x.track)
+            ?.filter((item: PlaylistTrackType) => item.preview_url !== null)
         );
       },
     }
@@ -73,6 +73,18 @@ const AllTracks = (props: AllTracksProps) => {
       dataIndex: "id",
       key: "index",
       width: 60,
+    },
+    {
+      dataIndex: "album",
+      render: (album: any) => (
+        <img
+          src={album.images[album.images.length - 1].url}
+          alt="track"
+          className="w-10 h-10"
+        />
+      ),
+      width: 60,
+      key: "album",
     },
     {
       dataIndex: "name",
@@ -160,7 +172,7 @@ const AllTracks = (props: AllTracksProps) => {
   ];
   if (isFetching) {
     return (
-      <div>
+      <div className="p-4">
         <Loader />
       </div>
     );
@@ -174,7 +186,7 @@ const AllTracks = (props: AllTracksProps) => {
       loading={isFetching}
       size="small"
       columns={columns}
-      dataSource={data.items || []}
+      dataSource={data.items.map((x: any) => x.track) || []}
       showHeader={false}
       pagination={false}
     />
