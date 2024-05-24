@@ -19,7 +19,7 @@ const ArtistInfo = (props: ArtistInfoProps) => {
 
   return (
     <div className="flex gap-4 items-end sticky top-16 z-50 bg-white p-4">
-      <div className="relative">
+      <div className="relative min-w-60">
         <img
           src={data?.images?.[1]?.url}
           alt={data.name}
@@ -30,7 +30,9 @@ const ArtistInfo = (props: ArtistInfoProps) => {
         </div>
       </div>
       <div className="grid gap-4">
-        <h1 className="text-6xl font-bold">{data.name}</h1>
+        <h1 className="text-5xl font-bold whitespace-nowrap overflow-x-scroll hide-scrollbar">
+          {data.name}
+        </h1>
         <div className="flex gap-2 items-center">
           <LuUsers2 />
           <p>{data.followers?.total}</p>

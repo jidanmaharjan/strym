@@ -107,7 +107,7 @@ const AllTracks = (props: AllTracksProps) => {
             disabled={
               !item.preview_url ||
               (playerStates?.isPlaying &&
-                queue[playerStates.current].id === item.id)
+                queue?.[playerStates.current]?.id === item.id)
             }
             onClick={() => {
               if (item.preview_url) {
@@ -126,7 +126,7 @@ const AllTracks = (props: AllTracksProps) => {
             type="text"
           >
             {playerStates?.isPlaying &&
-            queue[playerStates.current].id === item.id ? (
+            queue?.[playerStates.current]?.id === item.id ? (
               <PiWaveform className="animate-pulse" />
             ) : (
               <TbPlayerPlay />

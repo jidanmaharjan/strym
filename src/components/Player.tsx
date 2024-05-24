@@ -1,4 +1,4 @@
-import { Button, Drawer, Slider } from "antd";
+import { Button, Drawer, Dropdown, Slider } from "antd";
 import { useEffect, useRef } from "react";
 import { BsFullscreen } from "react-icons/bs";
 import { CgToolbarBottom } from "react-icons/cg";
@@ -18,6 +18,8 @@ import {
 
 import ReactPlayer from "react-player";
 import { useAuth } from "../context/AuthContext";
+import { RiComputerLine } from "react-icons/ri";
+import { IoBluetoothOutline } from "react-icons/io5";
 
 export const getTimeStringFromSeconds = (seconds: number) => {
   const minutes = Math.floor(seconds / 60);
@@ -383,7 +385,29 @@ const Player = () => {
           }
           type="text"
         />
-        <Button className="" icon={<PiDevices size={20} />} type="text" />
+        <Dropdown
+          menu={{
+            items: [
+              {
+                label: "Speakers",
+                key: "speakers",
+                icon: <RiComputerLine size={20} />,
+              },
+              {
+                label: "Bluetooth",
+                key: "bluetooth",
+                icon: <IoBluetoothOutline size={20} />,
+              },
+            ],
+            selectable: true,
+            selectedKeys: ["speakers"],
+          }}
+          placement="top"
+          arrow={{ pointAtCenter: true }}
+          trigger={["click"]}
+        >
+          <Button className="" icon={<PiDevices size={20} />} type="text" />
+        </Dropdown>
         <Button
           className=""
           onClick={() => {

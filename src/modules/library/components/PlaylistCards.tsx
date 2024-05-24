@@ -1,4 +1,4 @@
-import { Card } from "antd";
+import { Button, Card } from "antd";
 import Meta from "antd/es/card/Meta";
 import { useState } from "react";
 import { IoHeart, IoHeartOutline } from "react-icons/io5";
@@ -82,14 +82,17 @@ const PlaylistCards = (props: PlaylistCardsProps) => {
               />
             }
             actions={[
-              <TbMusicSearch
-                key="tracks"
+              <Button
+                key="playlist"
+                type="text"
                 onClick={() => navigate(`/playlist/${item.id}`)}
-              />,
-              // <LiaMicrophoneAltSolid key="playlists" />,
-              <div
+              >
+                <TbMusicSearch />
+              </Button>,
+              <Button
                 className="text-primary cursor-pointer text-lg"
                 key="favourite"
+                type="text"
                 onClick={() => {
                   if (favouritePlaylists.find((x) => x.id === item.id)) {
                     setFavouritePlaylists(
@@ -115,7 +118,7 @@ const PlaylistCards = (props: PlaylistCardsProps) => {
                 ) : (
                   <IoHeartOutline />
                 )}
-              </div>,
+              </Button>,
             ]}
           >
             <Meta
