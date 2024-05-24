@@ -12,6 +12,7 @@ import Artist from "./modules/artist/Artist";
 import Library from "./modules/library/Library";
 import Album from "./modules/album/Album";
 import Playlist from "./modules/playlist/Playlist";
+import Recommendations from "./components/Recommendations";
 
 function App() {
   return (
@@ -26,6 +27,10 @@ function App() {
           <Route path="/search" element={<Search />} />
           <Route path="/genre" element={<Genre />} />
           <Route path="/library" element={<Library />} />
+          <Route
+            path="/recommendations"
+            element={<Recommendations tableView />}
+          />
           <Route path="/favourites" element={<Favourites />} />
           <Route path="/artist/:artistId/*" element={<Artist />} />
           <Route path="/album/:albumId/*" element={<Album />} />

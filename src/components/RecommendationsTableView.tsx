@@ -1,37 +1,25 @@
 import { Button, Table } from "antd";
 import { useState } from "react";
-import { IoHeart, IoHeartOutline } from "react-icons/io5";
+import { IoHeart, IoHeartOutline, IoRefresh } from "react-icons/io5";
 import { PiWaveform } from "react-icons/pi";
 import { RiMenuAddFill } from "react-icons/ri";
 import { TbPlayerPlay } from "react-icons/tb";
-import { useQuery } from "react-query";
-import Loader from "../components/Loader";
-import { getTimeStringFromMilliseconds } from "../components/Player";
+import { TrackSingleType } from "../modules/library/components/TrackCards";
+import { getTimeStringFromMilliseconds } from "./Player";
 import { useAuth } from "../context/AuthContext";
-import { getMultipleTracks } from "../queries/multidata";
-import { TrackSingleType } from "./library/components/TrackCards";
 
-const Favourites = () => {
+type RecommendationsTableViewProps = {
+  data: TrackSingleType[];
+  loading: boolean;
+  refetch: () => void;
+};
+
+const RecommendationsTableView = (props: RecommendationsTableViewProps) => {
+  const { data, loading, refetch } = props;
   const [favouriteTracks, setFavouriteTracks] = useState<string[]>(
     JSON.parse(localStorage.getItem("favouriteTracks") || "[]")
   );
-  const hasTracks = favouriteTracks.length > 0;
-
   const { queue, setQueue, playerStates, setPlayerStates } = useAuth();
-
-  const {
-    data: trackData,
-    isFetching: trackFetching,
-    ...tracksResult
-  } = useQuery(
-    ["selectedTracks"],
-    () => getMultipleTracks(favouriteTracks.join(",")),
-    {
-      enabled: hasTracks,
-      refetchOnWindowFocus: false,
-      refetchOnMount: hasTracks ? true : false,
-    }
-  );
 
   const columns = [
     {
@@ -136,48 +124,54 @@ const Favourites = () => {
       ),
     },
   ];
-  if (trackFetching) {
-    return (
-      <div className="p-4">
-        <Loader />
-      </div>
-    );
-  }
+
   return (
     <>
       <div className="p-4 flex justify-between items-center">
-        <h2 className="text-lg font-semibold">Favourites</h2>
-        <Button
-          type="primary"
-          onClick={() => {
-            setQueue(
-              trackData.tracks?.filter(
-                (item: TrackSingleType) => item.preview_url !== null
-              ) || []
-            );
-            setPlayerStates &&
-              setPlayerStates((prev) => ({
-                ...prev,
-                current: 0,
-                isPlaying: true,
-              }));
-          }}
-        >
-          Play All
-        </Button>
+        <h2 className="text-lg font-semibold">Recommendations</h2>
+        <div className="flex gap-4 items-center">
+          <Button
+            type="primary"
+            disabled={data?.length === 0 || loading}
+            icon={<TbPlayerPlay />}
+            onClick={() => {
+              setQueue(
+                data?.filter(
+                  (item: TrackSingleType) => item.preview_url !== null
+                ) || []
+              );
+              setPlayerStates &&
+                setPlayerStates((prev) => ({
+                  ...prev,
+                  current: 0,
+                  isPlaying: true,
+                }));
+            }}
+          >
+            Play All
+          </Button>
+          <Button
+            type="default"
+            loading={loading}
+            onClick={() => {
+              refetch();
+            }}
+            icon={<IoRefresh />}
+          ></Button>
+        </div>
       </div>
       <Table
         sticky
         className="px-4"
         bordered
         rowKey={(record) => record.id}
-        loading={trackFetching}
+        loading={loading}
         size="small"
         columns={columns}
-        dataSource={trackData.tracks || []}
+        dataSource={data || []}
         showHeader={false}
       />
     </>
   );
 };
-export default Favourites;
+export default RecommendationsTableView;
