@@ -40,6 +40,18 @@ const Favourites = () => {
       width: 60,
     },
     {
+      dataIndex: "album",
+      render: (album: any) => (
+        <img
+          src={album.images[album.images.length - 1].url}
+          alt="track"
+          className="w-10 h-10"
+        />
+      ),
+      width: 60,
+      key: "album",
+    },
+    {
       dataIndex: "name",
       key: "name",
     },
