@@ -81,7 +81,7 @@ const AllAlbums = (props: { id: string | undefined }) => {
   ];
   if (isFetching) {
     return (
-      <div>
+      <div className="p-4 w-1/2">
         <Loader />
       </div>
     );

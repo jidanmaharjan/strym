@@ -149,7 +149,7 @@ const TopTracks = (props: TopTracksProps) => {
   ];
   if (isFetching) {
     return (
-      <div>
+      <div className="p-4">
         <Loader />
       </div>
     );

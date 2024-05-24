@@ -172,7 +172,7 @@ const AllTracks = (props: AllTracksProps) => {
   ];
   if (isFetching) {
     return (
-      <div>
+      <div className="p-4">
         <Loader />
       </div>
     );
