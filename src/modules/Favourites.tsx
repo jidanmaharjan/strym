@@ -131,17 +131,36 @@ const Favourites = () => {
     );
   }
   return (
-    <Table
-      sticky
-      className="p-4"
-      bordered
-      rowKey={(record) => record.id}
-      loading={trackFetching}
-      size="small"
-      columns={columns}
-      dataSource={trackData.tracks || []}
-      showHeader={false}
-    />
+    <>
+      <div className="p-4 flex justify-between items-center">
+        <h2 className="text-lg font-semibold">Favourites</h2>
+        <Button
+          type="primary"
+          onClick={() => {
+            setQueue(trackData.tracks || []);
+            setPlayerStates &&
+              setPlayerStates((prev) => ({
+                ...prev,
+                current: 0,
+                isPlaying: true,
+              }));
+          }}
+        >
+          Play All
+        </Button>
+      </div>
+      <Table
+        sticky
+        className="px-4"
+        bordered
+        rowKey={(record) => record.id}
+        loading={trackFetching}
+        size="small"
+        columns={columns}
+        dataSource={trackData.tracks || []}
+        showHeader={false}
+      />
+    </>
   );
 };
 export default Favourites;
