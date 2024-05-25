@@ -1,10 +1,9 @@
 import { Button } from "antd";
 import { useState } from "react";
 import { FaHeadphonesSimple } from "react-icons/fa6";
-import { IoHeart, IoHeartOutline } from "react-icons/io5";
-import { Link } from "react-router-dom";
-import { PlaylistSingleType } from "../../library/components/PlaylistCards";
 import { FiUsers } from "react-icons/fi";
+import { IoHeart, IoHeartOutline } from "react-icons/io5";
+import { PlaylistSingleType } from "../../library/components/PlaylistCards";
 
 type PlaylistDetailType = {
   collaborative: boolean;

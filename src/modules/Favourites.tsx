@@ -19,11 +19,7 @@ const Favourites = () => {
 
   const { queue, setQueue, playerStates, setPlayerStates } = useAuth();
 
-  const {
-    data: trackData,
-    isFetching: trackFetching,
-    ...tracksResult
-  } = useQuery(
+  const { data: trackData, isFetching: trackFetching } = useQuery(
     ["selectedTracks"],
     () => getMultipleTracks(favouriteTracks.join(",")),
     {
