@@ -147,7 +147,7 @@ const Favourites = () => {
           type="primary"
           onClick={() => {
             setQueue(
-              trackData.tracks?.filter(
+              trackData?.tracks?.filter(
                 (item: TrackSingleType) => item.preview_url !== null
               ) || []
             );
@@ -170,7 +170,7 @@ const Favourites = () => {
         loading={trackFetching}
         size="small"
         columns={columns}
-        dataSource={trackData.tracks || []}
+        dataSource={trackData?.tracks || []}
         showHeader={false}
       />
     </>

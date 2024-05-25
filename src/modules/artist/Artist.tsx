@@ -21,7 +21,7 @@ const Artist = () => {
   const [playableTracks, setPlayableTracks] = useState<TrackSingleType[]>([]);
 
   const playableTracksHandler = () => {
-    if (setQueue && setPlayerStates) {
+    if (setQueue && setPlayerStates && playableTracks.length > 0) {
       setQueue(playableTracks);
       setPlayerStates((prev) => ({
         ...prev,

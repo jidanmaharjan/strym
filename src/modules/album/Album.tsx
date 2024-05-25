@@ -20,7 +20,7 @@ const Album = () => {
   const [playableTracks, setPlayableTracks] = useState<AlbumTrackType[]>([]);
 
   const playableTracksHandler = () => {
-    if (setQueue && setPlayerStates) {
+    if (setQueue && setPlayerStates && playableTracks.length > 0) {
       setQueue(
         playableTracks.map(
           (item) =>
