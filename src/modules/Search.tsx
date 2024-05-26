@@ -58,12 +58,13 @@ const Search = () => {
   return (
     <div className="p-4">
       <form
-        className="flex-grow flex justify-center items-center gap-4 sticky top-20 z-40"
+        className="flex-grow flex justify-center items-center gap-4 sticky top-20 z-20"
         onSubmit={(e) => {
           e.preventDefault();
         }}
       >
         <Input
+          size="large"
           prefix={<FiSearch size={20} className="text-gray0" />}
           placeholder="Search"
           className="rounded-full"
@@ -73,7 +74,7 @@ const Search = () => {
         <Button
           type="primary"
           shape="circle"
-          // size="large"
+          size="large"
           onClick={() => setIsModalOpen(true)}
           icon={<TbFilter size={20} />}
         ></Button>

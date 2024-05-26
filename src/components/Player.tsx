@@ -41,7 +41,6 @@ const Player = () => {
       "keydown",
       (e) => {
         if (e.key === " ") {
-
           if (playPauseRef.current !== document.activeElement) {
             playPauseRef.current.click();
           }
@@ -157,7 +156,7 @@ const Player = () => {
         <img
           className={`${
             playerStates.fullscreen
-              ? "w-40 h-40 rounded-lg shadow-md mx-auto"
+              ? "w-40 h-40 md:w-80 md:h-80 rounded-lg shadow-md mx-auto"
               : "w-12 h-12 md:w-20 md:h-20 rounded-lg md:absolute top-0 md:-translate-y-4 shadow-md"
           }`}
           src={currentTrack.album.images?.[1]?.url}
@@ -165,7 +164,7 @@ const Player = () => {
         />
         <div
           className={`${
-            !playerStates.fullscreen ? "pl-24 hidden xl:block" : ""
+            !playerStates.fullscreen ? "pl-24 hidden xl:block" : "text-3xl"
           } `}
         >
           <h2 className="font-semibold">{currentTrack.name}</h2>

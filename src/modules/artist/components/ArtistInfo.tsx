@@ -37,7 +37,7 @@ const ArtistInfo = (props: ArtistInfoProps) => {
           <LuUsers2 />
           <p>{data.followers?.total}</p>
         </div>
-        <div className="flex gap-2 overflow-x-scroll hide-scrollbar">
+        <div className="flex gap-2 overflow-x-scroll hide-scrollbar h-fit">
           {data.genres.map((genre) => {
             const color = getRandomColorPair();
             return (
