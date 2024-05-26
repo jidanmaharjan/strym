@@ -7,7 +7,13 @@ import { MdOutlineAddBox } from "react-icons/md";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useTheme } from "../context/ThemeContext";
 
-const Sidebar = () => {
+interface SidebarProps {
+  sidebarOpen: boolean;
+  setSideBarOpen?: (open: boolean) => void;
+}
+
+const Sidebar = (props: SidebarProps) => {
+  const { sidebarOpen, setSideBarOpen } = props;
   const { pathname } = useLocation();
   const { theme } = useTheme();
   const navigate = useNavigate();
@@ -48,14 +54,21 @@ const Sidebar = () => {
     })
   );
   return (
-    <div className="fixed left-0 min-h-screen z-30 w-60 pt-16">
+    <div
+      className={`fixed left-0 min-h-screen z-30 w-60 pt-16 transition-all duration-200 ${
+        !sidebarOpen && "-translate-x-[100%]"
+      }`}
+    >
       <Menu
         defaultSelectedKeys={[pathname]}
         mode="inline"
         theme={theme}
         items={items}
         className="h-screen w-60 pt-4"
-        onClick={(e) => navigate(e.key)}
+        onClick={(e) => {
+          navigate(e.key);
+          setSideBarOpen && setSideBarOpen(false);
+        }}
       />
     </div>
   );

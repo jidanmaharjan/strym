@@ -140,7 +140,7 @@ const PlaylistInfo = (props: PlaylistInfoProps) => {
   >(JSON.parse(localStorage.getItem("favouritePlaylists") || "[]"));
 
   return (
-    <div className="flex gap-4 items-end sticky top-16 z-50 bg-white p-4">
+    <div className="flex gap-4 items-end sticky top-16 z-20 bg-white p-4">
       <div className="relative min-w-60">
         <img
           src={data?.images?.[0]?.url}
