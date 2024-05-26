@@ -162,6 +162,7 @@ const RecommendationsTableView = (props: RecommendationsTableViewProps) => {
       </div>
       <Table
         sticky
+        scroll={{ x: 500 }}
         className="px-4"
         bordered
         rowKey={(record) => record.id}

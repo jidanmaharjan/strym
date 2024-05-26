@@ -50,14 +50,14 @@ const Featured = (props: FeaturedProps) => {
               style={{ background: randomColor.primaryColor }}
               className="w-full h-80 flex justify-between shadow-sm rounded-lg overflow-clip"
             >
-              <div className="p-12 flex flex-col justify-center">
+              <div className="p-4 md:p-12 flex flex-col justify-center">
                 <Link
                   to={`/album/${item.album.id}`}
                   className="text-gray-100 mb-6"
                 >
                   {item.album.name} - {item.album.album_type}
                 </Link>
-                <h2 className="text-white text-6xl font-bold mb-2">
+                <h2 className="text-white text-2xl md:text-6xl font-bold mb-2">
                   {item.name}
                 </h2>
                 <h3 className="text-white text-lg font-semibold flex gap-4">

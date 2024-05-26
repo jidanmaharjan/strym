@@ -17,11 +17,12 @@ const Navbar = (props: NavbarProps) => {
       className={`w-full flex justify-between gap-4 p-4 border-b shadow-sm bg-white dark:bg-background_dark dark:text-white sticky top-0 z-40`}
     >
       <div className="flex items-center gap-2 pl-4">
-        <Button
-          icon={sidebarOpen ? <MdClose size={20} /> : <MdMenu size={20} />}
-          onClick={() => setSideBarOpen(!sidebarOpen)}
-          className="md:hidden"
-        ></Button>
+        <div className="md:hidden">
+          <Button
+            icon={sidebarOpen ? <MdClose size={20} /> : <MdMenu size={20} />}
+            onClick={() => setSideBarOpen(!sidebarOpen)}
+          ></Button>
+        </div>
         <img src={logo} alt="logo" className="h-8 w-8" />
         <h3 className="">Strym.</h3>
       </div>

@@ -27,7 +27,7 @@ function App() {
   }, []);
 
   useEffect(() => {
-    if (screenSize && screenSize <= 900) {
+    if (screenSize && screenSize <= 768) {
       setSidebarOpen(false);
     } else {
       setSidebarOpen(true);
