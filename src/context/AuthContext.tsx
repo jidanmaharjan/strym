@@ -32,6 +32,7 @@ type ContextType = {
   setQueue: React.Dispatch<React.SetStateAction<TrackSingleType[]>>;
   playerStates?: playerStatesType;
   setPlayerStates?: React.Dispatch<React.SetStateAction<playerStatesType>>;
+  isLoading: boolean;
 };
 
 const AuthContext = createContext<ContextType | undefined>(undefined);
@@ -76,11 +77,26 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       onSuccess: (res) => {
         localStorage.setItem("ACCESS_TOKEN", res.data?.access_token);
         setIsAuthenticated(true);
-        window.location.reload();
       },
       onError: () => {
         navigate("/connection-error");
       },
+    }
+  );
+
+  axios.interceptors.response.use(
+    (response) => response,
+    (error) => {
+      if (
+        error.response?.data?.error?.message === "The access token expired" ||
+        error.response?.data?.error?.message === "Invalid access token"
+      ) {
+        console.log("Token expired");
+
+        localStorage.removeItem("ACCESS_TOKEN");
+        fetchToken.mutate();
+      }
+      throw new Error(error);
     }
   );
 
@@ -98,6 +114,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         setQueue,
         playerStates,
         setPlayerStates,
+        isLoading: fetchToken.isLoading,
       }}
     >
       {children}

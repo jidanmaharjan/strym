@@ -14,8 +14,11 @@ import Album from "./modules/album/Album";
 import Playlist from "./modules/playlist/Playlist";
 import Recommendations from "./components/Recommendations";
 import { useEffect, useState } from "react";
+import { useAuth } from "./context/AuthContext";
+import Loader from "./components/Loader";
 
 function App() {
+  const { isLoading } = useAuth();
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [screenSize, setScreenSize] = useState<number | undefined>(undefined);
 
@@ -45,21 +48,25 @@ function App() {
       />
 
       <div className="md:pl-60 w-full pb-24">
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/search" element={<Search />} />
-          <Route path="/genre" element={<Genre />} />
-          <Route path="/library" element={<Library />} />
-          <Route
-            path="/recommendations"
-            element={<Recommendations tableView />}
-          />
-          <Route path="/favourites" element={<Favourites />} />
-          <Route path="/artist/:artistId/*" element={<Artist />} />
-          <Route path="/album/:albumId/*" element={<Album />} />
-          <Route path="/playlist/:playlistId/*" element={<Playlist />} />
-          <Route path="*" element={<Error />} />
-        </Routes>
+        {isLoading ? (
+          <Loader />
+        ) : (
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/search" element={<Search />} />
+            <Route path="/genre" element={<Genre />} />
+            <Route path="/library" element={<Library />} />
+            <Route
+              path="/recommendations"
+              element={<Recommendations tableView />}
+            />
+            <Route path="/favourites" element={<Favourites />} />
+            <Route path="/artist/:artistId/*" element={<Artist />} />
+            <Route path="/album/:albumId/*" element={<Album />} />
+            <Route path="/playlist/:playlistId/*" element={<Playlist />} />
+            <Route path="*" element={<Error />} />
+          </Routes>
+        )}
       </div>
       <Player />
     </section>
