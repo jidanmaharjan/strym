@@ -41,7 +41,6 @@ const Player = () => {
       "keydown",
       (e) => {
         if (e.key === " ") {
-          console.log(playPauseRef.current !== document.activeElement);
 
           if (playPauseRef.current !== document.activeElement) {
             playPauseRef.current.click();
