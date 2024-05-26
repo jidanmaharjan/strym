@@ -9,11 +9,12 @@ import { useTheme } from "../context/ThemeContext";
 
 interface SidebarProps {
   sidebarOpen: boolean;
+  screenSize: number | undefined;
   setSideBarOpen?: (open: boolean) => void;
 }
 
 const Sidebar = (props: SidebarProps) => {
-  const { sidebarOpen, setSideBarOpen } = props;
+  const { sidebarOpen, setSideBarOpen, screenSize } = props;
   const { pathname } = useLocation();
   const { theme } = useTheme();
   const navigate = useNavigate();
@@ -67,7 +68,10 @@ const Sidebar = (props: SidebarProps) => {
         className="h-screen w-60 pt-4"
         onClick={(e) => {
           navigate(e.key);
-          setSideBarOpen && setSideBarOpen(false);
+          setSideBarOpen &&
+            screenSize &&
+            screenSize < 768 &&
+            setSideBarOpen(false);
         }}
       />
     </div>

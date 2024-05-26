@@ -141,11 +141,11 @@ const PlaylistInfo = (props: PlaylistInfoProps) => {
 
   return (
     <div className="flex flex-row gap-4 md:items-end md:sticky top-16 z-20 bg-white p-4">
-      <div className="relative min-w-12 md:min-w-60">
+      <div className="relative min-w-32 md:min-w-60">
         <img
           src={data?.images?.[0]?.url}
           alt={data.name}
-          className="w-12 h-12 md:w-60 md:h-60"
+          className="w-32 h-32 sm:w-60 sm:h-60"
         />
       </div>
       <div className="grid gap-4">

@@ -29,7 +29,7 @@ const Favourites = () => {
     }
   );
 
-  const columns = [
+  const columns: any = [
     {
       render: (_: any, __: any, i: number) => i + 1,
       dataIndex: "id",
@@ -61,7 +61,8 @@ const Favourites = () => {
     {
       dataIndex: "id",
       key: "actions",
-      width: "fit-content",
+      fixed: "right",
+      width: 150,
       render: (_id: string, item: any) => (
         <div className="flex">
           <Button
@@ -164,6 +165,7 @@ const Favourites = () => {
       </div>
       <Table
         sticky
+        scroll={{ x: 500 }}
         className="px-4"
         bordered
         rowKey={(record) => record.id}

@@ -91,7 +91,7 @@ const Player = () => {
       }}
       className={`w-full fixed bottom-0 ${
         playerStates.fullscreen ? "h-screen items-end" : "h-24"
-      } z-[100] flex justify-between items-center gap-2 p-4 border-t-2 border-t-primary transition-all duration-300 backdrop-filter backdrop-blur-lg bg-opacity-90 filterbackdrop`}
+      } z-[100] flex justify-between items-center md:items-end gap-2 p-4 border-t-2 border-t-primary transition-all duration-300 backdrop-filter backdrop-blur-lg bg-opacity-90 filterbackdrop`}
     >
       <div className="absolute">
         <ReactPlayer
@@ -164,7 +164,7 @@ const Player = () => {
       <div
         className={`${
           playerStates.fullscreen
-            ? "absolute left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%] flex flex-col text-center"
+            ? "absolute left-[50%] top-40 md:top-[50%] translate-x-[-50%] translate-y-[-50%] flex flex-col text-center"
             : "ml-4 min-w-12 md:w-80"
         }`}
       >
@@ -188,7 +188,7 @@ const Player = () => {
           </p>
         </div>
       </div>
-      <div className="flex md:flex-col w-full md:w-auto">
+      <div className="flex md:flex-col gap-2 md:gap-0 w-full md:w-auto">
         <div className="flex items-center gap-4  md:w-[24rem] justify-center">
           <div className="hidden md:block">
             <Button

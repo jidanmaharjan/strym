@@ -38,7 +38,11 @@ function App() {
     <section className="flex w-full min-h-screen flex-col ">
       <Scrolltotop />
       <Navbar sidebarOpen={sidebarOpen} setSideBarOpen={setSidebarOpen} />
-      <Sidebar sidebarOpen={sidebarOpen} setSideBarOpen={setSidebarOpen} />
+      <Sidebar
+        sidebarOpen={sidebarOpen}
+        setSideBarOpen={setSidebarOpen}
+        screenSize={screenSize}
+      />
 
       <div className="md:pl-60 w-full pb-24">
         <Routes>

@@ -68,7 +68,7 @@ const AllTracks = (props: AllTracksProps) => {
     }
   );
 
-  const columns = [
+  const columns: any = [
     {
       render: (_: any, __: any, i: number) => i + 1,
       dataIndex: "id",
@@ -88,7 +88,8 @@ const AllTracks = (props: AllTracksProps) => {
     {
       dataIndex: "id",
       key: "actions",
-      width: "fit-content",
+      fixed: "right",
+      width: 150,
       render: (_id: string, item: any) => (
         <div className="flex">
           <Button
@@ -180,6 +181,7 @@ const AllTracks = (props: AllTracksProps) => {
   return (
     <Table
       sticky
+      scroll={{ x: 500 }}
       className="p-4"
       bordered
       rowKey={(record) => record.id}

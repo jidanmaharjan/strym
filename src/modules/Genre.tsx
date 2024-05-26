@@ -35,6 +35,8 @@ const Genre = () => {
     {
       title: "Action",
       dataIndex: "",
+      fixed: "right",
+      width: 150,
       render: (item: string) => (
         <div>
           <Button
@@ -81,7 +83,7 @@ const Genre = () => {
   };
 
   return (
-    <div className="p-4 grid gap-4">
+    <div className="p-4 grid gap-4 w-full">
       <Search
         placeholder="Search for genre"
         value={query}

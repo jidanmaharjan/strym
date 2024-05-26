@@ -5,6 +5,7 @@ import Loader from "../../../components/Loader";
 import { getRelatedArtists } from "../../../queries/artist";
 import { useState } from "react";
 import { IoHeart, IoHeartOutline } from "react-icons/io5";
+import { render } from "react-dom";
 
 const RelatedArtists = (props: { id: string | undefined }) => {
   const { id } = props;
@@ -21,7 +22,7 @@ const RelatedArtists = (props: { id: string | undefined }) => {
     }
   );
 
-  const columns = [
+  const columns: any = [
     {
       dataIndex: "images",
       render: (images: any) => (
@@ -47,7 +48,8 @@ const RelatedArtists = (props: { id: string | undefined }) => {
     {
       dataIndex: "id",
       key: "actions",
-      width: "fit-content",
+      fixed: "right",
+      width: 100,
       render: (_id: string, item: any) => (
         <div className="flex">
           <Button
@@ -77,16 +79,17 @@ const RelatedArtists = (props: { id: string | undefined }) => {
   ];
   if (isFetching) {
     return (
-      <div className="p-4 w-1/2">
+      <div className="p-4 md:w-1/2">
         <Loader />
       </div>
     );
   }
   return (
-    <div className="p-4 flex flex-col gap-4 w-1/2">
+    <div className="p-4 flex flex-col gap-4 md:w-1/2">
       <h2 className="font-semibold">Related Artists</h2>
       <Table
         sticky
+        scroll={{ x: 500 }}
         loading={isFetching}
         rowKey={(record) => record.id}
         size="small"

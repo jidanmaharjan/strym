@@ -99,8 +99,8 @@ const AllTracks = (props: AllTracksProps) => {
     {
       dataIndex: "id",
       key: "actions",
-      width: "fit-content",
       fixed: "right",
+      width: "fit-content",
       render: (_id: string, item: any) => (
         <div className="flex">
           <Button

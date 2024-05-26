@@ -21,7 +21,7 @@ const RecommendationsTableView = (props: RecommendationsTableViewProps) => {
   );
   const { queue, setQueue, playerStates, setPlayerStates } = useAuth();
 
-  const columns = [
+  const columns: any = [
     {
       render: (_: any, __: any, i: number) => i + 1,
       dataIndex: "id",
@@ -53,7 +53,8 @@ const RecommendationsTableView = (props: RecommendationsTableViewProps) => {
     {
       dataIndex: "id",
       key: "actions",
-      width: "fit-content",
+      fixed: "right",
+      width: 150,
       render: (_id: string, item: any) => (
         <div className="flex">
           <Button

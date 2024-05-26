@@ -45,7 +45,7 @@ const Artist = () => {
     <div className="">
       <ArtistInfo data={data} playTracks={playableTracksHandler} />
       <TopTracks id={artistId} setPlayableTracks={setPlayableTracks} />
-      <div className="flex gap-4">
+      <div className="flex flex-col md:flex-row gap-4">
         <AllAlbums id={artistId} />
         <RelatedArtists id={artistId} />
       </div>
