@@ -6,12 +6,12 @@ import { RiMenuAddFill } from "react-icons/ri";
 import { TbPlayerPlay } from "react-icons/tb";
 import { useQuery } from "react-query";
 import Loader from "../../../components/Loader";
-import { getTimeStringFromMilliseconds } from "../../../components/Player";
 import { useAuth } from "../../../context/AuthContext";
 import { getAllTracks } from "../../../queries/album";
 import { AlbumSingleType } from "../../library/components/AlbumCards";
 import { omit } from "lodash";
 import { TrackSingleType } from "../../library/components/TrackCards";
+import { getTimeStringFromMilliseconds } from "../../../constants/helpers";
 
 export type AlbumTrackType = {
   artists: Array<{

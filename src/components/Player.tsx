@@ -16,24 +16,11 @@ import {
   TbVolume3,
 } from "react-icons/tb";
 
+import { IoBluetoothOutline } from "react-icons/io5";
+import { RiComputerLine } from "react-icons/ri";
 import ReactPlayer from "react-player";
 import { useAuth } from "../context/AuthContext";
-import { RiComputerLine } from "react-icons/ri";
-import { IoBluetoothOutline } from "react-icons/io5";
-
-export const getTimeStringFromSeconds = (seconds: number) => {
-  const minutes = Math.floor(seconds / 60);
-  seconds = Math.floor(seconds) - minutes * 60;
-  return `${minutes}:${seconds < 10 ? "0" + seconds : seconds}`;
-};
-
-export const getTimeStringFromMilliseconds = (ms: number) => {
-  const seconds = Math.floor(ms / 1000);
-  const minutes = Math.floor(seconds / 60);
-  return `${minutes < 10 ? "0" + minutes : minutes} : ${
-    seconds % 60 < 10 ? "0" + (seconds % 60) : seconds % 60
-  }`;
-};
+import { getTimeStringFromSeconds } from "../constants/helpers";
 
 const Player = () => {
   const { queue, playerStates, setPlayerStates } = useAuth();
@@ -84,9 +71,7 @@ const Player = () => {
 
   return (
     <div
-      //gradient background
       style={{
-        // background: `linear-gradient(to right, ${color.primaryColor}, ${color.secondaryColor})`,
         opacity: 0.9,
       }}
       className={`w-full fixed bottom-0 ${

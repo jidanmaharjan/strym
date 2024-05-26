@@ -5,8 +5,8 @@ import { PiWaveform } from "react-icons/pi";
 import { RiMenuAddFill } from "react-icons/ri";
 import { TbPlayerPlay } from "react-icons/tb";
 import { TrackSingleType } from "../modules/library/components/TrackCards";
-import { getTimeStringFromMilliseconds } from "./Player";
 import { useAuth } from "../context/AuthContext";
+import { getTimeStringFromMilliseconds } from "../constants/helpers";
 
 type RecommendationsTableViewProps = {
   data: TrackSingleType[];

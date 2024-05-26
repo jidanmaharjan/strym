@@ -6,10 +6,10 @@ import { RiMenuAddFill } from "react-icons/ri";
 import { TbPlayerPlay } from "react-icons/tb";
 import { useQuery } from "react-query";
 import Loader from "../../../components/Loader";
-import { getTimeStringFromMilliseconds } from "../../../components/Player";
 import { useAuth } from "../../../context/AuthContext";
 import { getAllPlaylistTracks } from "../../../queries/playlist";
 import { TrackSingleType } from "../../library/components/TrackCards";
+import { getTimeStringFromMilliseconds } from "../../../constants/helpers";
 
 export type PlaylistTrackType = {
   artists: Array<{

@@ -75,3 +75,17 @@ export function getRandomColorPair() {
   const randomIndex = Math.floor(Math.random() * avatarColorsArray.length);
   return avatarColorsArray[randomIndex];
 }
+
+export const getTimeStringFromSeconds = (seconds: number) => {
+  const minutes = Math.floor(seconds / 60);
+  seconds = Math.floor(seconds) - minutes * 60;
+  return `${minutes}:${seconds < 10 ? "0" + seconds : seconds}`;
+};
+
+export const getTimeStringFromMilliseconds = (ms: number) => {
+  const seconds = Math.floor(ms / 1000);
+  const minutes = Math.floor(seconds / 60);
+  return `${minutes < 10 ? "0" + minutes : minutes} : ${
+    seconds % 60 < 10 ? "0" + (seconds % 60) : seconds % 60
+  }`;
+};
