@@ -1,11 +1,10 @@
 import { Button, Table } from "antd";
+import { useState } from "react";
+import { IoHeart, IoHeartOutline } from "react-icons/io5";
 import { useQuery } from "react-query";
 import { Link } from "react-router-dom";
 import Loader from "../../../components/Loader";
 import { getRelatedArtists } from "../../../queries/artist";
-import { useState } from "react";
-import { IoHeart, IoHeartOutline } from "react-icons/io5";
-import { render } from "react-dom";
 
 const RelatedArtists = (props: { id: string | undefined }) => {
   const { id } = props;

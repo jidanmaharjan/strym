@@ -90,8 +90,10 @@ const Player = () => {
         opacity: 0.9,
       }}
       className={`w-full fixed bottom-0 ${
-        playerStates.fullscreen ? "h-screen items-end" : "h-24"
-      } z-[100] flex justify-between items-center md:items-end gap-2 p-4 border-t-2 border-t-primary transition-all duration-300 backdrop-filter backdrop-blur-lg bg-opacity-90 filterbackdrop`}
+        playerStates.fullscreen
+          ? "h-screen items-end"
+          : "h-24 items-center md:items-start"
+      } z-[100] flex justify-between  gap-2 p-4 border-t-2 border-t-primary transition-all duration-300 backdrop-filter backdrop-blur-lg bg-opacity-90 filterbackdrop`}
     >
       <div className="absolute">
         <ReactPlayer
@@ -164,7 +166,7 @@ const Player = () => {
       <div
         className={`${
           playerStates.fullscreen
-            ? "absolute left-[50%] top-40 md:top-[50%] translate-x-[-50%] translate-y-[-50%] flex flex-col text-center"
+            ? "absolute left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%] flex flex-col text-center"
             : "ml-4 min-w-12 md:w-80"
         }`}
       >
