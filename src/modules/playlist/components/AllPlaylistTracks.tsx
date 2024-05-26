@@ -182,7 +182,7 @@ const AllTracks = (props: AllTracksProps) => {
     <Table
       sticky
       scroll={{ x: 500 }}
-      className="p-4 overflow-x-scroll"
+      className="p-4"
       bordered
       rowKey={(record) => record.id}
       loading={isFetching}
