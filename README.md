@@ -11,7 +11,7 @@
 - ✨ User-friendly interface
 
 ### Demo
-Check out the live demo [here](strym.vercel.app).
+Check out the live demo [here](https://strym.vercel.app).
 
 ## Getting Started
 
