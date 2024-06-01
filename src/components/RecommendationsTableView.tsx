@@ -21,6 +21,9 @@ const RecommendationsTableView = (props: RecommendationsTableViewProps) => {
   );
   const { queue, setQueue, playerStates, setPlayerStates } = useAuth();
 
+  const playableTracks =
+    data?.filter((item: TrackSingleType) => item.preview_url !== null) || [];
+
   const columns: any = [
     {
       render: (_: any, __: any, i: number) => i + 1,
@@ -136,11 +139,8 @@ const RecommendationsTableView = (props: RecommendationsTableViewProps) => {
             disabled={data?.length === 0 || loading}
             icon={<TbPlayerPlay />}
             onClick={() => {
-              setQueue(
-                data?.filter(
-                  (item: TrackSingleType) => item.preview_url !== null
-                ) || []
-              );
+              if (playableTracks.length === 0) return;
+              setQueue(playableTracks);
               setPlayerStates &&
                 setPlayerStates((prev) => ({
                   ...prev,
